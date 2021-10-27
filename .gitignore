@@ -4,3 +4,5 @@
 .Ruserdata
 .RDataTmp*
 outputs/
+inst/doc
+~$*.xls*

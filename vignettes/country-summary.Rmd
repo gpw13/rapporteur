@@ -1,0 +1,57 @@
+---
+title: "Country summary Excel files"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Country summary Excel files}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+---
+title: "Country summary Excel files"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Country summary Excel files}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Country summary sheets are country-specific Excel files reporting on the Triple Billions.
+
+Two functions exists:
+* `export_country_summary_xls()` : export a specific country
+* `export_all_countries_summaries_xls()` : export all countries present in the dataset
+
+The `billion` parameter allows to export a specific billion or all at once.
+
+```{r example-all_billions, eval=FALSE}
+library(rapporteuR)
+
+# Export HEP summary for Afghanistan:
+export_country_summary_xls(all_billions_example, "AFG", "hep")
+
+# Export all billions for Canada:
+export_country_summary_xls(all_billions_example, "CAN", "all")
+
+# By default, files are saved to "outputs" folder, but this can be modified with `output_folder'.
+# If the folder doesn't exists, it will be created (recursively).
+export_country_summary_xls(all_billions_example, "CAN", "all", output_folder = "outputs/all/CAN")
+
+# Exporting all billions for all countries in the dataset:
+export_all_countries_summaries_xls(all_billions_example, "all", output_folder = "outputs/all")
+
+```
