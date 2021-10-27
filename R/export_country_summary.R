@@ -258,7 +258,7 @@ export_country_summary_xls <- function(df,
 
   # Write workbook
   if (!dir.exists(output_folder)) {
-    dir.create(output_folder)
+    dir.create(output_folder, recursive = TRUE)
   }
 
   openxlsx::saveWorkbook(wb,
