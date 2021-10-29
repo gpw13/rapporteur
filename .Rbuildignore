@@ -13,3 +13,4 @@
 ^outputs$
 ^.*\.Rprofvis
 ^.RDataTmp*$
+^\.pre-commit-config\.yaml$

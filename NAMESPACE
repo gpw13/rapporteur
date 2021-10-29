@@ -3,6 +3,7 @@
 export("%>%")
 export(export_all_countries_summaries_xls)
 export(export_country_summary_xls)
+export(export_regional_summary_xls)
 importFrom(magrittr,"%>%")
 importFrom(rlang,"!!")
 importFrom(rlang,":=")
