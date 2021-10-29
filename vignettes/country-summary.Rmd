@@ -39,7 +39,7 @@ Two functions exists:
 The `billion` parameter allows to export a specific billion or all at once.
 
 ```{r example-all_billions, eval=FALSE}
-library(rapporteuR)
+library(rapporteur)
 
 # Export HEP summary for Afghanistan:
 export_country_summary_xls(all_billions_example, "AFG", "hep")
