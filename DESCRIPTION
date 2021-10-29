@@ -1,4 +1,4 @@
-Package: rapporteuR
+Package: rapporteur
 Type: Package
 Title: Reports on triple billion data
 Version: 0.1.0
@@ -11,7 +11,7 @@ Description: Reports on the Triple Billion data calculated by the billionaiRe
 License: GPL-3
 URL: https://www.who.int/data/triple-billion-dashboard,
     https://www.who.int/publications/m/item/thirteenth-general-programme-of-work-(gpw13)-methods-for-impact-measurement,
-    https://github.com/gpw13/rapporteuR
+    https://github.com/gpw13/rapporteur
 Depends: 
     R (>= 3.5.0)
 Imports: 

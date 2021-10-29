@@ -1,18 +1,18 @@
 
-# rapporteuR
+# rapporteur
 
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/ElliottMess/rapporteuR/workflows/R-CMD-check/badge.svg)](https://github.com/elliottMess/rapporteuR/actions)
+status](https://github.com/ElliottMess/rapporteur/workflows/R-CMD-check/badge.svg)](https://github.com/elliottMess/rapporteur/actions)
 <!-- badges: end -->
 
-The goal of rapporteuR is to facilitate reporting on the World Health
+The goal of rapporteur is to facilitate reporting on the World Health
 Organization’s Triple Billions framework.
 
 ## Installation
 
-You can install rapporteuR from [GitHub](https://github.com/) with:
+You can install rapporteur from [GitHub](https://github.com/) with:
 
 ## Demonstration dataset
 
@@ -21,7 +21,7 @@ actual data for the countries included. It serves only to demonstrate
 the functions of the package.
 
 ``` r
-library(rapporteuR)
+library(rapporteur)
 
 head(all_billions_example)
 ```
