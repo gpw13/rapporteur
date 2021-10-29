@@ -10,7 +10,7 @@
 write_permanent_sheets <- function(billion, start_col, start_row) {
   wb_file <- system.file("extdata",
     "country_summary_template.xlsx",
-    package = "rapporteuR"
+    package = "rapporteur"
   )
 
   wb <- openxlsx::loadWorkbook(wb_file)
