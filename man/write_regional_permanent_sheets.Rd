@@ -4,17 +4,13 @@
 \alias{write_regional_permanent_sheets}
 \title{Write permanent sheets for regional summary}
 \usage{
-write_regional_permanent_sheets(bounds, start_year, end_year)
+write_regional_permanent_sheets(start_year, end_year)
 }
 \arguments{
-\item{bounds}{a named list with the extent of the data to be written over.
-Must contain the following named parameters:
-\itemize{
-\item start_row
-\item end_row
-\item start_col
-\item end_col
-}}
+\item{start_year}{Base year for contribution calculation, defaults to 2018.}
+
+\item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
+2025.}
 }
 \value{
 A \code{openxlsx} workbook object

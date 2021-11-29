@@ -2,7 +2,7 @@
 #'
 #' `export_country_summary_xls` Export a country-specific for all three
 #' billions or for a specific billion.
-#' @param iso ISO3 code of country to summarize.
+#' @param iso3 ISO3 code of country to summarize.
 #' @inherit export_all_countries_summaries_xls
 #'
 #' @export
@@ -25,12 +25,7 @@ export_regional_summary_xls <- function(df,
                                        output_folder = "outputs") {
   billion <- rlang::arg_match(billion)
 
-  bounds <- list(
-    intro_intrep2 = list(start_row = 26, end_row = 26,
-                      start_col = 3, end_col = 3)
-  )
-
-  wb <- write_regional_permanent_sheets(bounds, start_year, end_year)
+  wb <- write_regional_permanent_sheets(start_year, end_year)
 
 
 }

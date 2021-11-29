@@ -33,7 +33,7 @@ country, year, and indicator.}
 
 \item{year}{Column name of column with years.}
 
-\item{iso3}{Column name of column with country ISO3 codes.}
+\item{iso3}{ISO3 code of country to summarize.}
 
 \item{ind}{Column name of column with indicator names.}
 
@@ -67,8 +67,6 @@ as \code{transform_value}.}
 2025.}
 
 \item{output_folder}{Folder path to where the Excel files should be written}
-
-\item{iso}{ISO3 code of country to summarize.}
 }
 \value{
 \code{openxslx} Workbook object. Output file is in \code{output_folder}.

@@ -279,7 +279,6 @@ write_baseline_projection_hpop_summary <- function(df,
 #' @inheritParams write_baseline_projection_hpop_summary
 #' @inheritParams write_sheet_header_hpop_summary
 #'
-
 write_billion_contrib_ind_hpop_summary <- function(df,
                                                    wb,
                                                    sheet_name,
@@ -364,6 +363,18 @@ write_billion_contrib_ind_hpop_summary <- function(df,
   return(wb)
 }
 
+#' Write the overall contribution to billion to the data sheet
+#'
+#'
+#' Used within `write_hpop_summary_sheet()`
+#'
+#' @param df data frame to be written
+#' @param sheet_name character name of the sheet to update
+#' @inheritParams export_hpop_country_summary_xls
+#' @inheritParams write_latest_reported_hpop_summary
+#' @inheritParams write_baseline_projection_hpop_summary
+#' @inheritParams write_sheet_header_hpop_summary
+#'
 write_billion_contribution_hpop_summary <- function(df,
                                                     wb,
                                                     sheet_name,
@@ -375,8 +386,6 @@ write_billion_contribution_hpop_summary <- function(df,
                                                     bounds,
                                                     iso,
                                                     boxes_bounds) {
-  # HERE HERE HERE need change to formula.
-
   hpop_billion_contribution <- df %>%
     dplyr::filter(
       .data[[year]] == max(end_year),
