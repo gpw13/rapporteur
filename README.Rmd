@@ -5,7 +5,7 @@ output: github_document
 # rapporteur
 
 <!-- badges: start -->
-[![R build status](https://github.com/ElliottMess/rapporteur/workflows/R-CMD-check/badge.svg)](https://github.com/elliottMess/rapporteur/actions)
+[![R build status](https://github.com/GPW13/rapporteur/workflows/R-CMD-check/badge.svg)](https://github.com/GPW13/rapporteur/actions)
 <!-- badges: end -->
 
 The goal of rapporteur is to facilitate reporting on the World Health Organization’s Triple Billions framework.
@@ -16,7 +16,7 @@ You can install rapporteur from [GitHub](https://github.com/) with:
 
 ```{r install, eval=FALSE, include=FALSE}
 # install.packages("devtools")
-devtools::install_github("ElliottMess/rapporteur")
+devtools::install_github("GPW13/rapporteur")
 ```
 
 ## Demonstration dataset
