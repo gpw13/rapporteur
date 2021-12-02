@@ -322,7 +322,7 @@ export_hep_country_summary_xls <- function(df,
     ) %>%
     dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2)))
 
-  df_iso <- get_df_one_scenario(df_iso, scenario)
+  # df_iso <- get_df_one_scenario(df_iso, scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(
@@ -441,7 +441,7 @@ export_hpop_country_summary_xls <- function(df,
     dplyr::filter(sum(is.na(.data[[value]])) != dplyr::n() | !is.na(.data[[contribution]])) %>%
     dplyr::ungroup()
 
-  df_iso <- get_df_one_scenario(df_iso, scenario)
+  # df_iso <- get_df_one_scenario(df_iso, scenario)
 
   water_sanitation_ind <- ind_ids[stringr::str_detect(names(ind_ids), "^water|^hpop_sanitation")]
 
@@ -571,7 +571,7 @@ export_uhc_country_summary_xls <- function(df,
     ) %>%
     dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2)))
 
-  df_iso <- get_df_one_scenario(df_iso, scenario)
+  # df_iso <- get_df_one_scenario(df_iso, scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(.data[["uhc"]],
