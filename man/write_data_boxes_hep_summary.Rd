@@ -15,6 +15,7 @@ write_data_boxes_hep_summary(
   start_year,
   end_year,
   ind,
+  scenario,
   ind_df,
   year,
   type_col,
@@ -52,6 +53,9 @@ values, used to calculate contributions.}
 2025.}
 
 \item{ind}{Column name of column with indicator names.}
+
+\item{scenario}{Column name of column with scenario identifiers. Useful for
+calculating contributions on data in long format rather than wide format.}
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 

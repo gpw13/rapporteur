@@ -87,8 +87,8 @@ write_data_headers_hep_summary <- function(wb, sheet_name, value, boxes_bounds,
 #' worksheet. Used in `write_hep_summary_sheet()`.
 #'
 #' @inherit write_latest_reported_hpop_summary
-#' @inheritParams  export_all_countries_summaries_xls
-#' @inheritParams  style_uhc_pillar
+#' @inheritParams export_all_countries_summaries_xls
+#' @inheritParams style_uhc_pillar
 #' @inheritParams write_data_boxes_hep_summary
 #' @inheritParams export_hep_country_summary_xls
 
@@ -106,6 +106,7 @@ write_data_boxes_hep_summary <- function(df,
                                          start_year,
                                          end_year,
                                          ind,
+                                         scenario,
                                          ind_df,
                                          year,
                                          type_col,
@@ -175,7 +176,7 @@ write_data_boxes_hep_summary <- function(df,
   }
 
   if (pillar == "prevent") {
-    affected_pathos_iso3 <- billionaiRe::affected_pathogens %>%
+    affected_pathos_iso3 <- rapporteur::affected_pathogens %>%
       dplyr::filter(.data[[iso3]] %in% unique(df_pillar[[!!iso3]])) %>%
       dplyr::select(-.data[[iso3]])
 
@@ -200,7 +201,7 @@ write_data_boxes_hep_summary <- function(df,
 
   pillar_latest_reported <- dplyr::select(pillar_latest_reported, -.data[[ind]])
 
-  pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -.data[[ind]], -.data[[iso3]])
+  pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -c(ind, iso3, scenario))
 
   openxlsx::writeData(wb, sheet_name,
     x = pillar_latest_reported,

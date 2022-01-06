@@ -19,6 +19,7 @@ export_hep_country_summary_xls(
   population = "population",
   contribution = "contribution",
   contribution_pct = paste0(contribution, "_percent"),
+  default_scenario = "default",
   start_year = 2018,
   end_year = 2019:2025,
   sheet_prefix = "HEP",
@@ -59,6 +60,8 @@ values. Must be the same length as \code{transform_value}.}
 
 \item{contribution_pct}{Column name of column(s) to store contribution (percent)
 values. Must be the same length as \code{transform_value}.}
+
+\item{default_scenario}{name of the default scenario.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 

@@ -27,6 +27,7 @@ Imports:
     tidyr,
     whoville
 Suggests: 
+    covr,
     knitr,
     rmarkdown,
     wppdistro (>= 0.1.0)

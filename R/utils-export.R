@@ -40,19 +40,16 @@ mergeCellForced <- function(wb, sheet, cols, rows) {
 #' multiple scenarios are present in export functions, as scenarios are not implemented
 #' at the moment.
 #'
-#' @param df data.frame to be treated
-#' @param scenario character string identifying the scenario column in `df`
+#' @inheritParams export_all_countries_summaries_xls
 #'
 #' @return A data frame with one scenario
-get_df_one_scenario <- function(df, scenario) {
+get_df_one_scenario <- function(df, scenario, default_scenario) {
   scenario <- ifelse(is.null(scenario), "scenario", scenario)
-  if (length(df[["scenario"]]) > 1) {
-    warning(paste0(
-      "More than one scenario found in column ", names(df)[grep("scenario", names(df))],
-      "If 'default' is present, this scenario will used. Otherwise, the first scenario will be used."
-    ))
-    scenario_to_use <- ifelse("default" %in% unique(df[["scenario"]]), "default", unique(df[["scenario"]][1]))
-    df <- dplyr::filter(df, !!sym("scenario") == !!scenario_to_use)
+  if (length(df[[scenario]]) > 1) {
+    if(length(unique(df[[scenario]])) > 1){
+      scenario_to_use <- ifelse(default_scenario %in% unique(df[[scenario]]), default_scenario, NA)
+      df <- dplyr::filter(df, .data[[scenario]] == scenario_to_use)
+    }
   }
   return(df)
 }

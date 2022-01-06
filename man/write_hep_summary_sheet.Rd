@@ -16,6 +16,7 @@ write_hep_summary_sheet(
   year = "year",
   iso3 = "iso3",
   ind = "ind",
+  scenario = "scenario",
   population = "population",
   type_col = "type",
   source_col = "source",
@@ -48,6 +49,9 @@ values, used to calculate contributions.}
 \item{iso3}{Column name of column with country ISO3 codes.}
 
 \item{ind}{Column name of column with indicator names.}
+
+\item{scenario}{Column name of column with scenario identifiers. Useful for
+calculating contributions on data in long format rather than wide format.}
 
 \item{population}{Column name of column with population figures.}
 

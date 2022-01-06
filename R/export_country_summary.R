@@ -25,6 +25,7 @@
 #' @param contribution_pct_total_pop Column name of column(s) to store contribution
 #' (percent of total population of the country) values. Must be the same length
 #' as `transform_value`.
+#' @param default_scenario name of the default scenario.
 #' @param start_year Base year for contribution calculation, defaults to 2018.
 #' @param end_year End year(s) for contribution calculation, defaults to 2019 to
 #'     2025.
@@ -52,6 +53,7 @@ export_all_countries_summaries_xls <- function(df,
                                                contribution = "contribution",
                                                contribution_pct = paste0(contribution, "_percent"),
                                                contribution_pct_total_pop = paste0(contribution, "_percent_total_pop"),
+                                               default_scenario = "default_scenario",
                                                start_year = 2018,
                                                end_year = 2019:2025,
                                                output_folder = "outputs") {
@@ -75,6 +77,7 @@ export_all_countries_summaries_xls <- function(df,
     contribution = contribution,
     contribution_pct = contribution_pct,
     contribution_pct_total_pop = contribution_pct_total_pop,
+    default_scenario = default_scenario,
     start_year = start_year,
     end_year = end_year,
     output_folder = output_folder
@@ -104,10 +107,13 @@ export_country_summary_xls <- function(df,
                                        contribution = "contribution",
                                        contribution_pct = paste0(contribution, "_percent"),
                                        contribution_pct_total_pop = paste0(contribution, "_percent_total_pop"),
+                                       default_scenario = "default",
                                        start_year = 2018,
                                        end_year = 2019:2025,
                                        output_folder = "outputs") {
   billion <- rlang::arg_match(billion)
+
+  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
 
   wb <- write_permanent_sheets(billion, start_col = 2, start_row = 3)
 
@@ -127,6 +133,7 @@ export_country_summary_xls <- function(df,
       population = population,
       contribution = contribution,
       contribution_pct = contribution_pct,
+      default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
       sheet_prefix = "HEP",
@@ -149,6 +156,7 @@ export_country_summary_xls <- function(df,
       contribution = contribution,
       contribution_pct = contribution_pct,
       contribution_pct_total_pop = contribution_pct_total_pop,
+      default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
       sheet_prefix = "HPOP",
@@ -168,6 +176,7 @@ export_country_summary_xls <- function(df,
       source_col = source_col,
       population = population,
       contribution = contribution,
+      default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
       sheet_prefix = "UHC",
@@ -194,6 +203,7 @@ export_country_summary_xls <- function(df,
       population = population,
       contribution = contribution,
       contribution_pct = contribution_pct,
+      default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
       sheet_prefix = "HEP",
@@ -220,6 +230,7 @@ export_country_summary_xls <- function(df,
       contribution = contribution,
       contribution_pct = contribution_pct,
       contribution_pct_total_pop = contribution_pct_total_pop,
+      default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
       sheet_prefix = "HPOP",
@@ -243,6 +254,7 @@ export_country_summary_xls <- function(df,
       source_col = source_col,
       population = population,
       contribution = contribution,
+      default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
       sheet_prefix = "UHC",
@@ -293,6 +305,7 @@ export_hep_country_summary_xls <- function(df,
                                            population = "population",
                                            contribution = "contribution",
                                            contribution_pct = paste0(contribution, "_percent"),
+                                           default_scenario = "default",
                                            start_year = 2018,
                                            end_year = 2019:2025,
                                            sheet_prefix = "HEP",
@@ -301,6 +314,7 @@ export_hep_country_summary_xls <- function(df,
   billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, contribution_pct, scenario, type_col, source_col)
   billionaiRe:::assert_years(start_year, end_year)
   billionaiRe:::assert_who_iso(iso)
+  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
   billionaiRe:::assert_same_length(value, transform_value)
   billionaiRe:::assert_same_length(value, contribution)
   billionaiRe:::assert_same_length(contribution, contribution_pct)
@@ -316,13 +330,25 @@ export_hep_country_summary_xls <- function(df,
   df_iso <- df %>%
     dplyr::ungroup() %>%
     dplyr::filter(.data[[iso3]] == !!iso) %>%
+    dplyr::group_by(dplyr::across(c(iso3, year, ind, scenario))) %>%
+    dplyr::group_modify(
+      ~ {
+        if(nrow(.x) == 1){
+          .x
+        }else{
+          .x %>%
+            dplyr::filter(!is.na(.data[["level"]]))
+        }
+      }
+    ) %>%
     dplyr::arrange(
       get_ind_order(.data[[ind]]),
       .data[[year]]
     ) %>%
-    dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2)))
+    dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2))) %>%
+    dplyr::ungroup()
 
-  # df_iso <- get_df_one_scenario(df_iso, scenario)
+  df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(
@@ -350,6 +376,7 @@ export_hep_country_summary_xls <- function(df,
     population = population,
     type_col = type_col,
     source_col = source_col,
+    scenario = scenario,
     ind_df,
     ind_ids
   )
@@ -405,6 +432,7 @@ export_hpop_country_summary_xls <- function(df,
                                             contribution = "contribution",
                                             contribution_pct = paste0(contribution, "_percent"),
                                             contribution_pct_total_pop = paste0(contribution, "_percent_total_pop"),
+                                            default_scenario = "default",
                                             start_year = 2018,
                                             end_year = 2019:2025,
                                             sheet_prefix = "HPOP",
@@ -413,6 +441,7 @@ export_hpop_country_summary_xls <- function(df,
   billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, population, contribution_pct, contribution_pct_total_pop, scenario, type_col, source_col)
   billionaiRe:::assert_years(start_year, end_year)
   billionaiRe:::assert_who_iso(iso)
+  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
   billionaiRe:::assert_same_length(value, transform_value)
   billionaiRe:::assert_same_length(value, contribution)
   billionaiRe:::assert_same_length(contribution, contribution_pct)
@@ -441,7 +470,7 @@ export_hpop_country_summary_xls <- function(df,
     dplyr::filter(sum(is.na(.data[[value]])) != dplyr::n() | !is.na(.data[[contribution]])) %>%
     dplyr::ungroup()
 
-  # df_iso <- get_df_one_scenario(df_iso, scenario)
+  df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
   water_sanitation_ind <- ind_ids[stringr::str_detect(names(ind_ids), "^water|^hpop_sanitation")]
 
@@ -543,6 +572,7 @@ export_uhc_country_summary_xls <- function(df,
                                            source_col = "source",
                                            population = "population",
                                            contribution = "contribution",
+                                           default_scenario = "default",
                                            start_year = 2018,
                                            end_year = 2019:2025,
                                            sheet_prefix = "UHC",
@@ -553,6 +583,7 @@ export_uhc_country_summary_xls <- function(df,
   billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, scenario, type_col, source_col)
   billionaiRe:::assert_years(start_year, end_year)
   billionaiRe:::assert_who_iso(iso)
+  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
   billionaiRe:::assert_same_length(value, transform_value)
   billionaiRe:::assert_same_length(value, contribution)
 
@@ -565,13 +596,25 @@ export_uhc_country_summary_xls <- function(df,
   df_iso <- df %>%
     dplyr::ungroup() %>%
     dplyr::filter(.data[[iso3]] == iso) %>%
+    dplyr::group_by(dplyr::across(c(iso3, year, ind, scenario))) %>%
+    dplyr::group_modify(
+      ~ {
+        if(nrow(.x) == 1){
+          .x
+        }else{
+          .x %>%
+            dplyr::filter(is.na(.data[["level"]]))
+        }
+      }
+    ) %>%
+    dplyr::ungroup() %>%
     dplyr::arrange(
       get_ind_order(.data[[ind]]),
       .data[[year]]
     ) %>%
     dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2)))
 
-  # df_iso <- get_df_one_scenario(df_iso, scenario)
+  df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(.data[["uhc"]],

@@ -20,6 +20,7 @@ export_hpop_country_summary_xls(
   contribution = "contribution",
   contribution_pct = paste0(contribution, "_percent"),
   contribution_pct_total_pop = paste0(contribution, "_percent_total_pop"),
+  default_scenario = "default",
   start_year = 2018,
   end_year = 2019:2025,
   sheet_prefix = "HPOP",
@@ -64,6 +65,8 @@ values. Must be the same length as \code{transform_value}.}
 \item{contribution_pct_total_pop}{Column name of column(s) to store contribution
 (percent of total population of the country) values. Must be the same length
 as \code{transform_value}.}
+
+\item{default_scenario}{name of the default scenario.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 

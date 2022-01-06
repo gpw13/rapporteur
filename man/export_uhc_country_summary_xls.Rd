@@ -19,6 +19,7 @@ export_uhc_country_summary_xls(
   source_col = "source",
   population = "population",
   contribution = "contribution",
+  default_scenario = "default",
   start_year = 2018,
   end_year = 2019:2025,
   sheet_prefix = "UHC",
@@ -56,6 +57,8 @@ calculating contributions on data in long format rather than wide format.}
 
 \item{contribution}{Column name of column(s) to store contribution (population)
 values. Must be the same length as \code{transform_value}.}
+
+\item{default_scenario}{name of the default scenario.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 
