@@ -472,7 +472,19 @@ export_hpop_country_summary_xls <- function(df,
 
   df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
-  water_sanitation_ind <- ind_ids[stringr::str_detect(names(ind_ids), "^water|^hpop_sanitation")]
+  ind_in_df <- unique(df_iso[[ind]])
+
+  water_ind <- ind_ids[stringr::str_detect(names(ind_ids), "^water")]
+
+  water_ind_in_df <- water_ind[ifelse(sum(water_ind %in% ind_in_df) > 0, ind_ids["water"], water_ind %in% ind_in_df)]
+
+  sanitation_ind <- ind_ids[stringr::str_detect(names(ind_ids), "^hpop_sanitation")]
+
+  sanitation_ind_in_df <- sanitation_ind[ifelse(sum(sanitation_ind %in% ind_in_df) == 0, ind_ids["hpop_sanitation"], sanitation_ind %in% ind_in_df)]
+
+  which_ind_ids <- ind_ids[!stringr::str_detect(names(ind_ids), "^water|^hpop_sanitation")]
+
+  ind_ids <- c(which_ind_ids, water_ind_in_df, sanitation_ind_in_df)
 
   # indicator data frame to make sure the order of indicators is correct
   # remove wash/sanitation indicators not in data
@@ -480,7 +492,7 @@ export_hpop_country_summary_xls <- function(df,
     dplyr::filter(
       .data[["hpop"]],
       !is.na(.data[["ind"]]),
-      !((.data[["ind"]] %in% !!water_sanitation_ind) & !(.data[["ind"]] %in% unique(df_iso[[!!ind]]))),
+      .data[["ind"]] %in% !!ind_ids,
       !is.na(.data[["order"]])
     ) %>%
     dplyr::arrange(get_ind_order(.data[["ind"]]))
