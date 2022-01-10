@@ -73,7 +73,7 @@ write_latest_reported_hpop_summary <- function(df,
 
   data_rows <- (bounds["start_row"] + 3):bounds["end_row"]
 
-  ind_ids <- ind_ids[!stringr::str_detect(ind_ids,"^hpop_healthier")]
+  ind_ids <- ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]
 
   latest_reported <- df %>%
     dplyr::filter(
@@ -188,7 +188,7 @@ write_baseline_projection_hpop_summary <- function(df,
 
   data_rows <- (bounds["start_row"] + 3):bounds["end_row"]
 
-  ind_ids <- ind_ids[!stringr::str_detect(ind_ids,"^hpop_healthier")]
+  ind_ids <- ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]
 
   baseline_proj <- df %>%
     dplyr::filter(
@@ -302,7 +302,7 @@ write_billion_contrib_ind_hpop_summary <- function(df,
   trans_end_col <- openxlsx::int2col(boxes_bounds$baseline_proj["start_col"] + 4)
   pop_cell <- glue::glue('{openxlsx::int2col(boxes_bounds$indicators["start_col"]+4)}{boxes_bounds$indicators["start_row"]-2}')
 
-  ind_ids <- ind_ids[!stringr::str_detect(ind_ids,"^hpop_healthier")]
+  ind_ids <- ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]
 
   populations <- df %>%
     dplyr::filter(

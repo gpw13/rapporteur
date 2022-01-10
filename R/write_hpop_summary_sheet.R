@@ -31,7 +31,7 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     dplyr::select("ind", "sdg", "short_name")
 
   start_row_data <- 9
-  end_row_data <- start_row_data + sum(unique(df[[ind]]) %in% ind_ids[!stringr::str_detect(ind_ids,"^hpop_healthier")]) + 2
+  end_row_data <- start_row_data + sum(unique(df[[ind]]) %in% ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]) + 2
 
   boxes_bounds <- list(
     indicators = c(

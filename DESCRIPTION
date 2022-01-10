@@ -19,17 +19,22 @@ Imports:
     dplyr,
     glue,
     magrittr,
+    pdftools,
     openxlsx,
     purrr,
     rlang,
     stringr,
     tibble,
     tidyr,
-    whoville
+    whoville,
+    ggplot2,
+    RColorBrewer
 Suggests: 
+    testthat (>= 3.0.0),
     covr,
     knitr,
     rmarkdown,
+    vdiffr,
     wppdistro (>= 0.1.0)
 VignetteBuilder: 
     knitr
@@ -41,3 +46,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Config/testthat/edition: 3

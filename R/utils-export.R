@@ -46,7 +46,7 @@ mergeCellForced <- function(wb, sheet, cols, rows) {
 get_df_one_scenario <- function(df, scenario, default_scenario) {
   scenario <- ifelse(is.null(scenario), "scenario", scenario)
   if (length(df[[scenario]]) > 1) {
-    if(length(unique(df[[scenario]])) > 1){
+    if (length(unique(df[[scenario]])) > 1) {
       scenario_to_use <- ifelse(default_scenario %in% unique(df[[scenario]]), default_scenario, NA)
       df <- dplyr::filter(df, .data[[scenario]] == scenario_to_use)
     }
