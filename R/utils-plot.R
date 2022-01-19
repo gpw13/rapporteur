@@ -94,4 +94,3 @@ integer_breaks <- function(n = 5, ...) {
   }
   return(fxn)
 }
-

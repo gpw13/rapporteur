@@ -32,9 +32,9 @@ export_plot_timeseries_indicator_pdf <- function(df,
                                                  ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE)) {
   scale <- rlang::arg_match(scale)
 
-  if(scale == "combined"){
+  if (scale == "combined") {
     scales <- c("fixed", "free")
-  }else{
+  } else {
     scales <- scale
   }
 
@@ -43,9 +43,9 @@ export_plot_timeseries_indicator_pdf <- function(df,
 
   unique_iso3 <- sort(unique(df_ind[[iso3]]))
 
-  if(group_iso3){
+  if (group_iso3) {
     iso3_groups <- split(unique_iso3, ceiling(seq_along(unique_iso3) / 54))
-  }else{
+  } else {
     iso3_groups <- list(unique_iso3)
   }
 
@@ -151,11 +151,10 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
 
   if (length(scale) > 1) {
     purrr::walk(scale, ~
-                  ggplot2::ggsave(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", .x, "_", group_id, ".pdf")),
-                                  plots[[paste0(.x)]],
-                                  width = 210, height = 297, units = "mm"
-                  )
-    )
+    ggplot2::ggsave(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", .x, "_", group_id, ".pdf")),
+      plots[[paste0(.x)]],
+      width = 210, height = 297, units = "mm"
+    ))
 
     pdftools::pdf_combine(
       c(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf"))),
@@ -165,8 +164,8 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
     file.remove(c(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf"))))
   } else {
     ggplot2::ggsave(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf")),
-                    plots[[paste0(scale, "_scale")]],
-                    width = 210, height = 297, units = "mm"
+      plots[[paste0(scale, "_scale")]],
+      width = 210, height = 297, units = "mm"
     )
   }
 }

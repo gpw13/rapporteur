@@ -75,8 +75,8 @@ plot_timeseries_indicator <- function(df,
     dplyr::pull(.data[["color_type"]])
 
   plot_title <- ifelse(scale == "fixed",
-                       paste0(stringr::str_to_sentence(indicator), ": ", iso3[1], " - ", iso3[length(iso3)], " - fixed scale"),
-                       paste0(stringr::str_to_sentence(indicator), ": ", iso3[1], " - ", iso3[length(iso3)], " - free scale")
+    paste0(stringr::str_to_sentence(indicator), ": ", iso3[1], " - ", iso3[length(iso3)], " - fixed scale"),
+    paste0(stringr::str_to_sentence(indicator), ": ", iso3[1], " - ", iso3[length(iso3)], " - free scale")
   )
 
   df_ind_grp_line <- df_ind_grp %>%
@@ -84,15 +84,16 @@ plot_timeseries_indicator <- function(df,
     dplyr::filter(dplyr::n() > 1)
 
   base_plot <- ggplot2::ggplot(df_ind_grp, ggplot2::aes(
-      x = as.Date(paste(.data[[year_col]], 1, 1, sep = "-")),
-      y = .data[[transform_value]]))
+    x = as.Date(paste(.data[[year_col]], 1, 1, sep = "-")),
+    y = .data[[transform_value]]
+  ))
 
-  if(length(iso3) <= 54){
+  if (length(iso3) <= 54) {
     base_plot <- base_plot +
       ggplot2::facet_wrap(~ .data[[iso3_col]], ncol = 6, nrow = 9, scales = scale)
   }
 
-  if(nrow(df_ind_grp_line) > 0){
+  if (nrow(df_ind_grp_line) > 0) {
     base_plot <- base_plot +
       ggplot2::geom_path(data = df_ind_grp_line, ggplot2::aes(color = .data[["color_line"]]), alpha = 0.5)
   }
@@ -100,16 +101,18 @@ plot_timeseries_indicator <- function(df,
   base_plot +
     ggplot2::geom_point(ggplot2::aes(colour = .data[["color_type"]]), size = 1) +
     ggplot2::scale_color_identity(guide = "legend", labels = line_type_name, breaks = color_type_breaks) +
-    ggplot2::scale_x_date(date_labels = "%y", date_breaks = "5 years")+
+    ggplot2::scale_x_date(date_labels = "%y", date_breaks = "5 years") +
     ggplot2::scale_y_continuous(breaks = integer_breaks()) +
     ggplot2::geom_text(
       ggplot2::aes(
         label = .data[[iso3_col]],
         x = as.Date(paste(min(.data[[year_col]]), 1, 1, sep = "-")),
         y = -Inf,
-        vjust = - 2,
-        hjust = - 0.5
-      ), color = "grey50")+
+        vjust = -2,
+        hjust = -0.5
+      ),
+      color = "grey50"
+    ) +
     ggplot2::ggtitle(plot_title) +
     theme_billionaiRe()
 }
