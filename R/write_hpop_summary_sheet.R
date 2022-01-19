@@ -10,6 +10,7 @@
 #' @param ind_df data frame containing the indicators in the correct order and format to be used.
 #' @inheritParams export_all_countries_summaries_xls
 #' @inheritParams write_data_boxes_hep_summary
+#' @inheritParams export_hep_country_summary_xls
 #'
 write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
                                      start_year = 2018,

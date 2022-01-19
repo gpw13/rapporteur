@@ -8,6 +8,7 @@ plot_timeseries_indicator(
   df,
   iso3,
   indicator,
+  scale = c("free", "fixed", "free_x", "free_y"),
   ind = "ind",
   iso3_col = "iso3",
   year_col = "year",
@@ -25,6 +26,8 @@ to a specific year, and indicator.}
 \item{iso3}{vector of ISO3 country codes to plot}
 
 \item{indicator}{name of indicator to plot}
+
+\item{scale}{type of scale to be exported, as in \code{\link[ggplot2]{facet_wrap}}}
 
 \item{ind}{Column name of column with indicator names.}
 
@@ -45,8 +48,7 @@ calculating contributions on data in long format rather than wide format.}
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 }
 \value{
-list with two \code{ggplot2} objects: one with a common scale for all iso3
-and one with an individual scale for each iso3.
+a \code{ggplot2} object
 }
 \description{
 Plot timeseries to provide line plots for each scenario present in \code{scenario}
