@@ -1,7 +1,7 @@
-pandoc: 2.7.3
+pandoc: 2.14.2
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   country-summary: country-summary.html
-last_built: 2022-01-19T09:03Z
+last_built: 2022-01-20T15:22Z
 
