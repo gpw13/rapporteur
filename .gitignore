@@ -6,6 +6,10 @@
 outputs/
 inst/doc
 ~$*.xls*
+<<<<<<< HEAD
 /Meta/
 docs
 data-raw/*.parquet
+=======
+docs
+>>>>>>> main
