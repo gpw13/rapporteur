@@ -1,6 +1,6 @@
 library(billionaiRe)
 
-test_data <- load_misc_data("test_data/test_data_transformed_with_scenarios.parquet")
+test_data <- load_misc_data("test_data/test_data_transformed_with_scenarios/test_data_transformed_with_scenarios.parquet")
 
 save_png <- function(code) {
   path <- tempfile(fileext = ".png")
