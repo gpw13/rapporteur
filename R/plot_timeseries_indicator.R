@@ -75,8 +75,8 @@ plot_timeseries_indicator <- function(df,
     dplyr::pull(.data[["color_type"]])
 
   plot_title <- ifelse(scale == "fixed",
-    paste0(stringr::str_to_sentence(indicator), ": ", iso3[1], " - ", iso3[length(iso3)], " - fixed scale"),
-    paste0(stringr::str_to_sentence(indicator), ": ", iso3[1], " - ", iso3[length(iso3)], " - free scale")
+    paste0(indicator, ": ", iso3[1], " - ", iso3[length(iso3)], " - fixed scale"),
+    paste0(indicator, ": ", iso3[1], " - ", iso3[length(iso3)], " - free scale")
   )
 
   df_ind_grp_line <- df_ind_grp %>%
