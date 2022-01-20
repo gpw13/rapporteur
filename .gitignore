@@ -7,3 +7,4 @@ outputs/
 inst/doc
 ~$*.xls*
 docs
+data-raw/*.parquet
