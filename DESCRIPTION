@@ -36,6 +36,7 @@ Suggests:
     knitr,
     rmarkdown,
     vdiffr,
+    whdh,
     wppdistro (>= 0.1.0)
 VignetteBuilder: 
     knitr
