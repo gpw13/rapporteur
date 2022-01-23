@@ -73,6 +73,12 @@
     <loc>/reference/export_hpop_country_summary_xls.html</loc>
   </url>
   <url>
+    <loc>/reference/export_plot_timeseries_indicator_iso3_group.html</loc>
+  </url>
+  <url>
+    <loc>/reference/export_plot_timeseries_indicator_pdf.html</loc>
+  </url>
+  <url>
     <loc>/reference/export_uhc_country_summary_xls.html</loc>
   </url>
   <url>
@@ -110,6 +116,9 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_timeseries_indicator.html</loc>
   </url>
   <url>
     <loc>/reference/style_asc_uhc_data_summary.html</loc>
