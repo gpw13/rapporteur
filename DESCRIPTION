@@ -29,13 +29,13 @@ Imports:
     whoville,
     ggplot2,
     RColorBrewer,
-    here
+    here,
+    vdiffr
 Suggests: 
     testthat (>= 3.0.0),
     covr,
     knitr,
     rmarkdown,
-    vdiffr,
     whdh,
     wppdistro (>= 0.1.0)
 VignetteBuilder: 

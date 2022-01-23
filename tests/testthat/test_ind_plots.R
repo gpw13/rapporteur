@@ -26,22 +26,23 @@ test_plot <- function(df, ind) {
       )
 
       testthat::expect_s3_class(test_result, "ggplot")
-      testthat::expect_snapshot_file(save_png(plot_timeseries_indicator(df_ind,
-        iso3 = unique(df_ind[["iso3"]]),
-        indicator = ind,
-        scale = "fixed"
-      )), paste0("test_plot_", ind, "_fixed.png"))
-      testthat::expect_snapshot_file(save_png(plot_timeseries_indicator(df_ind,
-        iso3 = unique(df_ind[["iso3"]]),
-        indicator = ind,
-        scale = "free"
-      )), paste0("test_plot_", ind, "_free.png"))
+      vdiffr::expect_doppelganger(
+        paste0("plot with fixed scale ",ind),
+        plot_timeseries_indicator(df_ind,
+          iso3 = unique(df_ind[["iso3"]]),
+          indicator = ind,
+          scale = "fixed"
+      ))
+      vdiffr::expect_doppelganger(
+        paste0("plot with free scale ", ind),
+        plot_timeseries_indicator(df_ind,
+          iso3 = unique(df_ind[["iso3"]]),
+          indicator = ind,
+          scale = "free"
+      ))
     }
   })
 }
-
-test_plot(test_data, "anc4")
-
 
 purrr::walk(unique(test_data[["ind"]]), test_plot, df = test_data)
 
