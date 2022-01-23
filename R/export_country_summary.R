@@ -40,7 +40,8 @@ export_all_countries_summaries_xls <- function(df,
                                                  "hpop",
                                                  "hep",
                                                  "uhc",
-                                                 "all"),
+                                                 "all"
+                                               ),
                                                year = "year",
                                                iso3 = "iso3",
                                                ind = "ind",
@@ -333,9 +334,9 @@ export_hep_country_summary_xls <- function(df,
     dplyr::group_by(dplyr::across(c(iso3, year, ind, scenario))) %>%
     dplyr::group_modify(
       ~ {
-        if(nrow(.x) == 1){
+        if (nrow(.x) == 1) {
           .x
-        }else{
+        } else {
           .x %>%
             dplyr::filter(!is.na(.data[["level"]]))
         }
@@ -590,8 +591,8 @@ export_uhc_country_summary_xls <- function(df,
                                            sheet_prefix = "UHC",
                                            output_folder = "outputs",
                                            ind_ids = billionaiRe::billion_ind_codes("uhc",
-                                                                                    include_calculated = TRUE)
-                                           ) {
+                                             include_calculated = TRUE
+                                           )) {
   billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, scenario, type_col, source_col)
   billionaiRe:::assert_years(start_year, end_year)
   billionaiRe:::assert_who_iso(iso)
@@ -611,9 +612,9 @@ export_uhc_country_summary_xls <- function(df,
     dplyr::group_by(dplyr::across(c(iso3, year, ind, scenario))) %>%
     dplyr::group_modify(
       ~ {
-        if(nrow(.x) == 1){
+        if (nrow(.x) == 1) {
           .x
-        }else{
+        } else {
           .x %>%
             dplyr::filter(is.na(.data[["level"]]))
         }
@@ -629,9 +630,10 @@ export_uhc_country_summary_xls <- function(df,
   df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
-    dplyr::filter(.data[["uhc"]],
-                  !is.na(.data[["order"]])
-                  ) %>%
+    dplyr::filter(
+      .data[["uhc"]],
+      !is.na(.data[["order"]])
+    ) %>%
     dplyr::arrange(get_ind_order(.data[["ind"]]))
 
   # data sheet

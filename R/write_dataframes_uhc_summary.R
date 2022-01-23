@@ -356,7 +356,7 @@ write_asc_uhc_data_summary <- function(df,
     no_show_cols <- (boxes_bounds[["baseline_projection_data"]]["start_col"]:boxes_bounds[["baseline_projection_data"]]["end_col"])[c(1, 4, 9, 12)]
   } else if (projected == 10) {
     no_show_cols <- (boxes_bounds[["baseline_projection_data"]]["start_col"]:boxes_bounds[["baseline_projection_data"]]["end_col"])[c(2, 5, 10, 13)]
-  }else if (length(projected) == 0){
+  } else if (length(projected) == 0) {
     no_show_cols <- NULL
   }
 

@@ -37,7 +37,7 @@ get_transform_formula_single <- function(ind, raw_col, raw_row, ind_ids, iso3) {
   } else if (ind %in% ind_ids["alcohol"]) {
     formula <- glue::glue('=if({raw_cell}<>"", round(100 - ({raw_cell} * 4), 2), "")')
   } else if (ind %in% ind_ids["road"]) {
-    sdi_rti <- billionaiRe::sdi_ratio[['sdiratio']][match(iso3, billionaiRe::sdi_ratio[['iso3']])]
+    sdi_rti <- billionaiRe::sdi_ratio[["sdiratio"]][match(iso3, billionaiRe::sdi_ratio[["iso3"]])]
     formula <- glue::glue('=if({raw_cell}<>"", round(100 - ({raw_cell} * 5 * {sdi_rti} / 1000), 2), "")')
   } else if (ind %in% ind_ids["transfats"]) {
     formula <- glue::glue('=if({raw_cell}<>"", (100 - 14.3 + 2.1 * {raw_cell} / 100), "")')
