@@ -75,9 +75,9 @@ testthat::test_that("export_plot_timeseries_indicator_pdf returns right format",
   testthat::expect_equal(pdftools::pdf_length(anc4_fixed_pdf), 5)
   testthat::expect_equal(pdftools::pdf_length(anc4_free_pdf), 5)
 
-  testthat::expect_snapshot_file(anc4_combined_pdf, "test_pdf_anc4_combined.pdf")
-  testthat::expect_snapshot_file(anc4_fixed_pdf, "test_pdf_anc4_fixed.pdf")
-  testthat::expect_snapshot_file(anc4_free_pdf, "test_pdf_anc4_free.pdf")
+  # testthat::expect_snapshot_file(anc4_combined_pdf, "test_pdf_anc4_combined.pdf")
+  # testthat::expect_snapshot_file(anc4_fixed_pdf, "test_pdf_anc4_fixed.pdf")
+  # testthat::expect_snapshot_file(anc4_free_pdf, "test_pdf_anc4_free.pdf")
 
   child_viol_combined_pdf <- test_pdf_plot(test_data, indicator = "child_viol", scale = "combined")
   child_viol_fixed_pdf <- test_pdf_plot(test_data, indicator = "child_viol", scale = "fixed")
@@ -87,8 +87,8 @@ testthat::test_that("export_plot_timeseries_indicator_pdf returns right format",
   testthat::expect_equal(pdftools::pdf_length(child_viol_fixed_pdf), 4)
   testthat::expect_equal(pdftools::pdf_length(child_viol_free_pdf), 4)
 
-  testthat::expect_snapshot_file(child_viol_combined_pdf, "test_pdf_child_viol_combined.pdf")
-  testthat::expect_snapshot_file(child_viol_fixed_pdf, "test_pdf_child_viol_fixed.pdf")
-  testthat::expect_snapshot_file(child_viol_free_pdf, "test_pdf_child_viol_free.pdf")
+  # testthat::expect_snapshot_file(child_viol_combined_pdf, "test_pdf_child_viol_combined.pdf")
+  # testthat::expect_snapshot_file(child_viol_fixed_pdf, "test_pdf_child_viol_fixed.pdf")
+  # testthat::expect_snapshot_file(child_viol_free_pdf, "test_pdf_child_viol_free.pdf")
 
 })
