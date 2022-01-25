@@ -149,12 +149,13 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
   ))
   names(plots) <- scale
 
-  if (length(scale) > 1) {
-    purrr::walk(scale, ~
+  purrr::walk(scale, ~
     ggplot2::ggsave(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", .x, "_", group_id, ".pdf")),
       plots[[paste0(.x)]],
       width = 210, height = 297, units = "mm"
     ))
+
+  if (length(scale) > 1) {
 
     pdftools::pdf_combine(
       c(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf"))),
@@ -162,10 +163,5 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
     )
 
     file.remove(c(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf"))))
-  } else {
-    ggplot2::ggsave(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf")),
-      plots[[paste0(scale, "_scale")]],
-      width = 210, height = 297, units = "mm"
-    )
   }
 }
