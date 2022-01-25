@@ -106,4 +106,3 @@ assert_valid_style_parameters <- function(...) {
     assert_valid_Colour(parameters[["fgFill"]], "Invalid fgFill colour")
   }
 }
-

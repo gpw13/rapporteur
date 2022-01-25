@@ -44,7 +44,7 @@ get_latest_reported_df <- function(df, iso3, ind, type_col, year, value, transfo
   df <- df %>%
     dplyr::filter(.data[[type_col]] %in% c("estimated", "reported"))
 
-  if(nrow(df) > 1){
+  if (nrow(df) > 1) {
     df <- df %>%
       dplyr::group_by(.data[[iso3]], .data[[ind]]) %>%
       dplyr::filter(.data[[year]] == max(.data[[year]])) %>%
