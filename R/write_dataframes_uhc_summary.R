@@ -194,7 +194,7 @@ write_data_boxes_uhc_summary <- function(df,
         !!sym(glue::glue("{transform_value}_{start_year}")) := get_transform_formula(.data[[ind]], boxes_bounds$baseline_projection_data["start_col"], pillar_data_rows, ind_ids = ind_ids, iso3 = this_iso3),
         !!sym(glue::glue("{transform_value}_{max(end_year)}")) := get_transform_formula(.data[[ind]], boxes_bounds$baseline_projection_data["start_col"] + 1, pillar_data_rows, ind_ids = ind_ids, iso3 = this_iso3)
       ) %>%
-      dplyr::select(-.data[[ind]], -.data[[iso3]])
+      dplyr::select(-c(ind, iso3))
 
     openxlsx::writeData(wb, sheet_name,
       x = pillar_latest_reported, -.data[[ind]],
@@ -304,7 +304,6 @@ write_asc_uhc_data_summary <- function(df,
   )
   pillar_data_rows <- (boxes_bounds[[pillar]]["start_row"] + 1):(boxes_bounds[[pillar]]["end_row"])
 
-
   pillar_latest_reported <- df_pillar %>%
     get_latest_reported_df(
       iso3 = iso3, ind = ind, type_col = type_col,
@@ -316,7 +315,7 @@ write_asc_uhc_data_summary <- function(df,
     dplyr::mutate(
       !!sym(glue::glue("{transform_value}")) := get_transform_formula(.data[[ind]], boxes_bounds$latest_reported_data["start_col"], pillar_data_rows, ind_ids = ind_ids, iso3 = this_iso3),
     ) %>%
-    dplyr::select(-.data[[ind]])
+    dplyr::select(value, transform_value, year, type_col, source)
 
   col_raw_end_year <- openxlsx::int2col(boxes_bounds$baseline_projection_data["start_col"] + 1)
   col_raw_start_year <- openxlsx::int2col(boxes_bounds$baseline_projection_data["start_col"])
@@ -333,7 +332,7 @@ write_asc_uhc_data_summary <- function(df,
     dplyr::mutate(empty3 = NA, .after = glue::glue("{type_col}_{max(end_year)}")) %>%
     dplyr::mutate(empty21 = NA, .after = "empty2") %>%
     dplyr::mutate(dir_change = as_excel_formula(glue::glue('=IF(OR(ISBLANK({col_trans_end_year}{pillar_data_rows}),ISBLANK({col_trans_start_year}{pillar_data_rows})),"",{col_trans_end_year}{pillar_data_rows}-{col_trans_start_year}{pillar_data_rows})')), .after = "empty2") %>%
-    dplyr::select(-.data[[iso3]], -.data[[ind]])
+    dplyr::select(-c(iso3, ind))
 
   openxlsx::writeData(wb, sheet_name,
     x = pillar_latest_reported,
@@ -357,6 +356,8 @@ write_asc_uhc_data_summary <- function(df,
     no_show_cols <- (boxes_bounds[["baseline_projection_data"]]["start_col"]:boxes_bounds[["baseline_projection_data"]]["end_col"])[c(1, 4, 9, 12)]
   } else if (projected == 10) {
     no_show_cols <- (boxes_bounds[["baseline_projection_data"]]["start_col"]:boxes_bounds[["baseline_projection_data"]]["end_col"])[c(2, 5, 10, 13)]
+  } else if (length(projected) == 0) {
+    no_show_cols <- NULL
   }
 
   style_asc_uhc_data_summary(wb,

@@ -8,9 +8,12 @@
 ^LICENSE\.md$
 ^data-raw$
 ^\.github$
-<<<<<<< HEAD
 ^test$
 ^outputs$
 ^.*\.Rprofvis
 ^.RDataTmp*$
 ^\.pre-commit-config\.yaml$
+^codecov\.yml$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

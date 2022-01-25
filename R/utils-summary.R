@@ -42,15 +42,19 @@ get_ind_order <- function(ind) {
 #' @inheritParams write_hpop_summary_sheet
 get_latest_reported_df <- function(df, iso3, ind, type_col, year, value, transform_value = NULL, level = NULL, source_col, ind_df) {
   df <- df %>%
-    dplyr::filter(.data[[type_col]] %in% c("estimated", "reported")) %>%
-    dplyr::group_by(.data[[iso3]], .data[[ind]]) %>%
-    dplyr::filter(.data[[year]] == max(.data[[year]])) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(dplyr::all_of(c(
-      ind, value, transform_value, level, year,
-      type_col, source_col
-    ))) %>%
-    dplyr::mutate(!!sym(year) := as.integer(.data[[year]]))
+    dplyr::filter(.data[[type_col]] %in% c("estimated", "reported"))
+
+  if (nrow(df) > 1) {
+    df <- df %>%
+      dplyr::group_by(.data[[iso3]], .data[[ind]]) %>%
+      dplyr::filter(.data[[year]] == max(.data[[year]])) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(dplyr::all_of(c(
+        ind, value, transform_value, level, year,
+        type_col, source_col
+      ))) %>%
+      dplyr::mutate(!!sym(year) := as.integer(.data[[year]]))
+  }
 
   df <- ind_df[, "ind"] %>%
     dplyr::left_join(df, by = c("ind" = ind))

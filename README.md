@@ -4,7 +4,8 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/ElliottMess/rapporteur/workflows/R-CMD-check/badge.svg)](https://github.com/elliottMess/rapporteur/actions)
+status](https://github.com/gpw13/rapporteur/workflows/R-CMD-check/badge.svg)](https://github.com/gpw13/rapporteur/actions)
+[![codecov](https://codecov.io/gh/gpw13/rapporteur/branch/main/graph/badge.svg?token=WK2WM2A7PU)](https://codecov.io/gh/gpw13/rapporteur)
 <!-- badges: end -->
 
 The goal of rapporteur is to facilitate reporting on the World Health

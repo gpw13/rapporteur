@@ -191,7 +191,7 @@ style_timeseries <- function(df, wb, billion = c("hep", "hpop", "uhc"), sheet_na
   }
 
   if (billion == "hep") {
-    affected_pathos_iso3 <- billionaiRe::affected_pathogens %>%
+    affected_pathos_iso3 <- rapporteur::affected_pathogens %>%
       dplyr::filter(.data[["iso3"]] == !!this_iso3)
 
     if (rowSums(affected_pathos_iso3 %>% dplyr::select(-.data[["iso3"]])) > 1) {

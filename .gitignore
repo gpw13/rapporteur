@@ -6,3 +6,6 @@
 outputs/
 inst/doc
 ~$*.xls*
+/Meta/
+docs
+data-raw/*.parquet

@@ -10,6 +10,7 @@
 #' @param ind_df data frame containing the indicators in the correct order and format to be used.
 #' @inheritParams export_all_countries_summaries_xls
 #' @inheritParams write_data_boxes_hep_summary
+#' @inheritParams export_hep_country_summary_xls
 #'
 write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
                                      start_year = 2018,
@@ -31,9 +32,8 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     dplyr::select("ind", "sdg", "short_name")
 
   start_row_data <- 9
-  end_row_data <- start_row_data + sum(unique(df[[ind]]) %in% ind_ids) + 2
+  end_row_data <- start_row_data + sum(unique(df[[ind]]) %in% ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]) + 2
 
-  # TODO: make dynamic if value or scenario >1
   boxes_bounds <- list(
     indicators = c(
       start_col = 1,

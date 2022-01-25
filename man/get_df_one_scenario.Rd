@@ -4,12 +4,16 @@
 \alias{get_df_one_scenario}
 \title{Get data frame with just one scenario}
 \usage{
-get_df_one_scenario(df, scenario)
+get_df_one_scenario(df, scenario, default_scenario)
 }
 \arguments{
-\item{df}{data.frame to be treated}
+\item{df}{Data frame in long format, where 1 row corresponds to a specific
+country, year, and indicator.}
 
-\item{scenario}{character string identifying the scenario column in \code{df}}
+\item{scenario}{Column name of column with scenario identifiers. Useful for
+calculating contributions on data in long format rather than wide format.}
+
+\item{default_scenario}{name of the default scenario.}
 }
 \value{
 A data frame with one scenario
