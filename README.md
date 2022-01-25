@@ -2,9 +2,7 @@
 # rapporteur
 
 <!-- badges: start -->
-
-[![R build
-status](https://github.com/gpw13/rapporteur/workflows/R-CMD-check/badge.svg)](https://github.com/gpw13/rapporteur/actions)
+[![R-CMD-check](https://github.com/gpw13/rapporteur/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/gpw13/rapporteur/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/gpw13/rapporteur/branch/main/graph/badge.svg?token=WK2WM2A7PU)](https://codecov.io/gh/gpw13/rapporteur)
 <!-- badges: end -->
 
