@@ -32,7 +32,7 @@ excel_styles <- function(billion = NULL,
   billionaiRe:::assert_style_param(...)
 
   billionaiRe:::assert_in_list_or_null(billion, c("hpop", "hep", "uhc"))
-  billionaiRe:::assert_in_list_or_null(style_category, c("title", "subtitle", "datatable_header", "sub_datatable_header", "data", "normal_text"))
+  billionaiRe:::assert_in_list_or_null(style_category, c("title", "subtitle", "datatable_header", "sub_datatable_header", "data", "normal_text", "void"))
   billionaiRe:::assert_in_list_or_null(type_data, c("date", "numeric", "integer"))
   billionaiRe:::assert_in_list_or_null(billion_fgFill, c("main", "light", "light2"))
 
@@ -71,6 +71,13 @@ excel_styles <- function(billion = NULL,
     }
   }
   if (!is.null(style_category)) {
+    if(style_category == "void"){
+      style <- modifyStyle(
+        style,
+        borderStyle  = "none",
+        fgFill = "white"
+      )
+    }
     if (style_category == "title") {
       style <- modifyStyle(
         style,

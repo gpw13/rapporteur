@@ -2,7 +2,7 @@
 % Please edit documentation in R/export_country_summary.R
 \name{export_hep_country_summary_xls}
 \alias{export_hep_country_summary_xls}
-\title{Export country summary to Excel for HEP billion$}
+\title{Export country summary to Excel for HEP billion}
 \usage{
 export_hep_country_summary_xls(
   df,
@@ -24,7 +24,8 @@ export_hep_country_summary_xls(
   end_year = 2019:2025,
   sheet_prefix = "HEP",
   output_folder = "outputs",
-  ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE)
+  ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE,
+    include_subindicators = FALSE)
 )
 }
 \arguments{

@@ -72,7 +72,7 @@ as \code{transform_value}.}
 \item{output_folder}{Folder path to where the Excel files should be written}
 }
 \value{
-\code{openxslx} Workbook object. Output file is in \code{output_folder}.
+list of \code{openxslx} Workbook object. Output file is in \code{output_folder}.
 }
 \description{
 \code{export_all_countries_summaries_xls} Export summaries of all countries for the

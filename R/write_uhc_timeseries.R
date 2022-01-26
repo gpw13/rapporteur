@@ -30,7 +30,13 @@ write_uhc_timeseries_sheet <- function(df, wb, sheet_name,
     startRow = 2
   )
 
-  no_show <- ifelse(sum(df[df[, "ind"] == ind_ids["art"], "use_dash"]) == 0, TRUE, FALSE)
+  no_show <- df %>%
+    dplyr::filter(.data[[ind]] == ind_ids["art"]) %>%
+    dplyr::summarise(no_show = dplyr::case_when(
+      sum(.data[["use_dash"]]) %in% c(0,NA) ~ TRUE,
+      TRUE ~ FALSE
+    )) %>%
+    dplyr::pull("no_show")
 
   # TODO: Simplify function to purrr-like walk rather than looping
 

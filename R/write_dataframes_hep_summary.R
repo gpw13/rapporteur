@@ -201,7 +201,7 @@ write_data_boxes_hep_summary <- function(df,
 
   pillar_latest_reported <- dplyr::select(pillar_latest_reported, -.data[[ind]])
 
-  pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -c(ind, iso3, scenario))
+  pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -c(ind, iso3))
 
   openxlsx::writeData(wb, sheet_name,
     x = pillar_latest_reported,

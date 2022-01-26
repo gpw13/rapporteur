@@ -31,7 +31,7 @@
 #'     2025.
 #' @param output_folder Folder path to where the Excel files should be written
 #'
-#' @return `openxslx` Workbook object. Output file is in `output_folder`.
+#' @return list of `openxslx` Workbook object. Output file is in `output_folder`.
 #'
 #' @export
 #'
@@ -93,6 +93,9 @@ export_all_countries_summaries_xls <- function(df,
 #' @inherit export_all_countries_summaries_xls
 #'
 #' @export
+#'
+#' @return `openxslx` Workbook object. Output file is in `output_folder`.
+#'
 export_country_summary_xls <- function(df,
                                        iso,
                                        billion = c("hpop", "hep", "uhc", "all"),
@@ -209,7 +212,7 @@ export_country_summary_xls <- function(df,
       end_year = end_year,
       sheet_prefix = "HEP",
       output_folder = output_folder,
-      ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE)
+      ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE, include_subindicators = FALSE)
     )
   }
   if (billion == "hpop") {
@@ -275,12 +278,14 @@ export_country_summary_xls <- function(df,
   }
 
   openxlsx::saveWorkbook(wb,
-    glue::glue("{output_folder}/GPW13_{toupper(billion)}_billion_{iso}_CountrySummary_{lubridate::today()}.xlsx"),
+    glue::glue("{output_folder}/GPW13_{toupper(billion)}_billion_{iso}_CountrySummary_{whdh::get_formatted_timestamp()}.xlsx"),
     overwrite = TRUE
   )
+
+  return(wb)
 }
 
-#' Export country summary to Excel for HEP billion$
+#' Export country summary to Excel for HEP billion
 #'
 #' `export_hep_country_summary_xls` Export a country-specific for HEP billion.
 #'
@@ -311,7 +316,7 @@ export_hep_country_summary_xls <- function(df,
                                            end_year = 2019:2025,
                                            sheet_prefix = "HEP",
                                            output_folder = "outputs",
-                                           ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE)) {
+                                           ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE, include_subindicators = FALSE)) {
   billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, contribution_pct, scenario, type_col, source_col)
   billionaiRe:::assert_years(start_year, end_year)
   billionaiRe:::assert_who_iso(iso)
@@ -349,7 +354,7 @@ export_hep_country_summary_xls <- function(df,
     dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2))) %>%
     dplyr::ungroup()
 
-  df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
+  df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(
@@ -363,7 +368,7 @@ export_hep_country_summary_xls <- function(df,
   summary_sheet <- glue::glue("{sheet_prefix}_summary")
 
   wb <- write_hep_summary_sheet(
-    df = df_iso,
+    df = df_iso_one_scenario,
     wb = wb,
     sheet_name = summary_sheet,
     iso = iso,
@@ -383,7 +388,7 @@ export_hep_country_summary_xls <- function(df,
   )
 
   write_hep_timeseries_sheet(
-    df = df_iso,
+    df = df_iso_one_scenario,
     wb = wb,
     sheet_name = glue::glue("{sheet_prefix}_Time Series"),
     start_row = 4,
@@ -397,6 +402,27 @@ export_hep_country_summary_xls <- function(df,
     end_year,
     iso3
   )
+  if(length(unique(df_iso[[scenario]])) > 1){
+    write_scenario_sheet(
+      df = df_iso,
+      wb = wb,
+      billion = "hep",
+      sheet_name = glue::glue("{sheet_prefix}_Scenarios"),
+      start_row = 4,
+      start_col = 2,
+      value = value,
+      scenario = scenario,
+      ind_df = ind_df,
+      ind = ind,
+      year = year,
+      type_col = type_col,
+      ind_ids = ind_ids,
+      start_year = start_year,
+      end_year = end_year,
+      iso3 = iso3,
+      default_scenario = default_scenario
+    )
+  }
 
   openxlsx::addStyle(wb,
     sheet = "HEP_Chart", rows = 22, cols = (3:(2 + nrow(ind_df))),
@@ -471,9 +497,9 @@ export_hpop_country_summary_xls <- function(df,
     dplyr::filter(sum(is.na(.data[[value]])) != dplyr::n() | !is.na(.data[[contribution]])) %>%
     dplyr::ungroup()
 
-  df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
+  df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
-  ind_in_df <- unique(df_iso[[ind]])
+  ind_in_df <- unique(df_iso_one_scenario[[ind]])
 
   water_ind <- ind_ids[stringr::str_detect(names(ind_ids), "^water")]
 
@@ -499,7 +525,7 @@ export_hpop_country_summary_xls <- function(df,
     dplyr::arrange(get_ind_order(.data[["ind"]]))
 
 
-  df_iso <- df_iso %>%
+  df_iso_one_scenario <- df_iso_one_scenario %>%
     dplyr::full_join(
       tidyr::expand_grid(
         ind = unique(ind_df[["ind"]]),
@@ -518,7 +544,7 @@ export_hpop_country_summary_xls <- function(df,
   summary_sheet <- glue::glue("{sheet_prefix}_summary")
 
   wb <- write_hpop_summary_sheet(
-    df = df_iso,
+    df = df_iso_one_scenario,
     wb = wb,
     sheet_name = summary_sheet,
     start_year = start_year,
@@ -543,7 +569,7 @@ export_hpop_country_summary_xls <- function(df,
   timeseries_sheet <- glue::glue("{sheet_prefix}_Time Series")
 
   wb <- write_hpop_timeseries_sheet(
-    df = df_iso, wb,
+    df = df_iso_one_scenario, wb,
     sheet_name = timeseries_sheet,
     start_col = 2, start_row = 4,
     value = value,
@@ -551,6 +577,29 @@ export_hpop_country_summary_xls <- function(df,
     year = year, type_col = type_col,
     end_year = end_year
   )
+
+  if(length(unique(df_iso[[scenario]])) > 1){
+    write_scenario_sheet(
+      df = df_iso,
+      wb = wb,
+      billion = "hpop",
+      sheet_name = glue::glue("{sheet_prefix}_Scenarios"),
+      start_row = 4,
+      start_col = 2,
+      value = value,
+      scenario = scenario,
+      ind_df = ind_df,
+      ind = ind,
+      year = year,
+      type_col = type_col,
+      ind_ids = ind_ids,
+      start_year = start_year,
+      end_year = end_year,
+      iso3 = iso3,
+      default_scenario = default_scenario
+    )
+  }
+
 
   # Flip titles graph
   openxlsx::addStyle(wb,
@@ -627,7 +676,7 @@ export_uhc_country_summary_xls <- function(df,
     ) %>%
     dplyr::mutate(dplyr::across(c(!!value, !!transform_value), ~ round(.x, digits = 2)))
 
-  df_iso <- get_df_one_scenario(df_iso, scenario, default_scenario)
+  df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario, default_scenario)
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(
@@ -640,7 +689,7 @@ export_uhc_country_summary_xls <- function(df,
   summary_sheet <- glue::glue("{sheet_prefix}_summary")
 
   write_uhc_summary_sheet(
-    df = df_iso,
+    df = df_iso_one_scenario,
     wb = wb,
     sheet_name = summary_sheet,
     iso = iso,
@@ -659,7 +708,7 @@ export_uhc_country_summary_xls <- function(df,
   )
 
   write_uhc_timeseries_sheet(
-    df = df_iso,
+    df = df_iso_one_scenario,
     wb = wb,
     sheet_name = glue::glue("{sheet_prefix}_Time Series"),
     start_row = 4,
@@ -673,6 +722,28 @@ export_uhc_country_summary_xls <- function(df,
     end_year
   )
 
+  if(length(unique(df_iso[[scenario]])) > 1){
+    write_scenario_sheet(
+      df = df_iso,
+      wb = wb,
+      billion = "uhc",
+      sheet_name = glue::glue("{sheet_prefix}_Scenarios"),
+      start_row = 4,
+      start_col = 2,
+      value = value,
+      scenario = scenario,
+      ind_df = ind_df,
+      ind = ind,
+      year = year,
+      type_col = type_col,
+      ind_ids = ind_ids,
+      start_year = start_year,
+      end_year = end_year,
+      iso3 = iso3,
+      default_scenario = default_scenario
+    )
+  }
+
   openxlsx::addStyle(wb,
     sheet = "UHC_Chart", rows = 22, cols = (3:(2 + nrow(ind_df))),
     style = excel_styles(
@@ -684,7 +755,6 @@ export_uhc_country_summary_xls <- function(df,
       valign = "center"
     )
   )
-
 
   return(wb)
 }
