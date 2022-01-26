@@ -143,7 +143,13 @@ write_data_boxes_uhc_summary <- function(df,
     dplyr::mutate(dir_change = as_excel_formula(glue::glue('=IF(OR(ISBLANK({col_raw_end_year}{pillar_data_rows}),ISBLANK({col_raw_start_year}{pillar_data_rows})),"",{col_raw_end_year}{pillar_data_rows}-{col_raw_start_year}{pillar_data_rows})')), .after = "empty2")
 
   if (pillar == "infec_diseases") {
-    no_show <- ifelse(sum(df_pillar[df_pillar[, "ind"] == ind_ids["art"], "use_dash"]) %in% c(0, NA), TRUE, FALSE)
+    no_show <- df_pillar %>%
+      dplyr::filter(.data[[ind]] == ind_ids["art"]) %>%
+      dplyr::summarise(no_show = dplyr::case_when(
+        sum(.data[["use_dash"]]) %in% c(0,NA) ~ TRUE,
+        TRUE ~ FALSE
+      )) %>%
+      dplyr::pull("no_show")
     no_show_row <- grep(ind_ids["art"], pillar_latest_reported[[ind]])
   } else {
     no_show <- FALSE
