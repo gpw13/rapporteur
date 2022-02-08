@@ -16,6 +16,11 @@ plot_comparison_indicator(
 )
 }
 \arguments{
+\item{...}{Name-value pair of data frames to use e.g. (new = df_1).The name
+(if provided) gives the name of the data frame and the value is the data
+frame itself. The name is used to appear in the legend of the plot if
+provided.}
+
 \item{indicator}{name of indicator to plot}
 
 \item{ind}{Column name of column with indicator names.}
@@ -33,10 +38,6 @@ calculate contributions.}
 Although separate indicator codes can be used than the standard, they must
 be supplied as a named vector where the names correspond to the output of
 \code{billion_ind_codes()}.}
-
-\item{iso3}{vector of ISO3 country codes to plot}
-
-\item{scale}{type of scale to be exported, as in \code{\link[ggplot2]{facet_wrap}}}
 }
 \value{
 a \code{ggplot2} object

@@ -7,14 +7,8 @@
 #' frame itself. The name is used to appear in the legend of the plot if
 #' provided.
 #' @param indicator name of indicator to plot
-#' @param scale type of scale to be exported. Can be either:
-#' - `common`: same scale for all iso3
-#' - `free`: individual scale for each iso3
-#' - `combined`: combination of common and free.
-#' By default, `combined` is used
 #' @param run_name name of the run of plots. Default to NULL. If used, a new
 #' folder will be added to `output_folder` to store the results.
-#' @param group_iso3 if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.
 #' @inherit write_hep_summary_sheet
 #' @inheritParams export_country_summary_xls
 #'
@@ -72,9 +66,15 @@ export_plot_comparison_pdf <- function(...,
 
   temp_dir <- here::here(output_folder, "temp")
 
+  if (!dir.exists(temp_dir)) {
+    dir.create(temp_dir)
+  }
+
+  temp_dir <- here::here(output_folder, "temp")
+
   purrr::walk(
     unique_ind, ~ ggplot2::ggsave(
-      here::here(temp_dir, paste0("temp_", run_name_index, indicator, ".pdf")),
+      here::here(temp_dir, paste0("temp_", run_name_index, run_name_index,.x, ".pdf")),
       plot_comparison_indicator(
         "{new}" := dfs[[1]],
         "{old}" := dfs[[2]],
@@ -91,8 +91,8 @@ export_plot_comparison_pdf <- function(...,
   )
 
   pdftools::pdf_combine(
-    c(here::here(temp_dir, paste0("temp_", run_name_index, indicator, ".pdf"))),
-    here::here(output_folder, paste0("plot_comparison_dfs_",run_name_index, indicator, ".pdf"))
+    c(here::here(temp_dir, paste0("temp_", run_name_index, unique_ind, ".pdf"))),
+    here::here(output_folder, paste0("plot_comparison_dfs_",run_name_index, ".pdf"))
   )
 
   unlink(temp_dir, recursive = TRUE)

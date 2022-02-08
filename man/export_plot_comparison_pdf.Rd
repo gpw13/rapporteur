@@ -5,8 +5,7 @@
 \title{Export plot comparison of two billionaiRe data frames}
 \usage{
 export_plot_comparison_pdf(
-  new_df,
-  old_df,
+  ...,
   indicator,
   output_folder = "outputs",
   run_name = NULL,
@@ -14,7 +13,7 @@ export_plot_comparison_pdf(
   scenario = "scenario",
   default_scenario = "default",
   type_col = "type",
-  transform_value = "transform_value",
+  value = "value",
   start_year = 2018,
   year = "year",
   iso3 = "iso3",
@@ -22,6 +21,11 @@ export_plot_comparison_pdf(
 )
 }
 \arguments{
+\item{...}{Name-value pair of data frames to use e.g. (new = df_1).The name
+(if provided) gives the name of the data frame and the value is the data
+frame itself. The name is used to appear in the legend of the plot if
+provided.}
+
 \item{indicator}{name of indicator to plot}
 
 \item{output_folder}{Folder path to where the Excel files should be written}
@@ -38,8 +42,7 @@ calculating contributions on data in long format rather than wide format.}
 
 \item{type_col}{Column name of column with type data.}
 
-\item{transform_value}{Column name of column(s) with transformed indicator
-values, used to calculate contributions.}
+\item{value}{Column name of column with indicator values.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 
@@ -51,14 +54,6 @@ values, used to calculate contributions.}
 Although separate indicator codes can be used than the standard, they must
 be supplied as a named vector where the names correspond to the output of
 \code{billion_ind_codes()}.}
-
-\item{scale}{type of scale to be exported. Can be either:
-\itemize{
-\item \code{common}: same scale for all iso3
-\item \code{free}: individual scale for each iso3
-\item \code{combined}: combination of common and free.
-By default, \code{combined} is used
-}}
 
 \item{group_iso3}{if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.}
 }

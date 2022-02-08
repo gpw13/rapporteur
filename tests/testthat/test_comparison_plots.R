@@ -48,7 +48,7 @@ test_plot <- function(new_df, old_df, ind) {
 }
 
 test_plot(new_df = new_test_data_calculated,
-          old_df = old_test_data_calculated_fewer_iso3s,
+          old_df = old_test_data_calculated,
           ind = "anc4"
 )
 

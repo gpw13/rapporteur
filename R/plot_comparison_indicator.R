@@ -2,20 +2,16 @@
 #'
 #' Plot comparison between two billionaiRe data frames fro an indicator
 #'
-#' @param iso3 vector of ISO3 country codes to plot
-#' @param iso3_col name of column with
 #' @param year_col Column name of column with years.
 #' @param iso3_col Column name of column with country ISO3 codes.
 #' @param ind Column name of column with indicator names.
 #' @param value Column name of column(s) with indicator's values, used to
 #'     calculate contributions.
 #' @param type_col Column name of column with type data.
-#' @param scale type of scale to be exported, as in \code{\link[ggplot2]{facet_wrap}}
 #' @inherit write_hep_summary_sheet
 #' @inheritParams export_country_summary_xls
 #' @inheritParams export_plot_timeseries_indicator_pdf
-#'
-#' @export
+#' @inheritParams export_plot_comparison_pdf
 #'
 #' @return a `ggplot2` object
 #'
@@ -132,6 +128,9 @@ plot_comparison_indicator <- function(...,
     )+
     ggplot2::scale_color_manual(values = c("#003f5c","#bc5090"))+
     ggplot2::scale_x_date(date_labels = "%y", date_breaks = "10 years") +
-    theme_billionaiRe()
+    theme_billionaiRe()+
+    ggplot2::ggtitle(
+      glue::glue("Comparing {old} and {new}: {indicator}")
+    )
 
 }
