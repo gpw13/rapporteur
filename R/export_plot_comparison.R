@@ -73,24 +73,27 @@ export_plot_comparison_pdf <- function(...,
   temp_dir <- here::here(output_folder, "temp")
 
   purrr::walk(
-    unique_ind, ~ plot_comparison_indicator(
-      "{new}" := dfs[[1]],
-      "{old}" := dfs[[2]],
-      indicator = .x,
-      ind = ind,
-      iso3_col = iso3,
-      year_col = year,
-      value = value,
-      type_col = type_col,
-      ind_ids = ind_ids
+    unique_ind, ~ ggplot2::ggsave(
+      here::here(temp_dir, paste0("temp_", run_name_index, indicator, ".pdf")),
+      plot_comparison_indicator(
+        "{new}" := dfs[[1]],
+        "{old}" := dfs[[2]],
+        indicator = .x,
+        ind = ind,
+        iso3_col = iso3,
+        year_col = year,
+        value = value,
+        type_col = type_col,
+        ind_ids = ind_ids
+      ),
+      width = 210, height = 297, units = "mm"
     )
   )
 
   pdftools::pdf_combine(
-    c(here::here(temp_dir, paste0("temp_", run_name_index, indicator, "_", scale, "_", names(iso3_groups), ".pdf"))),
-    here::here(output_folder, paste0(run_name_index, indicator, "_", scale, ".pdf"))
+    c(here::here(temp_dir, paste0("temp_", run_name_index, indicator, ".pdf"))),
+    here::here(output_folder, paste0("plot_comparison_dfs_",run_name_index, indicator, ".pdf"))
   )
-
 
   unlink(temp_dir, recursive = TRUE)
 }
