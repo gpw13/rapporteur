@@ -2,13 +2,6 @@ library(billionaiRe)
 
 test_data <- load_misc_data("test_data/test_data_transformed_with_scenarios/test_data_transformed_with_scenarios.parquet")
 
-save_png <- function(code) {
-  path <- tempfile(fileext = ".png")
-  plot <- code
-  ggplot2::ggsave(path, height = 4.25, width = 7.35)
-  path
-}
-
 test_plot <- function(df, ind) {
   testthat::test_that(paste0("plot_timeseries_indicator returns plots for ", ind, ":"), {
     df_ind <- df %>%
@@ -46,16 +39,16 @@ test_plot <- function(df, ind) {
 
 purrr::walk(unique(test_data[["ind"]]), test_plot, df = test_data)
 
+expand_df <- function(df, iso3s) {
+  old_isos <- c("AFG", "AGO", "BDI", "BGD", "BOL", "UGA")
+  iso3s <- setNames(iso3s, old_isos)
+  new_df <- df
+  new_df$iso3 <- as.character(iso3s[as.character(df$iso3)])
+  new_df
+}
+
 test_pdf_plot <- function(df, indicator, scale) {
   temp_dir <- tempdir()
-
-  expand_df <- function(df, iso3s) {
-    old_isos <- c("AFG", "AGO", "BDI", "BGD", "BOL", "UGA")
-    iso3s <- setNames(iso3s, old_isos)
-    new_df <- df
-    new_df$iso3 <- as.character(iso3s[as.character(df$iso3)])
-    new_df
-  }
 
   iso3s <- split(unique(whoville::countries$iso3), ceiling(seq_along(unique(whoville::countries$iso3)) / 6))
   iso3s <- iso3s[1:41]
