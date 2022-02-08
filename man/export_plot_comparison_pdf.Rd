@@ -54,8 +54,6 @@ calculating contributions on data in long format rather than wide format.}
 Although separate indicator codes can be used than the standard, they must
 be supplied as a named vector where the names correspond to the output of
 \code{billion_ind_codes()}.}
-
-\item{group_iso3}{if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.}
 }
 \value{
 \code{openxslx} Workbook object. Output file is in \code{output_folder}.

@@ -28,10 +28,10 @@ export_plot_comparison_pdf <- function(...,
                                        ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE)) {
 
   dfs <- rlang::list2(...)
-  billionaiRe:::assert_columns(dfs[[1]], ind, iso3, year, type_col, value)
-  billionaiRe:::assert_columns(dfs[[2]], ind, iso3, year, type_col, value)
-  billionaiRe:::assert_unique_rows(dfs[[1]], ind, iso3, year, ind_ids = ind_ids)
-  billionaiRe:::assert_unique_rows(dfs[[2]], ind, iso3, year, ind_ids = ind_ids)
+  assert_columns(dfs[[1]], ind, iso3, year, type_col, value)
+  assert_columns(dfs[[2]], ind, iso3, year, type_col, value)
+  assert_unique_rows(dfs[[1]], ind, iso3, year, ind_ids = ind_ids)
+  assert_unique_rows(dfs[[2]], ind, iso3, year, ind_ids = ind_ids)
 
   if(length(dfs) != 2){
     stop("Only two data frames are supported by comparaison plots ", call. = FALSE)
@@ -64,13 +64,8 @@ export_plot_comparison_pdf <- function(...,
     dir.create(output_folder)
   }
 
-  temp_dir <- here::here(output_folder, "temp")
 
-  if (!dir.exists(temp_dir)) {
-    dir.create(temp_dir)
-  }
-
-  temp_dir <- here::here(output_folder, "temp")
+  temp_dir <- tempdir()
 
   purrr::walk(
     unique_ind, ~ ggplot2::ggsave(

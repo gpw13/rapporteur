@@ -30,6 +30,11 @@ plot_comparison_indicator <- function(...,
     stop("Only two data frames are supported by comparaison plots ", call. = FALSE)
   }
 
+  assert_columns(dfs[[1]], ind, iso3_col, year_col, type_col, value)
+  assert_columns(dfs[[2]], ind, iso3_col, year_col, type_col, value)
+  assert_unique_rows(dfs[[1]], ind, iso3_col, year_col, ind_ids = ind_ids)
+  assert_unique_rows(dfs[[2]], ind, iso3_col, year_col, ind_ids = ind_ids)
+
   if(is.null(names(dfs))){
     old <- "old"
     new <- "new"
@@ -37,11 +42,6 @@ plot_comparison_indicator <- function(...,
     old <- ifelse(names(dfs)[1] != "", names(dfs)[1], "old")
     new <- ifelse(names(dfs)[2] != "", names(dfs)[2], "new")
   }
-  billionaiRe:::assert_columns(dfs[[1]], ind, iso3_col, year_col, type_col, value)
-  billionaiRe:::assert_columns(dfs[[2]], ind, iso3_col, year_col, type_col, value)
-  billionaiRe:::assert_unique_rows(dfs[[1]], ind, iso3_col, year_col, ind_ids = ind_ids)
-  billionaiRe:::assert_unique_rows(dfs[[2]], ind, iso3_col, year_col, ind_ids = ind_ids)
-
   cols_to_keep <- c(
     ind, iso3_col, year_col, value, type_col
   )

@@ -29,12 +29,12 @@ excel_styles <- function(billion = NULL,
                          billion_fgFill = NULL,
                          hide = FALSE,
                          ...) {
-  billionaiRe:::assert_style_param(...)
+  assert_style_param(...)
 
-  billionaiRe:::assert_in_list_or_null(billion, c("hpop", "hep", "uhc"))
-  billionaiRe:::assert_in_list_or_null(style_category, c("title", "subtitle", "datatable_header", "sub_datatable_header", "data", "normal_text", "void"))
-  billionaiRe:::assert_in_list_or_null(type_data, c("date", "numeric", "integer"))
-  billionaiRe:::assert_in_list_or_null(billion_fgFill, c("main", "light", "light2"))
+  assert_in_list_or_null(billion, c("hpop", "hep", "uhc"))
+  assert_in_list_or_null(style_category, c("title", "subtitle", "datatable_header", "sub_datatable_header", "data", "normal_text", "void"))
+  assert_in_list_or_null(type_data, c("date", "numeric", "integer"))
+  assert_in_list_or_null(billion_fgFill, c("main", "light", "light2"))
 
   billion_color_list <- list(
     uhc_main = "#00A173", uhc_light = "#66C6AB", uhc_light2 = "#A3DCCC",
