@@ -2,7 +2,10 @@
 #'
 #' `export_plot_comparison_pdf` exports plots to pdf comparing two billionaiRe
 #' data frames.
-#'
+#' @param ... Name-value pair of data frames to use e.g. (new = df_1).The name
+#' (if provided) gives the name of the data frame and the value is the data
+#' frame itself. The name is used to appear in the legend of the plot if
+#' provided.
 #' @param indicator name of indicator to plot
 #' @param scale type of scale to be exported. Can be either:
 #' - `common`: same scale for all iso3
@@ -16,8 +19,7 @@
 #' @inheritParams export_country_summary_xls
 #'
 #' @export
-export_plot_comparison_pdf <- function(new_df,
-                                       old_df,
+export_plot_comparison_pdf <- function(...,
                                        indicator,
                                        output_folder = "outputs",
                                        run_name = NULL,
@@ -25,15 +27,37 @@ export_plot_comparison_pdf <- function(new_df,
                                        scenario = "scenario",
                                        default_scenario = "default",
                                        type_col = "type",
-                                       transform_value = "transform_value",
+                                       value = "value",
                                        start_year = 2018,
                                        year = "year",
                                        iso3 = "iso3",
                                        ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE)) {
-  df_ind <- df %>%
-    dplyr::filter(.data[[ind]] == !!indicator)
 
-  unique_ind <- sort(unique(df_ind[[ind]]))
+  dfs <- rlang::list2(...)
+  billionaiRe:::assert_columns(dfs[[1]], ind, iso3, year, type_col, value)
+  billionaiRe:::assert_columns(dfs[[2]], ind, iso3, year, type_col, value)
+  billionaiRe:::assert_unique_rows(dfs[[1]], ind, iso3, year, ind_ids = ind_ids)
+  billionaiRe:::assert_unique_rows(dfs[[2]], ind, iso3, year, ind_ids = ind_ids)
+
+  if(length(dfs) != 2){
+    stop("Only two data frames are supported by comparaison plots ", call. = FALSE)
+  }
+
+  if(is.null(names(dfs))){
+    old <- "old"
+    new <- "new"
+  }else{
+    old <- ifelse(names(dfs)[1] != "", names(dfs)[1], "old")
+    new <- ifelse(names(dfs)[2] != "", names(dfs)[2], "new")
+  }
+
+  dfs[[1]] <- dfs[[1]] %>%
+    dplyr::filter(!is.na(.data[[value]]))
+
+  dfs[[2]] <- dfs[[2]] %>%
+    dplyr::filter(!is.na(.data[[value]]))
+
+  unique_ind <- sort(unique(c(dfs[[1]][[ind]], dfs[[2]][[ind]])))
 
   if (!is.null(run_name)) {
     output_folder <- here::here(output_folder, run_name)
@@ -48,23 +72,17 @@ export_plot_comparison_pdf <- function(new_df,
 
   temp_dir <- here::here(output_folder, "temp")
 
-
   purrr::walk(
     unique_ind, ~ plot_comparison_indicator(
-      df = df_ind,
-      iso3_group = .x,
-      indicator = indicator,
-      output_folder = temp_dir,
+      "{new}" := dfs[[1]],
+      "{old}" := dfs[[2]],
+      indicator = .x,
       ind = ind,
       iso3_col = iso3,
       year_col = year,
-      transform_value = transform_value,
+      value = value,
       type_col = type_col,
-      scenario = scenario,
-      default_scenario = default_scenario,
-      start_year = start_year,
-      scale = scales,
-      run_name = run_name
+      ind_ids = ind_ids
     )
   )
 
