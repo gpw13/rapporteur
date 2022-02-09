@@ -56,7 +56,7 @@ style_data <- function(data_type,
                        no_show_row = 0,
                        fade = FALSE,
                        fade_row = 0) {
-  billionaiRe:::assert_same_length(data_type, cols)
+  assert_same_length(data_type, cols)
 
   for (i in seq_along(data_type)) {
     style_data_single(

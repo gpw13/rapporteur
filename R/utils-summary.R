@@ -10,8 +10,8 @@
 #' @return data frame
 
 count_since <- function(df, year_specified, year, ind, iso3, type_col) {
-  billionaiRe:::assert_columns(df, year, ind, iso3, type_col)
-  billionaiRe:::assert_numeric(year_specified)
+  assert_columns(df, year, ind, iso3, type_col)
+  assert_numeric(year_specified)
 
   df %>%
     dplyr::filter(.data[[type_col]] %in% c("estimated", "reported")) %>%

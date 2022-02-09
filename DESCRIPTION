@@ -30,7 +30,8 @@ Imports:
     ggplot2,
     RColorBrewer,
     here,
-    vdiffr
+    vdiffr,
+    ggh4x
 Suggests: 
     testthat (>= 3.0.0),
     covr,
