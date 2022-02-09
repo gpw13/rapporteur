@@ -8,7 +8,7 @@
 modifyStyle <- function(style,
                         ...) {
   modifications <- list(...)
-  billionaiRe:::assert_style_param(modifications)
+  assert_style_param(modifications)
   assert_valid_style_parameters(modifications)
 
   od <- getOption("OutDec")

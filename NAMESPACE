@@ -3,6 +3,7 @@
 export("%>%")
 export(export_all_countries_summaries_xls)
 export(export_country_summary_xls)
+export(export_plot_comparison_pdf)
 export(export_plot_timeseries_indicator_pdf)
 export(plot_timeseries_indicator)
 importFrom(magrittr,"%>%")

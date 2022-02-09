@@ -117,7 +117,7 @@ export_country_summary_xls <- function(df,
                                        output_folder = "outputs") {
   billion <- rlang::arg_match(billion)
 
-  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
+  assert_in_list_or_null(iso, unique(df[[iso3]]))
 
   wb <- write_permanent_sheets(billion, start_col = 2, start_row = 3)
 
@@ -317,13 +317,13 @@ export_hep_country_summary_xls <- function(df,
                                            sheet_prefix = "HEP",
                                            output_folder = "outputs",
                                            ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE, include_subindicators = FALSE)) {
-  billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, contribution_pct, scenario, type_col, source_col)
-  billionaiRe:::assert_years(start_year, end_year)
-  billionaiRe:::assert_who_iso(iso)
-  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
-  billionaiRe:::assert_same_length(value, transform_value)
-  billionaiRe:::assert_same_length(value, contribution)
-  billionaiRe:::assert_same_length(contribution, contribution_pct)
+  assert_columns(df, year, iso3, ind, value, transform_value, contribution, contribution_pct, scenario, type_col, source_col)
+  assert_years(start_year, end_year)
+  assert_who_iso(iso)
+  assert_in_list_or_null(iso, unique(df[[iso3]]))
+  assert_same_length(value, transform_value)
+  assert_same_length(value, contribution)
+  assert_same_length(contribution, contribution_pct)
 
   # TODO: HEP export functions are static (length(value) == 1). If required, it would be nice to have it dynamic.
   ## Adding a stop for now to avoid issues for now.
@@ -465,14 +465,14 @@ export_hpop_country_summary_xls <- function(df,
                                             sheet_prefix = "HPOP",
                                             output_folder = "outputs",
                                             ind_ids = billionaiRe::billion_ind_codes("hpop", include_calculated = TRUE)) {
-  billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, population, contribution_pct, contribution_pct_total_pop, scenario, type_col, source_col)
-  billionaiRe:::assert_years(start_year, end_year)
-  billionaiRe:::assert_who_iso(iso)
-  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
-  billionaiRe:::assert_same_length(value, transform_value)
-  billionaiRe:::assert_same_length(value, contribution)
-  billionaiRe:::assert_same_length(contribution, contribution_pct)
-  billionaiRe:::assert_same_length(contribution, contribution_pct_total_pop)
+  assert_columns(df, year, iso3, ind, value, transform_value, contribution, population, contribution_pct, contribution_pct_total_pop, scenario, type_col, source_col)
+  assert_years(start_year, end_year)
+  assert_who_iso(iso)
+  assert_in_list_or_null(iso, unique(df[[iso3]]))
+  assert_same_length(value, transform_value)
+  assert_same_length(value, contribution)
+  assert_same_length(contribution, contribution_pct)
+  assert_same_length(contribution, contribution_pct_total_pop)
 
   # TODO: Big chunks of HPOP export functions are static (length(value) == 1). If required, it would be nice to have it dynamic.
   ## Adding a stop for now to avoid issues for now.
@@ -642,12 +642,12 @@ export_uhc_country_summary_xls <- function(df,
                                            ind_ids = billionaiRe::billion_ind_codes("uhc",
                                              include_calculated = TRUE
                                            )) {
-  billionaiRe:::assert_columns(df, year, iso3, ind, value, transform_value, contribution, scenario, type_col, source_col)
-  billionaiRe:::assert_years(start_year, end_year)
-  billionaiRe:::assert_who_iso(iso)
-  billionaiRe:::assert_in_list_or_null(iso, unique(df[[iso3]]))
-  billionaiRe:::assert_same_length(value, transform_value)
-  billionaiRe:::assert_same_length(value, contribution)
+  assert_columns(df, year, iso3, ind, value, transform_value, contribution, scenario, type_col, source_col)
+  assert_years(start_year, end_year)
+  assert_who_iso(iso)
+  assert_in_list_or_null(iso, unique(df[[iso3]]))
+  assert_same_length(value, transform_value)
+  assert_same_length(value, contribution)
 
   # TODO: The whole of UHC export functions are static (length(value) == 1). If required, it would be nice to have it dynamic.
   ## Adding a stop for now to avoid issues for now.
