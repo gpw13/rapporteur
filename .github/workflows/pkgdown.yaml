@@ -19,7 +19,7 @@ jobs:
       APP_ID: ${{ secrets.WHDH_APP_ID }}
       TENANT_ID: ${{ secrets.WHDH_TENANT_ID }}
       CLIENT_SECRET: ${{ secrets.WHDH_CLIENT_SECRET }}
-
+      
     steps:
       - uses: actions/checkout@v2
 
@@ -31,8 +31,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: |
-            any::pkgdown
+          extra-packages: any::pkgdown, local::.
           needs: website
 
       - name: Deploy package
