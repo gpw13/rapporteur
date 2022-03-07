@@ -71,10 +71,11 @@ with some manipulations. Produce two faceted plots where each facet is an
   ind <span class="op">=</span> <span class="st">"ind"</span>,
   iso3_col <span class="op">=</span> <span class="st">"iso3"</span>,
   year_col <span class="op">=</span> <span class="st">"year"</span>,
-  transform_value <span class="op">=</span> <span class="st">"transform_value"</span>,
+  value <span class="op">=</span> <span class="st">"value"</span>,
   type_col <span class="op">=</span> <span class="st">"type"</span>,
   scenario <span class="op">=</span> <span class="st">"scenario"</span>,
   default_scenario <span class="op">=</span> <span class="st">"default"</span>,
+  base_scenarios <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>routine <span class="op">=</span> <span class="st">"routine"</span>, reference_infilling <span class="op">=</span> <span class="st">"reference_infilling"</span><span class="op">)</span>,
   start_year <span class="op">=</span> <span class="fl">2018</span>
 <span class="op">)</span></code></pre></div>
     </div>
@@ -96,8 +97,8 @@ to a specific year, and indicator.</p></dd>
 <dd><p>Column name of column with country ISO3 codes.</p></dd>
 <dt>year_col</dt>
 <dd><p>Column name of column with years.</p></dd>
-<dt>transform_value</dt>
-<dd><p>Column name of column(s) with transformed indicator
+<dt>value</dt>
+<dd><p>Column name of column(s) with indicator
 values, used to calculate contributions.</p></dd>
 <dt>type_col</dt>
 <dd><p>Column name of column with type data.</p></dd>
@@ -106,6 +107,9 @@ values, used to calculate contributions.</p></dd>
 calculating contributions on data in long format rather than wide format.</p></dd>
 <dt>default_scenario</dt>
 <dd><p>name of the default scenario.</p></dd>
+<dt>base_scenarios</dt>
+<dd><p>(vector) named vector with the names of the base scenarios. For
+more details see <a href="../doc/scenarios.html"><code>vignette("scenarios", package = "billionaiRe")</code></a></p></dd>
 <dt>start_year</dt>
 <dd><p>Base year for contribution calculation, defaults to 2018.</p></dd>
 </dl></div>
