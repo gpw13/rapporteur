@@ -37,7 +37,7 @@ scenarios_style <- function(df,
     dplyr::group_by(.data[[ind]], .data[[scenario]]) %>%
     tidyr::pivot_wider(names_from = .data[[year]], values_from = .data[[type_col]]) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(dplyr::across(dplyr::everything(), tidyr::replace_na, ""))
+    dplyr::mutate(dplyr::across(dplyr::starts_with("20"), tidyr::replace_na, ""))
 
   wide_df <- ind_df[, "ind"] %>%
     dplyr::left_join(wide_df, by = "ind") %>%

@@ -1,50 +1,43 @@
 library(billionaiRe)
 
-test_data <- load_misc_data("test_data/test_data_transformed_with_scenarios/test_data_transformed_with_scenarios.parquet")
-
-save_png <- function(code) {
-  path <- tempfile(fileext = ".png")
-  plot <- code
-  ggplot2::ggsave(path, height = 4.25, width = 7.35)
-  path
-}
+test_data <- load_misc_data("test_data/test_data/test_data.parquet") %>%
+  dplyr::mutate(value = dplyr::case_when(
+    scenario == "covid_dip_lag" ~  dplyr::if_else(.data[["value"]] - 10.0 >0, .data[["value"]] - 10.0, 0),
+    TRUE ~ .data[["value"]]
+  ))
 
 test_plot <- function(df, ind) {
   testthat::test_that(paste0("plot_timeseries_indicator returns plots for ", ind, ":"), {
     df_ind <- df %>%
       dplyr::filter(.data[["ind"]] == !!ind)
 
-    if (ind %in% c("doctors", "nurses")) {
-      testthat::expect_warning(plot_timeseries_indicator(df_ind,
-        iso3 = unique(df_ind[["iso3"]]),
-        indicator = ind
-      ))
-    } else {
-      test_result <- plot_timeseries_indicator(df_ind,
-        iso3 = unique(df_ind[["iso3"]]),
-        indicator = ind
-      )
+    test_result <- plot_timeseries_indicator(df_ind,
+                                             iso3 = unique(df_ind[["iso3"]]),
+                                             indicator = ind
+    )
 
-      testthat::expect_s3_class(test_result, "ggplot")
-      vdiffr::expect_doppelganger(
-        paste0("plot with fixed scale ",ind),
-        plot_timeseries_indicator(df_ind,
-          iso3 = unique(df_ind[["iso3"]]),
-          indicator = ind,
-          scale = "fixed"
+    testthat::expect_s3_class(test_result, "ggplot")
+
+    vdiffr::expect_doppelganger(
+      paste0("plot with fixed scale ",ind),
+      plot_timeseries_indicator(df_ind,
+                                iso3 = unique(df_ind[["iso3"]]),
+                                indicator = ind,
+                                scale = "fixed"
       ))
-      vdiffr::expect_doppelganger(
-        paste0("plot with free scale ", ind),
-        plot_timeseries_indicator(df_ind,
-          iso3 = unique(df_ind[["iso3"]]),
-          indicator = ind,
-          scale = "free"
+    vdiffr::expect_doppelganger(
+      paste0("plot with free scale ", ind),
+      plot_timeseries_indicator(df_ind,
+                                iso3 = unique(df_ind[["iso3"]]),
+                                indicator = ind,
+                                scale = "free"
       ))
-    }
   })
 }
 
-purrr::walk(unique(test_data[["ind"]]), test_plot, df = test_data)
+those_inds <- billionaiRe::billion_ind_codes("all", include_subindicators = FALSE)[billionaiRe::billion_ind_codes("all", include_subindicators = FALSE) %in% unique(test_data[["ind"]])]
+
+purrr::walk(those_inds, test_plot, df = test_data)
 
 test_pdf_plot <- function(df, indicator, scale) {
   temp_dir <- tempdir()

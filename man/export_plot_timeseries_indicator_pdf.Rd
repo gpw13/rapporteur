@@ -15,7 +15,7 @@ export_plot_timeseries_indicator_pdf(
   scenario = "scenario",
   default_scenario = "default",
   type_col = "type",
-  transform_value = "transform_value",
+  value = "value",
   start_year = 2018,
   year = "year",
   iso3 = "iso3",
@@ -52,8 +52,7 @@ calculating contributions on data in long format rather than wide format.}
 
 \item{type_col}{Column name of column with type data.}
 
-\item{transform_value}{Column name of column(s) with transformed indicator
-values, used to calculate contributions.}
+\item{value}{Column name of column with indicator values.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 

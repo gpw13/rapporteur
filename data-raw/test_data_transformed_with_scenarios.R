@@ -1,8 +1,11 @@
 library(tidyverse)
+library(billionaiRe)
 
 test_data_transformed_with_scenarios <- load_misc_data("test_data/test_data/test_data.parquet") %>%
+  dplyr::filter(scenario != "default") %>%
   billionaiRe::make_default_scenario() %>%
-  dplyr::filter(!stringr::str_detect(.data[["ind"]], "espar|detect_respond")) %>%
+  dplyr::filter(!stringr::str_detect(.data[["ind"]], "espar|detect_respond"),
+                scenario == "default") %>%
   billionaiRe::add_scenario("accelerate") %>%
   billionaiRe::add_scenario("halt_rise") %>%
   billionaiRe::transform_hep_data(scenario = "scenario") %>%

@@ -12,10 +12,11 @@ plot_timeseries_indicator(
   ind = "ind",
   iso3_col = "iso3",
   year_col = "year",
-  transform_value = "transform_value",
+  value = "value",
   type_col = "type",
   scenario = "scenario",
   default_scenario = "default",
+  base_scenarios = c(routine = "routine", reference_infilling = "reference_infilling"),
   start_year = 2018
 )
 }
@@ -35,7 +36,7 @@ to a specific year, and indicator.}
 
 \item{year_col}{Column name of column with years.}
 
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{value}{Column name of column(s) with indicator
 values, used to calculate contributions.}
 
 \item{type_col}{Column name of column with type data.}
@@ -44,6 +45,9 @@ values, used to calculate contributions.}
 calculating contributions on data in long format rather than wide format.}
 
 \item{default_scenario}{name of the default scenario.}
+
+\item{base_scenarios}{(vector) named vector with the names of the base scenarios. For
+more details see \href{../doc/scenarios.html}{\code{vignette("scenarios", package = "billionaiRe")}}}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 }

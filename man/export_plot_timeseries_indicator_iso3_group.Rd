@@ -13,7 +13,7 @@ export_plot_timeseries_indicator_iso3_group(
   ind,
   iso3_col,
   year_col,
-  transform_value,
+  value,
   type_col,
   scenario,
   default_scenario,
@@ -45,8 +45,7 @@ By default, \code{combined} is used
 
 \item{year_col}{Column name of column with years.}
 
-\item{transform_value}{Column name of column(s) with transformed indicator
-values, used to calculate contributions.}
+\item{value}{Column name of column with indicator values.}
 
 \item{type_col}{Column name of column with type data.}
 

@@ -27,7 +27,7 @@
 </defs>
 <g clip-path='url(#cpMTcuMDl8MjQ1LjkxfDMzLjM1fDUzMS4zMg==)'>
 <rect x='17.09' y='33.35' width='228.83' height='497.97' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='96.95' cy='508.69' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='96.95' cy='421.77' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='36.69' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='18.41px' lengthAdjust='spacingAndGlyphs'>BDI</text>
 <rect x='17.09' y='33.35' width='228.83' height='497.97' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -40,7 +40,9 @@
 </defs>
 <g clip-path='url(#cpMjUxLjM5fDQ4MC4yMnwzMy4zNXw1MzEuMzI=)'>
 <rect x='251.39' y='33.35' width='228.83' height='497.97' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='469.81' cy='55.99' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='469.81' cy='105.79' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='469.81' cy='196.33' r='1.42' style='stroke-width: 0.71; stroke: #A6CEE3; fill: #A6CEE3;' />
+<text x='273.76' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>BGD</text>
 <text x='273.76' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>BGD</text>
 <rect x='251.39' y='33.35' width='228.83' height='497.97' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -53,7 +55,7 @@
 </defs>
 <g clip-path='url(#cpNDg1LjcwfDcxNC41MnwzMy4zNXw1MzEuMzI=)'>
 <rect x='485.70' y='33.35' width='228.83' height='497.97' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='496.10' cy='179.22' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='496.10' cy='191.80' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='508.06' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>UGA</text>
 <rect x='485.70' y='33.35' width='228.83' height='497.97' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -89,16 +91,22 @@
 <polyline points='251.39,531.32 480.22,531.32 ' style='stroke-width: 1.07; stroke: #BEBEBE; stroke-linecap: butt;' />
 <polyline points='485.70,531.32 714.52,531.32 ' style='stroke-width: 1.07; stroke: #BEBEBE; stroke-linecap: butt;' />
 <polyline points='17.09,531.32 17.09,33.35 ' style='stroke-width: 1.07; stroke: #BEBEBE; stroke-linecap: butt;' />
-<text x='12.15' y='505.56' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>40</text>
-<text x='12.15' y='375.85' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>50</text>
-<text x='12.15' y='246.14' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>60</text>
-<text x='12.15' y='116.42' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>70</text>
-<polyline points='14.35,503.50 17.09,503.50 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='14.35,373.79 17.09,373.79 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='14.35,244.07 17.09,244.07 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<polyline points='14.35,114.36 17.09,114.36 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<circle cx='341.12' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
-<text x='357.23' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='49.37px' lengthAdjust='spacingAndGlyphs'>Reported</text>
+<text x='12.15' y='510.75' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>30</text>
+<text x='12.15' y='420.21' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>40</text>
+<text x='12.15' y='329.67' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>50</text>
+<text x='12.15' y='239.13' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>60</text>
+<text x='12.15' y='148.59' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>70</text>
+<text x='12.15' y='58.05' text-anchor='end' style='font-size: 6.00px; fill: #404040; font-family: sans;' textLength='6.67px' lengthAdjust='spacingAndGlyphs'>80</text>
+<polyline points='14.35,508.69 17.09,508.69 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='14.35,418.15 17.09,418.15 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='14.35,327.61 17.09,327.61 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='14.35,237.07 17.09,237.07 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='14.35,146.53 17.09,146.53 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<polyline points='14.35,55.99 17.09,55.99 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
+<circle cx='288.31' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='369.90' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #A6CEE3; fill: #A6CEE3;' />
+<text x='304.42' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='49.37px' lengthAdjust='spacingAndGlyphs'>Reported</text>
+<text x='386.01' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='73.40px' lengthAdjust='spacingAndGlyphs'>covid_dip_lag</text>
 <text x='17.09' y='22.68' style='font-size: 25.00px; font-family: sans;' textLength='394.66px' lengthAdjust='spacingAndGlyphs'>devontrack: BDI - UGA - fixed scale</text>
 </g>
 </svg>

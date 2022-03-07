@@ -310,6 +310,7 @@ write_billion_contrib_ind_hpop_summary <- function(df,
       .data[[ind]] %in% ind_ids
     ) %>%
     dplyr::select(dplyr::all_of(population)) %>%
+    dplyr::mutate("{population}" := as.character(.data[[population]])) %>%
     tidyr::replace_na(list(population = '""')) %>%
     unlist()
 
