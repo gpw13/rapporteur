@@ -8,8 +8,10 @@ get_scenario_colour <- function(col) {
     "Projected" = "forestgreen",
     "Acceleration" = "Purple",
     "SDG" = "Green",
-    "Pre-COVID-19 trajectories" = "navyblue",
-    "COVID-19 shock" ~ "Red"
+    "Pre-COVID-19 trajectories" = "lightblue",
+    "COVID-19 shock" = "Red",
+    "COVID-19 Optimistic" = "Green",
+    "COVID-19 Pessimistic" = "Darkred"
   )
 
   extended_palette_no_red_no_purple <- RColorBrewer::brewer.pal(12, "Paired")[-c(4, 6, 10)]
@@ -97,7 +99,7 @@ get_previous_year_row <- function(df, last_year, this_iso3, this_ind, this_plot_
                                   plot_group = "plot_group",
                                   plot_color = "plot_color"){
   df %>%
-    dplyr::filter(.data[[year_col]] == last_year - 1,
+    dplyr::filter(.data[[year_col]] %in% max(c(max(.data[[year_col]]): last_year - 1)),
                   .data[[iso3_col]] == this_iso3,
                   .data[[ind_col]] == this_ind) %>%
     dplyr::mutate(

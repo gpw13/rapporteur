@@ -37,7 +37,9 @@ plot_timeseries_indicator <- function(df,
                                       type_col = "type",
                                       scenario = "scenario",
                                       default_scenario = "default",
-                                      base_scenarios = c("routine" = "routine", "reference_infilling" ="reference_infilling"),
+                                      base_scenarios = c("routine" = "routine",
+                                                         "reference_infilling" ="reference_infilling",
+                                                         "covid_shock" = "covid_shock"),
                                       start_year = 2018) {
   scale <- rlang::arg_match(scale)
 
@@ -60,6 +62,8 @@ plot_timeseries_indicator <- function(df,
         .data[[scenario]] == "sdg" ~ "SDG",
         .data[[scenario]] == "acceleration" ~ "Acceleration",
         .data[[scenario]] == "pre_covid_trajectory" ~ "Pre-COVID-19 trajectories",
+        .data[[scenario]] == "covid_pessimistic" ~ "COVID-19 Pessimistic",
+        .data[[scenario]] == "covid_optimistic" ~ "COVID-19 Optimistic",
         .data[[scenario]] == "covid_shock" ~ "COVID-19 shock",
         TRUE ~ as.character(.data[[scenario]])
       ),
