@@ -30,7 +30,8 @@ Imports:
     ggplot2,
     RColorBrewer,
     here,
-    vdiffr
+    vdiffr,
+    ggnewscale
 Suggests: 
     testthat (>= 3.0.0),
     covr,

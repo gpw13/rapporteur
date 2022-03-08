@@ -5,16 +5,17 @@ get_scenario_colour <- function(col) {
     "Estimated" = "grey30",
     "Reported" = "grey30",
     "Imputed" = "grey",
-    "Projected" = "forestgreen",
+    "Projected" = "#e9989c",
     "Acceleration" = "Purple",
-    "SDG" = "Green",
+    "Base" = "grey30",
+    "SDG" = "#a6611a",
     "Pre-COVID-19 trajectories" = "lightblue",
-    "COVID-19 shock" = "Red",
-    "COVID-19 Optimistic" = "Green",
-    "COVID-19 Pessimistic" = "Darkred"
+    "COVID-19 shock" = "#d7191c",
+    "COVID-19 Delayed Return" = "#488f31",
+    "COVID-19 Sustained Disruption" = "#ffa600"
   )
 
-  extended_palette_no_red_no_purple <- RColorBrewer::brewer.pal(12, "Paired")[-c(4, 6, 10)]
+  extended_palette_no_red_no_purple <- RColorBrewer::brewer.pal(12, "Paired")[-c(1, 4, 6, 10)]
 
   not_base_colour <- those_col[!those_col %in% names(base_colours)]
 
@@ -73,8 +74,9 @@ connect_lines <- function(df,
                           ind_col,
                           plot_group,
                           value,
-                          plot_color,
-                          base_scenario = "base"){
+                          plot_line_color,
+                          plot_line_type,
+                          base_scenario = "Base"){
 
   base_df <- df %>%
     dplyr::filter(.data[[plot_group]] == base_scenario)
@@ -85,9 +87,10 @@ connect_lines <- function(df,
       dplyr::across(
         dplyr::any_of(c(!!iso3_col,!!ind_col,!!plot_group)))) %>%
     dplyr::filter(.data[[year_col]] == min(.data[[year_col]])) %>%
-    dplyr::select(dplyr::all_of(c(iso3_col, year_col, ind_col, plot_group, plot_color))) %>%
+    dplyr::select(dplyr::all_of(c(iso3_col, year_col, ind_col, plot_group, plot_line_color, plot_line_type))) %>%
     dplyr::rename(last_year = !!year_col, this_ind = !!ind_col, this_plot_group = !!plot_group, this_iso3 = !! iso3_col,
-                  this_plot_color = !!plot_color) %>%
+                  this_plot_line_color = !!plot_line_color,
+                  this_line_type = !!plot_line_type) %>%
     dplyr::distinct()
 
    purrr::pmap_dfr(df_parameters, get_previous_year_row, df = base_df) %>%
@@ -95,16 +98,18 @@ connect_lines <- function(df,
 }
 
 get_previous_year_row <- function(df, last_year, this_iso3, this_ind, this_plot_group,
-                                  this_plot_color, iso3_col = "iso3", year_col = "year", ind_col = "ind",
+                                  this_plot_line_color, this_line_type, iso3_col = "iso3", year_col = "year", ind_col = "ind",
                                   plot_group = "plot_group",
-                                  plot_color = "plot_color"){
+                                  plot_line_color = "plot_line_color",
+                                  plot_line_type = "plot_line_type"){
   df %>%
     dplyr::filter(.data[[year_col]] %in% max(c(max(.data[[year_col]]): last_year - 1)),
                   .data[[iso3_col]] == this_iso3,
                   .data[[ind_col]] == this_ind) %>%
     dplyr::mutate(
       "{plot_group}" := this_plot_group,
-      "{plot_color}" := this_plot_color
+      "{plot_line_color}" := this_plot_line_color,
+      "{plot_line_type}" := this_line_type
       )
 }
 

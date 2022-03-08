@@ -27,7 +27,7 @@
 </defs>
 <g clip-path='url(#cpMTcuMDl8MjM4LjE3fDMzLjM1fDUzMS4zMg==)'>
 <rect x='17.09' y='33.35' width='221.09' height='497.97' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='228.12' cy='74.10' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='228.12' cy='74.10' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='36.34' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='18.41px' lengthAdjust='spacingAndGlyphs'>BDI</text>
 <rect x='17.09' y='33.35' width='221.09' height='497.97' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -40,8 +40,8 @@
 </defs>
 <g clip-path='url(#cpMjU1LjI2fDQ3Ni4zNXwzMy4zNXw1MzEuMzI=)'>
 <rect x='255.26' y='33.35' width='221.09' height='497.97' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='466.30' cy='180.48' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
-<circle cx='466.30' cy='406.83' r='1.42' style='stroke-width: 0.71; stroke: #A6CEE3; fill: #A6CEE3;' />
+<circle cx='466.30' cy='180.48' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='466.30' cy='406.83' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='277.27' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>BGD</text>
 <text x='277.27' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>BGD</text>
 <rect x='255.26' y='33.35' width='221.09' height='497.97' style='stroke-width: 1.07; stroke: #E5E5E5;' />
@@ -55,7 +55,7 @@
 </defs>
 <g clip-path='url(#cpNDkzLjQzfDcxNC41MnwzMy4zNXw1MzEuMzI=)'>
 <rect x='493.43' y='33.35' width='221.09' height='497.97' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='603.98' cy='282.34' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='603.98' cy='282.34' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='615.94' y='516.13' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>UGA</text>
 <rect x='493.43' y='33.35' width='221.09' height='497.97' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -127,10 +127,8 @@
 <polyline points='14.35,237.07 17.09,237.07 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='14.35,146.53 17.09,146.53 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='14.35,55.99 17.09,55.99 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<circle cx='288.31' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
-<circle cx='369.90' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #A6CEE3; fill: #A6CEE3;' />
-<text x='304.42' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='49.37px' lengthAdjust='spacingAndGlyphs'>Reported</text>
-<text x='386.01' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='73.40px' lengthAdjust='spacingAndGlyphs'>covid_dip_lag</text>
+<circle cx='341.12' cy='556.40' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<text x='357.23' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='49.37px' lengthAdjust='spacingAndGlyphs'>Reported</text>
 <text x='17.09' y='22.68' style='font-size: 25.00px; font-family: sans;' textLength='384.93px' lengthAdjust='spacingAndGlyphs'>devontrack: BDI - UGA - free scale</text>
 </g>
 </svg>

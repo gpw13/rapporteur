@@ -57,21 +57,23 @@ plot_timeseries_indicator <- function(df,
   df_ind_grp <- df_ind_grp %>%
     dplyr::select(dplyr::any_of(c(iso3_col,ind, year_col, value, type_col, scenario, "source", "scenario_detail"))) %>%
     dplyr::mutate(
-      plot_type = dplyr::case_when(
-        .data[[scenario]] %in% c(default_scenario, base_scenarios) ~ stringr::str_to_sentence(.data[[type_col]]),
+      plot_type = stringr::str_to_sentence(.data[[type_col]]),
+      plot_group = dplyr::case_when(
+        .data[[scenario]] == "covid_shock" ~ "COVID-19 shock",
+        .data[[scenario]] %in% base_scenarios ~ "Base",
         .data[[scenario]] == "sdg" ~ "SDG",
         .data[[scenario]] == "acceleration" ~ "Acceleration",
         .data[[scenario]] == "pre_covid_trajectory" ~ "Pre-COVID-19 trajectories",
-        .data[[scenario]] == "covid_pessimistic" ~ "COVID-19 Pessimistic",
-        .data[[scenario]] == "covid_optimistic" ~ "COVID-19 Optimistic",
-        .data[[scenario]] == "covid_shock" ~ "COVID-19 shock",
-        TRUE ~ as.character(.data[[scenario]])
-      ),
-      plot_group = dplyr::case_when(
-        .data[[scenario]] %in% base_scenarios ~ "base",
+        .data[[scenario]] == "covid_delayed_return" ~ "COVID-19 Delayed Return",
+        .data[[scenario]] == "covid_sustained_disruption" ~ "COVID-19 Sustained Disruption",
         TRUE ~ .data[[scenario]]
       ),
-      plot_color = get_scenario_colour(.data[["plot_type"]])
+      plot_line_color = get_scenario_colour(.data[["plot_group"]]),
+      plot_line_type = dplyr::case_when(
+        .data[["plot_group"]] == "Base" ~ "Base",
+        TRUE ~ "Scenarios"
+      ),
+      plot_type_color = get_scenario_colour(.data[["plot_type"]])
     ) %>%
     dplyr::arrange(.data[[iso3_col]], .data[[year_col]])
 
@@ -81,9 +83,14 @@ plot_timeseries_indicator <- function(df,
     return(NULL)
   }
 
-  color_type_breaks_labels <- df_ind_grp %>%
-    dplyr::select(dplyr::all_of(c("plot_type", "plot_color"))) %>%
+  color_line_breaks_labels <- df_ind_grp %>%
+    dplyr::select(dplyr::all_of(c("plot_group", "plot_line_color"))) %>%
     dplyr::distinct()
+
+  color_type_breaks_labels <- df_ind_grp %>%
+    dplyr::select(dplyr::all_of(c("plot_type", "plot_type_color"))) %>%
+    dplyr::distinct()
+
 
   plot_title <- ifelse(scale == "fixed",
                        paste0(indicator, ": ", iso3[1], " - ", iso3[length(iso3)], " - fixed scale"),
@@ -119,18 +126,28 @@ plot_timeseries_indicator <- function(df,
   if (nrow(df_ind_grp_line) > 0) {
     df_ind_grp_line <- connect_lines(df_ind_grp_line,
                                      iso3_col = iso3_col, year_col = year_col,
-                                     plot_color = "plot_color", ind_col = ind,
+                                     plot_line_color = "plot_line_color", ind_col = ind,
+                                     plot_line_type = "plot_line_type",
                                      value = value,
                                      plot_group ="plot_group")
 
     base_plot <- base_plot +
       ggplot2::geom_path(data = df_ind_grp_line,
-                         ggplot2::aes(color = .data[["plot_color"]], group = .data[["plot_group"]]))
+                         ggplot2::aes(
+                           color = .data[["plot_line_color"]],
+                           group = .data[["plot_group"]],
+                           linetype = .data[["plot_line_type"]]),
+                         size = 1
+                         )+
+      ggplot2::scale_color_identity(guide = "legend", labels = color_line_breaks_labels[["plot_group"]], breaks = color_line_breaks_labels[["plot_line_color"]])+
+      ggplot2::scale_linetype(guide = "none")+
+      ggnewscale::new_scale_color()
+
   }
 
-  final_plot <- base_plot +
-    ggplot2::geom_point(ggplot2::aes(colour = .data[["plot_color"]]), size = 1) +
-    ggplot2::scale_color_identity(guide = "legend", labels = color_type_breaks_labels[["plot_type"]], breaks = color_type_breaks_labels[["plot_color"]]) +
+  base_plot +
+    ggplot2::geom_point(ggplot2::aes(color = .data[["plot_type_color"]])) +
+    ggplot2::scale_color_identity(guide = "legend", labels = color_type_breaks_labels[["plot_type"]], breaks = color_type_breaks_labels[["plot_type_color"]]) +
     ggplot2::scale_x_date(date_labels = "%y", date_breaks = "5 years") +
     ggplot2::scale_y_continuous(breaks = integer_breaks(), expand = ) +
     ggplot2::geom_text(

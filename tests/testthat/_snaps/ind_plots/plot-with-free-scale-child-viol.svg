@@ -27,7 +27,7 @@
 </defs>
 <g clip-path='url(#cpMTcuMDl8MTc4LjYzfDMzLjM1fDUyMS4wMg==)'>
 <rect x='17.09' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='97.86' cy='303.78' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='97.86' cy='303.78' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='109.21' y='505.82' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='22.70px' lengthAdjust='spacingAndGlyphs'>AFG</text>
 <rect x='17.09' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -40,7 +40,7 @@
 </defs>
 <g clip-path='url(#cpMTk1LjcyfDM1Ny4yNnwzMy4zNXw1MjEuMDI=)'>
 <rect x='195.72' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='349.92' cy='73.25' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='349.92' cy='73.25' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='212.26' y='505.82' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='18.41px' lengthAdjust='spacingAndGlyphs'>BDI</text>
 <rect x='195.72' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -53,8 +53,8 @@
 </defs>
 <g clip-path='url(#cpMzc0LjM1fDUzNS44OXwzMy4zNXw1MjEuMDI=)'>
 <rect x='374.35' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='528.55' cy='82.12' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
-<circle cx='528.55' cy='303.78' r='1.42' style='stroke-width: 0.71; stroke: #A6CEE3; fill: #A6CEE3;' />
+<circle cx='528.55' cy='82.12' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='528.55' cy='303.78' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='393.65' y='505.82' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>BGD</text>
 <text x='393.65' y='505.82' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>BGD</text>
 <rect x='374.35' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: #E5E5E5;' />
@@ -68,7 +68,7 @@
 </defs>
 <g clip-path='url(#cpNTUyLjk4fDcxNC41MnwzMy4zNXw1MjEuMDI=)'>
 <rect x='552.98' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: none; fill: #FFFFFF;' />
-<circle cx='707.18' cy='281.62' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<circle cx='707.18' cy='281.62' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
 <text x='572.28' y='505.82' style='font-size: 11.04px; fill: #7F7F7F; font-family: sans;' textLength='23.93px' lengthAdjust='spacingAndGlyphs'>UGA</text>
 <rect x='552.98' y='33.35' width='161.54' height='487.66' style='stroke-width: 1.07; stroke: #E5E5E5;' />
 </g>
@@ -169,10 +169,8 @@
 <polyline points='14.35,232.85 17.09,232.85 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='14.35,144.19 17.09,144.19 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
 <polyline points='14.35,55.52 17.09,55.52 ' style='stroke-width: 1.07; stroke: #333333; stroke-linecap: butt;' />
-<circle cx='288.31' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
-<circle cx='369.90' cy='556.40' r='1.42' style='stroke-width: 0.71; stroke: #A6CEE3; fill: #A6CEE3;' />
-<text x='304.42' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='49.37px' lengthAdjust='spacingAndGlyphs'>Reported</text>
-<text x='386.01' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='73.40px' lengthAdjust='spacingAndGlyphs'>covid_dip_lag</text>
+<circle cx='341.12' cy='556.40' r='1.95' style='stroke-width: 0.71; stroke: #4D4D4D; fill: #4D4D4D;' />
+<text x='357.23' y='560.53' style='font-size: 12.00px; font-family: sans;' textLength='49.37px' lengthAdjust='spacingAndGlyphs'>Reported</text>
 <text x='17.09' y='22.68' style='font-size: 25.00px; font-family: sans;' textLength='375.16px' lengthAdjust='spacingAndGlyphs'>child_viol: AFG - UGA - free scale</text>
 </g>
 </svg>

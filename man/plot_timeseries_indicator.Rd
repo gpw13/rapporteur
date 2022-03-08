@@ -16,7 +16,8 @@ plot_timeseries_indicator(
   type_col = "type",
   scenario = "scenario",
   default_scenario = "default",
-  base_scenarios = c(routine = "routine", reference_infilling = "reference_infilling"),
+  base_scenarios = c(routine = "routine", reference_infilling = "reference_infilling",
+    covid_shock = "covid_shock"),
   start_year = 2018
 )
 }
