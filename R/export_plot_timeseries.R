@@ -8,7 +8,7 @@
 #' - `free`: individual scale for each iso3
 #' - `combined`: combination of common and free.
 #' By default, `combined` is used
-#' @param run_name name of the run of plots. Default to NULL. If used, a new
+#' @param experiment name of the experiment of plots. Default to NULL. If used, a new
 #' folder will be added to `output_folder` to store the results.
 #' @param group_iso3 if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.
 #' @inherit write_hep_summary_sheet
@@ -19,7 +19,7 @@ export_plot_timeseries_indicator_pdf <- function(df,
                                                  indicator,
                                                  scale = c("combined", "free", "fixed", "free_x", "free_y"),
                                                  output_folder = "outputs",
-                                                 run_name = NULL,
+                                                 experiment = NULL,
                                                  group_iso3 = TRUE,
                                                  ind = "ind",
                                                  scenario = "scenario",
@@ -53,11 +53,11 @@ export_plot_timeseries_indicator_pdf <- function(df,
     paste0(x[[1]], "_", x[[length(x)]])
   })
 
-  if (!is.null(run_name)) {
-    output_folder <- here::here(output_folder, run_name)
-    run_name_index <- paste0(run_name, "_")
+  if (!is.null(experiment)) {
+    output_folder <- here::here(output_folder, experiment)
+    experiment_index <- paste0(experiment, "_")
   } else {
-    run_name_index <- NULL
+    experiment_index <- NULL
   }
 
   if (!dir.exists(output_folder)) {
@@ -85,13 +85,13 @@ export_plot_timeseries_indicator_pdf <- function(df,
       default_scenario = default_scenario,
       start_year = start_year,
       scale = scales,
-      run_name = run_name
+      experiment = experiment
     )
   )
 
   pdftools::pdf_combine(
-    c(here::here(temp_dir, paste0("temp_", run_name_index, indicator, "_", scale, "_", names(iso3_groups), ".pdf"))),
-    here::here(output_folder, paste0(run_name_index, indicator, "_", scale, ".pdf"))
+    c(here::here(temp_dir, paste0("temp_", experiment_index, indicator, "_", scale, "_", names(iso3_groups), ".pdf"))),
+    here::here(output_folder, paste0(experiment_index, indicator, "_", scale, ".pdf"))
   )
 
   unlink(temp_dir, recursive = TRUE)
@@ -118,14 +118,13 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
                                                         scenario,
                                                         default_scenario,
                                                         start_year,
-                                                        run_name) {
+                                                        experiment) {
   group_id <- paste0(iso3_group[[1]], "_", iso3_group[[length(iso3_group)]])
 
-  if (!is.null(run_name)) {
-    output_folder <- here::here(output_folder, run_name)
-    run_name_index <- paste0(run_name, "_")
+  if (!is.null(experiment)) {
+    experiment_index <- paste0(experiment, "_")
   } else {
-    run_name_index <- NULL
+    experiment_index <- NULL
   }
 
 
@@ -150,7 +149,7 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
   names(plots) <- scale
 
   purrr::walk(scale, ~
-    ggplot2::ggsave(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", .x, "_", group_id, ".pdf")),
+    ggplot2::ggsave(here::here(output_folder, paste0("temp_", experiment_index, indicator, "_", .x, "_", group_id, ".pdf")),
       plots[[paste0(.x)]],
       width = 210, height = 297, units = "mm"
     ))
@@ -158,10 +157,10 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
   if (length(scale) > 1) {
 
     pdftools::pdf_combine(
-      c(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf"))),
-      here::here(output_folder, paste0("temp_", run_name_index, indicator, "_combined_", group_id, ".pdf"))
+      c(here::here(output_folder, paste0("temp_", experiment_index, indicator, "_", scale, "_", group_id, ".pdf"))),
+      here::here(output_folder, paste0("temp_", experiment_index, indicator, "_combined_", group_id, ".pdf"))
     )
 
-    file.remove(c(here::here(output_folder, paste0("temp_", run_name_index, indicator, "_", scale, "_", group_id, ".pdf"))))
+    file.remove(c(here::here(output_folder, paste0("temp_", experiment_index, indicator, "_", scale, "_", group_id, ".pdf"))))
   }
 }

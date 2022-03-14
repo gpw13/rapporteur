@@ -18,7 +18,7 @@ export_plot_timeseries_indicator_iso3_group(
   scenario,
   default_scenario,
   start_year,
-  run_name
+  experiment
 )
 }
 \arguments{
@@ -56,7 +56,7 @@ calculating contributions on data in long format rather than wide format.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 
-\item{run_name}{name of the run of plots. Default to NULL. If used, a new
+\item{experiment}{name of the experiment of plots. Default to NULL. If used, a new
 folder will be added to \code{output_folder} to store the results.}
 }
 \value{

@@ -57,16 +57,24 @@ plot_timeseries_indicator <- function(df,
   df_ind_grp <- df_ind_grp %>%
     dplyr::select(dplyr::any_of(c(iso3_col,ind, year_col, value, type_col, scenario, "source", "scenario_detail"))) %>%
     dplyr::mutate(
-      plot_type = stringr::str_to_sentence(.data[[type_col]]),
-      plot_group = dplyr::case_when(
-        .data[[scenario]] == "covid_shock" ~ "COVID-19 shock",
-        .data[[scenario]] %in% base_scenarios ~ "Base",
+      plot_type = dplyr::case_when(
+        .data[[scenario]] %in% c(!!base_scenarios, !!default_scenario) ~ stringr::str_to_sentence(.data[[type_col]]),
         .data[[scenario]] == "sdg" ~ "SDG",
         .data[[scenario]] == "acceleration" ~ "Acceleration",
         .data[[scenario]] == "pre_covid_trajectory" ~ "Pre-COVID-19 trajectories",
         .data[[scenario]] == "covid_delayed_return" ~ "COVID-19 Delayed Return",
         .data[[scenario]] == "covid_sustained_disruption" ~ "COVID-19 Sustained Disruption",
-        TRUE ~ .data[[scenario]]
+        TRUE ~ as.character(.data[[scenario]])
+      ),
+      plot_group = dplyr::case_when(
+        .data[[scenario]] %in% base_scenarios ~ "Base",
+        .data[[scenario]] == default_scenario ~ "Base",
+        .data[[scenario]] == "sdg" ~ "SDG",
+        .data[[scenario]] == "acceleration" ~ "Acceleration",
+        .data[[scenario]] == "pre_covid_trajectory" ~ "Pre-COVID-19 trajectories",
+        .data[[scenario]] == "covid_delayed_return" ~ "COVID-19 Delayed Return",
+        .data[[scenario]] == "covid_sustained_disruption" ~ "COVID-19 Sustained Disruption",
+        TRUE ~ as.character(.data[[scenario]])
       ),
       plot_line_color = get_scenario_colour(.data[["plot_group"]]),
       plot_line_type = dplyr::case_when(
@@ -88,9 +96,9 @@ plot_timeseries_indicator <- function(df,
     dplyr::distinct()
 
   color_type_breaks_labels <- df_ind_grp %>%
+    dplyr::filter(.data[["plot_type"]] %in% c("Estimated", "Reported", "Imputed", "Projected")) %>%
     dplyr::select(dplyr::all_of(c("plot_type", "plot_type_color"))) %>%
     dplyr::distinct()
-
 
   plot_title <- ifelse(scale == "fixed",
                        paste0(indicator, ": ", iso3[1], " - ", iso3[length(iso3)], " - fixed scale"),
@@ -137,16 +145,17 @@ plot_timeseries_indicator <- function(df,
                            color = .data[["plot_line_color"]],
                            group = .data[["plot_group"]],
                            linetype = .data[["plot_line_type"]]),
-                         size = 1
+                         size = 0.2
                          )+
       ggplot2::scale_color_identity(guide = "legend", labels = color_line_breaks_labels[["plot_group"]], breaks = color_line_breaks_labels[["plot_line_color"]])+
       ggplot2::scale_linetype(guide = "none")+
+      ggplot2::guides(color = ggplot2::guide_legend(nrow=2, byrow=TRUE))+
       ggnewscale::new_scale_color()
 
   }
 
   base_plot +
-    ggplot2::geom_point(ggplot2::aes(color = .data[["plot_type_color"]])) +
+    ggplot2::geom_point(ggplot2::aes(color = .data[["plot_type_color"]]), size = .2) +
     ggplot2::scale_color_identity(guide = "legend", labels = color_type_breaks_labels[["plot_type"]], breaks = color_type_breaks_labels[["plot_type_color"]]) +
     ggplot2::scale_x_date(date_labels = "%y", date_breaks = "5 years") +
     ggplot2::scale_y_continuous(breaks = integer_breaks(), expand = ) +
@@ -163,5 +172,6 @@ plot_timeseries_indicator <- function(df,
     ggplot2::geom_blank(ggplot2::aes(y = .data[["ymin"]])) +
     ggplot2::geom_blank(ggplot2::aes(y = .data[["ymax"]])) +
     ggplot2::ggtitle(plot_title) +
+    ggplot2::guides(color = ggplot2::guide_legend(nrow=2, byrow=TRUE))+
     theme_billionaiRe()
 }

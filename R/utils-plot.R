@@ -5,7 +5,7 @@ get_scenario_colour <- function(col) {
     "Estimated" = "grey30",
     "Reported" = "grey30",
     "Imputed" = "grey",
-    "Projected" = "#e9989c",
+    "Projected" = "#e35f66",
     "Acceleration" = "Purple",
     "Base" = "grey30",
     "SDG" = "#a6611a",
@@ -54,6 +54,7 @@ theme_billionaiRe <- function() {
     legend.key = ggplot2::element_blank(),
     legend.position = "bottom",
     legend.background = ggplot2::element_blank(),
+    legend.text = ggplot2::element_text(size = 8),
     legend.title = ggplot2::element_blank(),
     plot.title = ggplot2::element_text(size = 25)
   )
@@ -91,7 +92,8 @@ connect_lines <- function(df,
     dplyr::rename(last_year = !!year_col, this_ind = !!ind_col, this_plot_group = !!plot_group, this_iso3 = !! iso3_col,
                   this_plot_line_color = !!plot_line_color,
                   this_line_type = !!plot_line_type) %>%
-    dplyr::distinct()
+    dplyr::distinct() %>%
+    dplyr::ungroup()
 
    purrr::pmap_dfr(df_parameters, get_previous_year_row, df = base_df) %>%
      dplyr::bind_rows(df)
@@ -103,9 +105,9 @@ get_previous_year_row <- function(df, last_year, this_iso3, this_ind, this_plot_
                                   plot_line_color = "plot_line_color",
                                   plot_line_type = "plot_line_type"){
   df %>%
-    dplyr::filter(.data[[year_col]] %in% max(c(max(.data[[year_col]]): last_year - 1)),
-                  .data[[iso3_col]] == this_iso3,
+    dplyr::filter(.data[[iso3_col]] == this_iso3,
                   .data[[ind_col]] == this_ind) %>%
+    dplyr::filter(.data[[year_col]] %in% min(max(.data[[year_col]]), last_year - 1)) %>%
     dplyr::mutate(
       "{plot_group}" := this_plot_group,
       "{plot_line_color}" := this_plot_line_color,

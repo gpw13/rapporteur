@@ -9,7 +9,7 @@ export_plot_timeseries_indicator_pdf(
   indicator,
   scale = c("combined", "free", "fixed", "free_x", "free_y"),
   output_folder = "outputs",
-  run_name = NULL,
+  experiment = NULL,
   group_iso3 = TRUE,
   ind = "ind",
   scenario = "scenario",
@@ -38,7 +38,7 @@ By default, \code{combined} is used
 
 \item{output_folder}{Folder path to where the Excel files should be written}
 
-\item{run_name}{name of the run of plots. Default to NULL. If used, a new
+\item{experiment}{name of the experiment of plots. Default to NULL. If used, a new
 folder will be added to \code{output_folder} to store the results.}
 
 \item{group_iso3}{if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.}
