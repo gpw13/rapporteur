@@ -31,7 +31,8 @@ Imports:
     RColorBrewer,
     here,
     vdiffr,
-    ggnewscale
+    ggnewscale,
+    furrr
 Suggests: 
     testthat (>= 3.0.0),
     covr,

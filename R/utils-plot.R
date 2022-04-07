@@ -95,7 +95,7 @@ connect_lines <- function(df,
     dplyr::distinct() %>%
     dplyr::ungroup()
 
-   purrr::pmap_dfr(df_parameters, get_previous_year_row, df = base_df) %>%
+   furrr::future_pmap_dfr(df_parameters, get_previous_year_row, df = base_df) %>%
      dplyr::bind_rows(df)
 }
 

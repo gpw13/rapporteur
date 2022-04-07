@@ -113,8 +113,8 @@ plot_timeseries_indicator <- function(df,
 
   plot_limits <- df_ind_grp %>%
     dplyr::group_by(.data[[iso3_col]], .data[["plot_group"]]) %>%
-    dplyr::summarise (ymin = min(value, na.rm = TRUE),
-               ymax = max(value, na.rm = TRUE)) %>%
+    dplyr::summarise (ymin = min(.data[[value]], na.rm = TRUE),
+               ymax = max(.data[[value]], na.rm = TRUE)) %>%
     dplyr::mutate(ymin = pmax(0, floor(.data[["ymin"]] / 10) * 10),
            ymax = pmin(ceiling(.data[["ymax"]] / 10) * 10))
 
