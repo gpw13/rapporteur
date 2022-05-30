@@ -16,6 +16,7 @@ timeseries_style <- function(df, wb, sheet_name, start_row, start_col, ind_df) {
   wide_df <- df %>%
     dplyr::ungroup() %>%
     dplyr::select(.data[["ind"]], .data[["year"]], .data[["type"]]) %>%
+    dplyr::distinct() %>%
     dplyr::arrange(.data[["year"]]) %>%
     dplyr::filter(!stringr::str_detect(.data[["ind"]], "^hpop_healthier")) %>%
     dplyr::ungroup() %>%

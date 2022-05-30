@@ -174,7 +174,6 @@ write_data_boxes_hep_summary <- function(df,
       dplyr::filter(.data[["iso3"]] %in% unique(df_pillar[["iso3"]])) %>%
       dplyr::select(-.data[["iso3"]])
 
-
     if (rowSums(affected_pathos_iso3) < ncol(affected_pathos_iso3)) {
       fade <- TRUE
       pathos_iso3 <- names(affected_pathos_iso3)[affected_pathos_iso3 == FALSE]
@@ -193,7 +192,7 @@ write_data_boxes_hep_summary <- function(df,
     fade_row <- NA
   }
 
-  pillar_latest_reported <- dplyr::select(pillar_latest_reported, -.data[["ind"]])
+  pillar_latest_reported <- dplyr::select(pillar_latest_reported, -c("ind"))
 
   pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -c("ind", "iso3"))
 

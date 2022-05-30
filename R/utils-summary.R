@@ -79,6 +79,7 @@ get_baseline_projection_df <- function(df, value_col, transform_value_col, start
     ))) %>%
     dplyr::group_by(.data[["ind"]], .data[["iso3"]]) %>%
     dplyr::arrange(.data[["year"]]) %>%
+    dplyr::distinct() %>%
     tidyr::pivot_wider(
       names_from = .data[["year"]],
       values_from = c(dplyr::all_of(c(value_col, transform_value_col)), .data[["type"]], .data[["source"]])

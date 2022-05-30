@@ -47,6 +47,7 @@ write_hep_timeseries_sheet <- function(df,
   time_series_wide_out <- list()
   for (i in seq(time_series)) {
     time_series_wide_out[[i]] <- time_series[[i]] %>%
+      dplyr::distinct() %>%
       dplyr::ungroup() %>%
       dplyr::group_by(.data[["ind"]]) %>%
       tidyr::pivot_wider(c(-.data[["type"]]), names_from = .data[["year"]], values_from = !!sym("transform_value"))
