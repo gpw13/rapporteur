@@ -61,15 +61,9 @@
   <span class="va">df</span>,
   <span class="va">wb</span>,
   <span class="va">iso</span>,
-  iso3 <span class="op">=</span> <span class="st">"iso3"</span>,
-  year <span class="op">=</span> <span class="st">"year"</span>,
-  ind <span class="op">=</span> <span class="st">"ind"</span>,
-  value <span class="op">=</span> <span class="st">"value"</span>,
-  transform_value <span class="op">=</span> <span class="st">"transform_value"</span>,
-  scenario <span class="op">=</span> <span class="cn">NULL</span>,
-  type_col <span class="op">=</span> <span class="st">"type"</span>,
-  source_col <span class="op">=</span> <span class="st">"source"</span>,
-  population <span class="op">=</span> <span class="st">"population"</span>,
+  value_col <span class="op">=</span> <span class="st">"value"</span>,
+  transform_value_col <span class="op">=</span> <span class="st">"transform_value"</span>,
+  scenario_col <span class="op">=</span> <span class="cn">NULL</span>,
   contribution <span class="op">=</span> <span class="st">"contribution"</span>,
   contribution_pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">contribution</span>, <span class="st">"_percent"</span><span class="op">)</span>,
   contribution_pct_total_pop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">contribution</span>, <span class="st">"_percent_total_pop"</span><span class="op">)</span>,
@@ -91,36 +85,24 @@ country, year, and indicator.</p></dd>
 <dd><p>a <code>openxlsx</code> workbook to be edited.</p></dd>
 <dt>iso</dt>
 <dd><p>ISO3 code of country to summarize.</p></dd>
-<dt>iso3</dt>
-<dd><p>Column name of column with country ISO3 codes.</p></dd>
-<dt>year</dt>
-<dd><p>Column name of column with years.</p></dd>
-<dt>ind</dt>
-<dd><p>Column name of column with indicator names.</p></dd>
-<dt>value</dt>
+<dt>value_col</dt>
 <dd><p>Column name of column with indicator values.</p></dd>
-<dt>transform_value</dt>
+<dt>transform_value_col</dt>
 <dd><p>Column name of column(s) with transformed indicator
 values, used to calculate contributions.</p></dd>
-<dt>scenario</dt>
+<dt>scenario_col</dt>
 <dd><p>Column name of column with scenario identifiers. Useful for
 calculating contributions on data in long format rather than wide format.</p></dd>
-<dt>type_col</dt>
-<dd><p>Column name of column with type data.</p></dd>
-<dt>source_col</dt>
-<dd><p>Column name of column to store source information.</p></dd>
-<dt>population</dt>
-<dd><p>Column name of column with population figures.</p></dd>
 <dt>contribution</dt>
 <dd><p>Column name of column(s) to store contribution (population)
-values. Must be the same length as <code>transform_value</code>.</p></dd>
+values. Must be the same length as <code>transform_value_col</code>.</p></dd>
 <dt>contribution_pct</dt>
 <dd><p>Column name of column(s) to store contribution (percent)
-values. Must be the same length as <code>transform_value</code>.</p></dd>
+values. Must be the same length as <code>transform_value_col</code>.</p></dd>
 <dt>contribution_pct_total_pop</dt>
 <dd><p>Column name of column(s) to store contribution
 (percent of total population of the country) values. Must be the same length
-as <code>transform_value</code>.</p></dd>
+as <code>transform_value_col</code>.</p></dd>
 <dt>default_scenario</dt>
 <dd><p>name of the default scenario.</p></dd>
 <dt>start_year</dt>
@@ -152,7 +134,7 @@ be supplied as a named vector where the names correspond to the output of
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
     </footer></div>
