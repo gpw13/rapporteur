@@ -8,12 +8,9 @@ write_billion_contrib_ind_hpop_summary(
   df,
   wb,
   sheet_name,
-  year,
   start_year,
   end_year,
-  ind,
   contribution_pct,
-  population,
   contribution,
   contribution_pct_total_pop,
   ind_df,
@@ -28,26 +25,20 @@ write_billion_contrib_ind_hpop_summary(
 
 \item{sheet_name}{character name of the sheet to update}
 
-\item{year}{Column name of column with years.}
-
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
 2025.}
 
-\item{ind}{Column name of column with indicator names.}
-
 \item{contribution_pct}{Column name of column(s) to store contribution (percent)
-values. Must be the same length as \code{transform_value}.}
-
-\item{population}{Column name of column with population figures.}
+values. Must be the same length as \code{transform_value_col}.}
 
 \item{contribution}{Column name of column(s) to store contribution (population)
-values. Must be the same length as \code{transform_value}.}
+values. Must be the same length as \code{transform_value_col}.}
 
 \item{contribution_pct_total_pop}{Column name of column(s) to store contribution
 (percent of total population of the country) values. Must be the same length
-as \code{transform_value}.}
+as \code{transform_value_col}.}
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 

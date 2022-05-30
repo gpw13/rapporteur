@@ -9,12 +9,7 @@ plot_timeseries_indicator(
   iso3,
   indicator,
   scale = c("free", "fixed", "free_x", "free_y"),
-  ind = "ind",
-  iso3_col = "iso3",
-  year_col = "year",
-  value = "value",
-  type_col = "type",
-  scenario = "scenario",
+  value_col = "value",
   default_scenario = "default",
   base_scenarios = c(routine = "routine", reference_infilling = "reference_infilling",
     covid_shock = "covid_shock"),
@@ -31,19 +26,8 @@ to a specific year, and indicator.}
 
 \item{scale}{type of scale to be exported, as in \code{\link[ggplot2]{facet_wrap}}}
 
-\item{ind}{Column name of column with indicator names.}
-
-\item{iso3_col}{Column name of column with country ISO3 codes.}
-
-\item{year_col}{Column name of column with years.}
-
-\item{value}{Column name of column(s) with indicator
+\item{value_col}{Column name of column(s) with indicator
 values, used to calculate contributions.}
-
-\item{type_col}{Column name of column with type data.}
-
-\item{scenario}{Column name of column with scenario identifiers. Useful for
-calculating contributions on data in long format rather than wide format.}
 
 \item{default_scenario}{name of the default scenario.}
 
@@ -56,7 +40,7 @@ more details see \href{../doc/scenarios.html}{\code{vignette("scenarios", packag
 a \code{ggplot2} object
 }
 \description{
-Plot timeseries to provide line plots for each scenario present in \code{scenario}
+Plot timeseries to provide line plots for each scenario present in \code{df}
 with some manipulations. Produce two faceted plots where each facet is an
 \code{iso3}.
 }

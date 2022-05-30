@@ -6,14 +6,19 @@
 #' @inheritParams style_header_hpop_summary_sheet
 #'
 
-write_hep_timeseries_sheet <- function(df, wb, sheet_name,
-                                       start_row, start_col, transform_value,
-                                       ind_df, ind, year, type_col,
-                                       ind_ids, end_year, iso3) {
+write_hep_timeseries_sheet <- function(df,
+                                       wb,
+                                       sheet_name,
+                                       start_row,
+                                       start_col,
+                                       transform_value_col,
+                                       ind_df,
+                                       ind_ids,
+                                       end_year) {
   ind_df_timeseries <- ind_df %>%
-    dplyr::filter(!is.na(.data[[ind]])) %>%
+    dplyr::filter(!is.na(.data[["ind"]])) %>%
     dplyr::mutate(short_name = dplyr::case_when(
-      .data[[ind]] == "espar" ~ "Prepare",
+      .data[["ind"]] == "espar" ~ "Prepare",
       TRUE ~ short_name
     ))
 
@@ -28,14 +33,14 @@ write_hep_timeseries_sheet <- function(df, wb, sheet_name,
 
   time_series <- df %>%
     dplyr::ungroup() %>%
-    dplyr::select(.data[[ind]], .data[[year]], .data[[type_col]], !!transform_value) %>%
-    dplyr::group_by(.data[[ind]], .data[[year]], .data[[type_col]]) %>%
-    tidyr::pivot_longer(c(!!transform_value), names_to = "transform_value_mod", values_to = "transform_value") %>%
+    dplyr::select(dplyr::any_of(c("ind", "year", "type", transform_value_col))) %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(c("ind", "year", "type")))) %>%
+    tidyr::pivot_longer(c(!!transform_value_col), names_to = "transform_value_mod", values_to = "transform_value") %>%
     dplyr::mutate(
-      !!sym("transform_value_mod") := factor(!!sym("transform_value_mod"), levels = !!transform_value)
+      !!sym("transform_value_mod") := factor(!!sym("transform_value_mod"), levels = !!transform_value_col)
     ) %>%
-    dplyr::filter(.data[[year]] <= max(end_year)) %>%
-    dplyr::arrange(.data[[year]]) %>%
+    dplyr::filter(.data[["year"]] <= max(end_year)) %>%
+    dplyr::arrange(.data[["year"]]) %>%
     dplyr::group_by(!!sym("transform_value_mod")) %>%
     dplyr::group_split()
 
@@ -43,12 +48,12 @@ write_hep_timeseries_sheet <- function(df, wb, sheet_name,
   for (i in seq(time_series)) {
     time_series_wide_out[[i]] <- time_series[[i]] %>%
       dplyr::ungroup() %>%
-      dplyr::group_by(.data[[ind]]) %>%
-      tidyr::pivot_wider(c(-.data[[type_col]]), names_from = .data[[year]], values_from = !!sym("transform_value"))
+      dplyr::group_by(.data[["ind"]]) %>%
+      tidyr::pivot_wider(c(-.data[["type"]]), names_from = .data[["year"]], values_from = !!sym("transform_value"))
 
     time_series_wide <- dplyr::select(ind_df_timeseries, "ind", "short_name") %>%
-      dplyr::left_join(time_series_wide_out[[i]], by = c("ind" = ind)) %>%
-      dplyr::select(-sym("transform_value_mod"), -ind)
+      dplyr::left_join(time_series_wide_out[[i]], by = c("ind" = "ind")) %>%
+      dplyr::select(-sym("transform_value_mod"), -"ind")
 
     if (i > 1) {
       nrows_sofar <- sum(unlist(lapply(1:(i - 1), function(x) nrow(time_series_wide_out[[x]]) + 2)))
@@ -63,7 +68,7 @@ write_hep_timeseries_sheet <- function(df, wb, sheet_name,
     )
     openxlsx::writeData(wb,
       sheet = sheet_name,
-      x = vec2emptyDF(glue::glue("Time serie: Raw {transform_value[i]}*")),
+      x = vec2emptyDF(glue::glue("Time serie: Raw {transform_value_col[i]}*")),
       startCol = start_col + 1, startRow = start_row_new,
       colNames = TRUE
     )
@@ -82,8 +87,8 @@ write_hep_timeseries_sheet <- function(df, wb, sheet_name,
     wb <- style_timeseries(
       df = time_series[[i]], wb, billion = "hep", sheet_name,
       start_row = start_row_new, start_col = start_col,
-      ind, year, type_col, df_wide = time_series_wide, ind_df_timeseries,
-      this_iso3 = unique(df[[iso3]])
+      df_wide = time_series_wide, ind_df_timeseries,
+      this_iso3 = unique(df[["iso3"]])
     )
   }
   openxlsx::setColWidths(

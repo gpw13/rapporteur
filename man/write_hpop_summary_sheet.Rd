@@ -11,14 +11,8 @@ write_hpop_summary_sheet(
   iso,
   start_year = 2018,
   end_year = 2019:2025,
-  value = "value",
-  year = "year",
-  iso3 = "iso3",
-  ind = "ind",
-  population = "population",
-  transform_value = "transform_value",
-  type_col = "type",
-  source_col = "source",
+  value_col = "value",
+  transform_value_col = "transform_value",
   contribution = "contribution",
   contribution_pct = paste0(contribution, "_percent"),
   contribution_pct_total_pop = paste0(contribution, "_percent_total_pop"),
@@ -41,32 +35,20 @@ to a specific year, and indicator.}
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
 2025.}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{year}{Column name of column with years.}
-
-\item{iso3}{Column name of column with country ISO3 codes.}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{population}{Column name of column with population figures.}
-
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{transform_value_col}{Column name of column(s) with transformed indicator
 values, used to calculate contributions.}
 
-\item{type_col}{Column name of column with type data.}
-
-\item{source_col}{Column name of column to store source information.}
-
 \item{contribution}{Column name of column(s) to store contribution (population)
-values. Must be the same length as \code{transform_value}.}
+values. Must be the same length as \code{transform_value_col}.}
 
 \item{contribution_pct}{Column name of column(s) to store contribution (percent)
-values. Must be the same length as \code{transform_value}.}
+values. Must be the same length as \code{transform_value_col}.}
 
 \item{contribution_pct_total_pop}{Column name of column(s) to store contribution
 (percent of total population of the country) values. Must be the same length
-as \code{transform_value}.}
+as \code{transform_value_col}.}
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 

@@ -39,7 +39,8 @@ mergeCellForced <- function(wb, sheet, cols, rows) {
 #' Get just one scenario in the data frame. Is used to avoid issues with when
 #' multiple scenarios are present in export functions, as scenarios are not implemented
 #' at the moment.
-#'
+#' @param scenario Column name of column with scenario identifiers. Useful for
+#'     calculating contributions on data in long format rather than wide format.
 #' @inheritParams export_all_countries_summaries_xls
 #'
 #' @return A data frame with one scenario

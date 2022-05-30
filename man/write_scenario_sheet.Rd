@@ -11,16 +11,12 @@ write_scenario_sheet(
   sheet_name = "Scenarios",
   start_row = 4,
   start_col = 2,
-  value = "value",
-  scenario = "scenario",
+  value_col = "value",
+  scenario_col = "scenario",
   ind_df,
-  ind = "ind",
-  year = "year",
-  type_col = "type",
   ind_ids,
   start_year = 2018,
   end_year = 2025,
-  iso3 = "iso3",
   default_scenario = "default"
 )
 }
@@ -38,18 +34,12 @@ write_scenario_sheet(
 
 \item{start_col}{integer start col of styling. Passed to \code{\link[openxlsx:addStyle]{openxlsx::addStyle()}}}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{scenario}{Column name of column with scenario identifiers. Useful for
+\item{scenario_col}{Column name of column with scenario identifiers. Useful for
 calculating contributions on data in long format rather than wide format.}
 
 \item{ind_df}{data frame containing information on indicators}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{year}{Column name of column with years.}
-
-\item{type_col}{Column name of column with type data.}
 
 \item{ind_ids}{Named vector of indicator codes for input indicators to the Billion.
 Although separate indicator codes can be used than the standard, they must
@@ -59,8 +49,6 @@ be supplied as a named vector where the names correspond to the output of
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to 2025.}
-
-\item{iso3}{Column name of column with country ISO3 codes.}
 
 \item{default_scenario}{name of the default scenario.}
 }

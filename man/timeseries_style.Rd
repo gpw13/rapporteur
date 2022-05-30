@@ -4,17 +4,7 @@
 \alias{timeseries_style}
 \title{Change font of time series values}
 \usage{
-timeseries_style(
-  df,
-  wb,
-  sheet_name,
-  start_row,
-  start_col,
-  ind,
-  year,
-  type_col,
-  ind_df
-)
+timeseries_style(df, wb, sheet_name, start_row, start_col, ind_df)
 }
 \arguments{
 \item{df}{data frame to be written}
@@ -26,12 +16,6 @@ timeseries_style(
 \item{start_row}{integer start row of styling. Passed to \code{\link[openxlsx:addStyle]{openxlsx::addStyle()}}}
 
 \item{start_col}{integer start col of styling. Passed to \code{\link[openxlsx:addStyle]{openxlsx::addStyle()}}}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{year}{Column name of column with years.}
-
-\item{type_col}{Column name of column with type data.}
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 }

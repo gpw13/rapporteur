@@ -9,15 +9,10 @@ write_baseline_projection_hpop_summary(
   wb,
   sheet_name,
   ind_df,
-  year,
   start_year,
   end_year,
-  ind,
-  value,
-  transform_value,
-  type_col,
-  source_col,
-  iso3,
+  value_col,
+  transform_value_col,
   bounds,
   ind_ids
 )
@@ -31,24 +26,14 @@ write_baseline_projection_hpop_summary(
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 
-\item{year}{Column name of column with years.}
-
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to 2025.}
 
-\item{ind}{Column name of column with indicator names.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{value}{Column name of column with indicator values.}
-
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{transform_value_col}{Column name of column(s) with transformed indicator
 values, used to calculate contributions.}
-
-\item{type_col}{Column name of column with type data.}
-
-\item{source_col}{Column name of column to store source information.}
-
-\item{iso3}{Column name of column with country ISO3 codes.}
 
 \item{bounds}{named integer vector identifying integer sheet start and end reference column.
 All parameters must be numerical. For converting Excel column references to integer references

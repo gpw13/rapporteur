@@ -6,9 +6,14 @@
 #' @inheritParams style_header_hpop_summary_sheet
 #'
 
-write_hpop_timeseries_sheet <- function(df, wb, sheet_name,
-                                        start_row, start_col, value,
-                                        ind_df, ind, year, type_col, end_year) {
+write_hpop_timeseries_sheet <- function(df,
+                                        wb,
+                                        sheet_name,
+                                        start_row,
+                                        start_col,
+                                        value_col,
+                                        ind_df,
+                                        end_year) {
   openxlsx::writeData(wb, sheet_name,
     x = "Time Series",
     startCol = start_col,
@@ -30,12 +35,12 @@ write_hpop_timeseries_sheet <- function(df, wb, sheet_name,
 
   time_series <- df %>%
     dplyr::ungroup() %>%
-    dplyr::filter(!stringr::str_detect(.data[[ind]], "^hpop_healthier")) %>%
-    dplyr::select(.data[[ind]], .data[[year]], .data[[type_col]], !!value) %>%
-    dplyr::group_by(.data[[ind]], .data[[year]], .data[[type_col]]) %>%
-    tidyr::pivot_longer(c(!!value), names_to = "value_mod", values_to = "value") %>%
-    dplyr::filter(.data[[year]] <= max(end_year)) %>%
-    dplyr::mutate(!!sym("value_mod") := factor(!!sym("value_mod"), levels = !!value)) %>%
+    dplyr::filter(!stringr::str_detect(.data[["ind"]], "^hpop_healthier")) %>%
+    dplyr::select(dplyr::all_of(c("ind", "year", "type",value_col))) %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(c("ind", "year", "type")))) %>%
+    tidyr::pivot_longer(c(!!value_col), names_to = "value_mod", values_to = "value") %>%
+    dplyr::filter(.data[["year"]] <= max(end_year)) %>%
+    dplyr::mutate(!!sym("value_mod") := factor(!!sym("value_mod"), levels = !!value_col)) %>%
     dplyr::group_by(!!sym("value_mod")) %>%
     dplyr::group_split()
 
@@ -43,12 +48,12 @@ write_hpop_timeseries_sheet <- function(df, wb, sheet_name,
   for (i in seq(time_series)) {
     time_series_wide_out[[i]] <- time_series[[i]] %>%
       dplyr::ungroup() %>%
-      dplyr::group_by(.data[[ind]]) %>%
-      tidyr::pivot_wider(c(-.data[[type_col]]), names_from = .data[[year]], values_from = !!sym("value"))
+      dplyr::group_by(.data[["ind"]]) %>%
+      tidyr::pivot_wider(c(-.data[["type"]]), names_from = .data[["year"]], values_from = !!sym("value_col"))
 
     time_series_wide <- dplyr::select(ind_df, "ind", "short_name") %>%
-      dplyr::left_join(time_series_wide_out[[i]], by = ind) %>%
-      dplyr::select(-sym("value_mod"), -ind)
+      dplyr::left_join(time_series_wide_out[[i]], by = "ind") %>%
+      dplyr::select(-sym("value_mod"), -"ind")
 
     if (i > 1) {
       nrows_sofar <- sum(unlist(lapply(1:(i - 1), function(x) nrow(time_series_wide_out[[x]]) + 2)))
@@ -63,7 +68,7 @@ write_hpop_timeseries_sheet <- function(df, wb, sheet_name,
     )
     openxlsx::writeData(wb,
       sheet = sheet_name,
-      x = vec2emptyDF(glue::glue("Time serie: Raw {value[i]}*")),
+      x = vec2emptyDF(glue::glue("Time serie: Raw {value_col[i]}*")),
       startCol = start_col + 1, startRow = start_row_new,
       colNames = TRUE
     )
@@ -82,7 +87,7 @@ write_hpop_timeseries_sheet <- function(df, wb, sheet_name,
     wb <- style_timeseries(
       df = time_series[[i]], wb, billion = "hpop", sheet_name,
       start_row = start_row_new, start_col = start_col,
-      ind, year, type_col, df_wide = time_series_wide, ind_df
+      df_wide = time_series_wide, ind_df
     )
   }
   openxlsx::setColWidths(

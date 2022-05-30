@@ -1,4 +1,4 @@
-#' Change font of scenario values
+#' Change font of scenario_col values
 #'
 #' `scenarios_style()` changes the font of time series values based on the
 #' indicator type it is:
@@ -7,7 +7,7 @@
 #' * normal: estimated
 #' * faded: imputed or projected
 #'
-#' @param scenarios_order (character) vector in which `scenario` should be `dplyr::arrange`
+#' @param scenarios_order (character) vector in which `scenario_col` should be `dplyr::arrange`
 #' @inheritParams write_baseline_projection_hpop_summary
 #' @inherit style_header_hpop_summary_sheet
 #' @inheritParams write_hpop_timeseries_sheet
@@ -17,10 +17,7 @@ scenarios_style <- function(df,
                             sheet_name,
                             start_row,
                             start_col,
-                            ind,
-                            year,
-                            type_col,
-                            scenario,
+                            scenario_col,
                             ind_df,
                             scenarios_order) {
 
@@ -30,12 +27,12 @@ scenarios_style <- function(df,
 
   wide_df <- df %>%
     dplyr::ungroup() %>%
-    dplyr::select(.data[[ind]], .data[[year]], .data[[type_col]], .data[[scenario]]) %>%
-    dplyr::left_join(ind_order, by = c(ind = "ind")) %>%
-    dplyr::arrange(order, factor(.data[[scenario]], scenarios_order)) %>%
-    dplyr::filter(!stringr::str_detect(.data[[ind]], "^hpop_healthier")) %>%
-    dplyr::group_by(.data[[ind]], .data[[scenario]]) %>%
-    tidyr::pivot_wider(names_from = .data[[year]], values_from = .data[[type_col]]) %>%
+    dplyr::select(dplyr::all_of(c("ind", "year", "type", scenario_col))) %>%
+    dplyr::left_join(ind_order, by = c("ind" = "ind")) %>%
+    dplyr::arrange(order, factor(.data[[scenario_col]], scenarios_order)) %>%
+    dplyr::filter(!stringr::str_detect(.data[["ind"]], "^hpop_healthier")) %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(c("ind", scenario_col)))) %>%
+    tidyr::pivot_wider(names_from = .data[["year"]], values_from = .data[["type"]]) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(dplyr::across(dplyr::starts_with("20"), tidyr::replace_na, ""))
 

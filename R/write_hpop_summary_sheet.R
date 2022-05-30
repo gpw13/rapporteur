@@ -15,14 +15,8 @@
 write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
                                      start_year = 2018,
                                      end_year = 2019:2025,
-                                     value = "value",
-                                     year = "year",
-                                     iso3 = "iso3",
-                                     ind = "ind",
-                                     population = "population",
-                                     transform_value = "transform_value",
-                                     type_col = "type",
-                                     source_col = "source",
+                                     value_col = "value",
+                                     transform_value_col = "transform_value",
                                      contribution = "contribution",
                                      contribution_pct = paste0(contribution, "_percent"),
                                      contribution_pct_total_pop = paste0(contribution, "_percent_total_pop"),
@@ -32,7 +26,7 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     dplyr::select("ind", "sdg", "short_name")
 
   start_row_data <- 9
-  end_row_data <- start_row_data + sum(unique(df[[ind]]) %in% ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]) + 2
+  end_row_data <- start_row_data + sum(unique(df[["ind"]]) %in% ind_ids[!stringr::str_detect(ind_ids, "^hpop_healthier")]) + 2
 
   boxes_bounds <- list(
     indicators = c(
@@ -98,13 +92,8 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     wb = wb,
     ind_df = ind_df,
     sheet_name = sheet_name,
-    type_col = type_col,
-    iso3 = iso3,
-    ind = ind,
-    year = year,
-    value = value,
-    transform_value = transform_value,
-    source_col = source_col,
+    value_col = value_col,
+    transform_value_col = transform_value_col,
     year_counts = c(2000, 2015),
     bounds = boxes_bounds$latest,
     ind_ids = ind_ids
@@ -115,15 +104,10 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     wb = wb,
     sheet_name = sheet_name,
     ind_df = ind_df,
-    year = year,
     start_year = start_year,
     end_year = end_year,
-    ind = ind,
-    value = value,
-    transform_value = transform_value,
-    type_col = type_col,
-    source_col = source_col,
-    iso3 = iso3,
+    value_col = value_col,
+    transform_value_col = transform_value_col,
     bounds = boxes_bounds$baseline_proj,
     ind_ids = ind_ids
   )
@@ -132,12 +116,9 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     df = df,
     wb = wb,
     sheet_name = sheet_name,
-    year = year,
     start_year = start_year,
     end_year = end_year,
-    ind = ind,
     contribution_pct = contribution_pct,
-    population = population,
     contribution = contribution,
     contribution_pct_total_pop = contribution_pct_total_pop,
     ind_df = ind_df,
@@ -152,8 +133,6 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
     sheet_name = sheet_name,
     contribution = contribution,
     contribution_pct = contribution_pct,
-    ind = ind,
-    year = year,
     end_year = end_year,
     bounds = boxes_bounds$billion_contribution,
     iso = iso,
@@ -177,7 +156,7 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
   wb <- write_hpop_inter(wb,
     sheet_name = "HPOP_Inter", data_sheet_name = sheet_name,
     ind_df, start_year, end_year, start_col = 1, start_row = 2,
-    transform_value, summary_bounds = boxes_bounds
+    transform_value_col, summary_bounds = boxes_bounds
   )
   return(wb)
 }
@@ -189,7 +168,7 @@ write_hpop_summary_sheet <- function(df, wb, sheet_name, iso,
 #' @inheritParams export_country_summary_xls
 #' @param boxes_bounds named list of bounds for data frame boxes to be written in sheet.
 
-write_sheet_header_hpop_summary <- function(wb, sheet_name, iso, start_col, start_row, end_year, value, boxes_bounds) {
+write_sheet_header_hpop_summary <- function(wb, sheet_name, iso, start_col, start_row, end_year, value_col, boxes_bounds) {
   openxlsx::writeData(wb,
     sheet = sheet_name,
     x = glue::glue("Country contribution to GPW13 Healthier Population billion"),

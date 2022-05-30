@@ -10,11 +10,8 @@ write_hpop_timeseries_sheet(
   sheet_name,
   start_row,
   start_col,
-  value,
+  value_col,
   ind_df,
-  ind,
-  year,
-  type_col,
   end_year
 )
 }
@@ -29,15 +26,9 @@ write_hpop_timeseries_sheet(
 
 \item{start_col}{integer start col of styling. Passed to \code{\link[openxlsx:addStyle]{openxlsx::addStyle()}}}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
 \item{ind_df}{data frame containing information on indicators}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{year}{Column name of column with years.}
-
-\item{type_col}{Column name of column with type data.}
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to 2025.}
 }

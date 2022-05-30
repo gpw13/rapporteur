@@ -11,15 +11,9 @@ write_hep_summary_sheet(
   iso,
   start_year = 2018,
   end_year = 2019:2025,
-  value = "value",
-  transform_value = "transform_value",
-  year = "year",
-  iso3 = "iso3",
-  ind = "ind",
-  scenario = "scenario",
-  population = "population",
-  type_col = "type",
-  source_col = "source",
+  value_col = "value",
+  transform_value_col = "transform_value",
+  scenario_col = "scenario",
   ind_df,
   ind_ids
 )
@@ -39,25 +33,13 @@ to a specific year, and indicator.}
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
 2025.}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{transform_value_col}{Column name of column(s) with transformed indicator
 values, used to calculate contributions.}
 
-\item{year}{Column name of column with years.}
-
-\item{iso3}{Column name of column with country ISO3 codes.}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{scenario}{Column name of column with scenario identifiers. Useful for
+\item{scenario_col}{Column name of column with scenario identifiers. Useful for
 calculating contributions on data in long format rather than wide format.}
-
-\item{population}{Column name of column with population figures.}
-
-\item{type_col}{Column name of column with type data.}
-
-\item{source_col}{Column name of column to store source information.}
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 

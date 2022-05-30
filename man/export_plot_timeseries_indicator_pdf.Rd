@@ -11,15 +11,11 @@ export_plot_timeseries_indicator_pdf(
   output_folder = "outputs",
   experiment = NULL,
   group_iso3 = TRUE,
-  ind = "ind",
-  scenario = "scenario",
   default_scenario = "default",
-  type_col = "type",
-  value = "value",
+  value_col = "value",
   start_year = 2018,
-  year = "year",
-  iso3 = "iso3",
-  ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE)
+  ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE),
+  version = whdh::get_formatted_timestamp()
 )
 }
 \arguments{
@@ -43,27 +39,18 @@ folder will be added to \code{output_folder} to store the results.}
 
 \item{group_iso3}{if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.}
 
-\item{ind}{Column name of column with indicator names.}
-
-\item{scenario}{Column name of column with scenario identifiers. Useful for
-calculating contributions on data in long format rather than wide format.}
-
 \item{default_scenario}{name of the default scenario.}
 
-\item{type_col}{Column name of column with type data.}
-
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
 \item{start_year}{Base year for contribution calculation, defaults to 2018.}
-
-\item{year}{Column name of column with years.}
-
-\item{iso3}{Column name of column with country ISO3 codes.}
 
 \item{ind_ids}{Named vector of indicator codes for input indicators to the Billion.
 Although separate indicator codes can be used than the standard, they must
 be supplied as a named vector where the names correspond to the output of
 \code{billion_ind_codes()}.}
+
+\item{version}{character vector identifying the version of the plot to be passed.}
 }
 \value{
 \code{openxslx} Workbook object. Output file is in \code{output_folder}.

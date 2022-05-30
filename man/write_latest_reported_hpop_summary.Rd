@@ -11,13 +11,8 @@ write_latest_reported_hpop_summary(
   ind_df,
   start_row,
   start_col,
-  type_col,
-  iso3,
-  ind,
-  year,
-  value,
-  transform_value,
-  source_col,
+  value_col,
+  transform_value_col,
   year_counts = c(2000, 2015),
   bounds,
   ind_ids
@@ -37,20 +32,10 @@ to a specific year, and indicator.}
 
 \item{start_col}{integer start col of styling. Passed to \code{\link[openxlsx:addStyle]{openxlsx::addStyle()}}}
 
-\item{type_col}{Column name of column with type data.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{iso3}{Column name of column with country ISO3 codes.}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{year}{Column name of column with years.}
-
-\item{value}{Column name of column with indicator values.}
-
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{transform_value_col}{Column name of column(s) with transformed indicator
 values, used to calculate contributions.}
-
-\item{source_col}{Column name of column to store source information.}
 
 \item{year_counts}{integer vector with the year(s) to count the number of values available for
 a specific indicators. Defaults to 2000 and 2015.}

@@ -58,7 +58,7 @@ test_pdf_plot <- function(df, indicator, scale, experiment = NULL) {
   full_df <- purrr::map_dfr(iso3s, ~ expand_df(test_data, .x))
 
   export_plot_timeseries_indicator_pdf(full_df, indicator = indicator, output_folder = temp_dir, scale = scale,
-                                       experiment = experiment)
+                                       experiment = experiment, version = NULL)
   here::here(temp_dir, paste0(indicator, "_", scale, ".pdf"))
 }
 

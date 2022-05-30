@@ -59,17 +59,12 @@ write_latest_reported_hpop_summary <- function(df,
                                                ind_df,
                                                start_row,
                                                start_col,
-                                               type_col,
-                                               iso3,
-                                               ind,
-                                               year,
-                                               value,
-                                               transform_value,
-                                               source_col,
+                                               value_col,
+                                               transform_value_col,
                                                year_counts = c(2000, 2015),
                                                bounds,
                                                ind_ids) {
-  this_iso3 <- unique(df[[iso3]])
+  this_iso3 <- unique(df[["iso3"]])
 
   data_rows <- (bounds["start_row"] + 3):bounds["end_row"]
 
@@ -77,27 +72,27 @@ write_latest_reported_hpop_summary <- function(df,
 
   latest_reported <- df %>%
     dplyr::filter(
-      .data[[type_col]] %in% c("estimated", "reported"),
-      .data[[ind]] %in% ind_ids
+      .data[["type"]] %in% c("estimated", "reported"),
+      .data[["ind"]] %in% ind_ids
     ) %>%
-    dplyr::group_by(.data[[iso3]], .data[[ind]]) %>%
-    dplyr::filter(.data[[year]] == max(.data[[year]])) %>%
+    dplyr::group_by(.data[["iso3"]], .data[["ind"]]) %>%
+    dplyr::filter(.data[["year"]] == max(.data[["year"]])) %>%
     dplyr::ungroup() %>%
     dplyr::select(dplyr::all_of(c(
-      ind, value, transform_value, year,
-      type_col, source_col, iso3
+      "ind", value_col, transform_value_col, "year",
+      "type", "source", "iso3"
     ))) %>%
-    dplyr::arrange(get_ind_order(ind)) %>%
+    dplyr::arrange(get_ind_order(.data[["ind"]])) %>%
     dplyr::full_join(
       tidyr::expand_grid(
-        ind = unlist(unique(df[df[[ind]] %in% ind_ids, ind])),
+        ind = unlist(unique(df[df[["ind"]] %in% ind_ids, "ind"])),
       ),
-      by = ind
+      by = "ind"
     ) %>%
     dplyr::mutate(
-      !!sym(year) := as.integer(.data[[year]]),
-      !!sym(glue::glue("{transform_value}")) :=
-        get_transform_formula(.data[[ind]], bounds["start_col"],
+      !!sym("year") := as.integer(.data[["year"]]),
+      !!sym(glue::glue("{transform_value_col}")) :=
+        get_transform_formula(.data[["ind"]], bounds["start_col"],
           data_rows,
           ind_ids = ind_ids,
           this_iso3
@@ -105,15 +100,15 @@ write_latest_reported_hpop_summary <- function(df,
     )
 
   # Count data points since specified dates
-  counts_years <- purrr::map(year_counts, ~ count_since(df, year_specified = .x, year = year, ind = ind, iso3 = iso3, type_col = type_col)) %>%
-    purrr::reduce(dplyr::left_join, by = c(iso3, ind))
+  counts_years <- purrr::map(year_counts, ~ count_since(df, year_specified = .x)) %>%
+    purrr::reduce(dplyr::left_join, by = c("iso3", "ind"))
 
   # Join counts with latest reported data
   latest_reported <- ind_df[, "ind"] %>%
-    dplyr::left_join(latest_reported, by = c("ind" = ind)) %>%
-    dplyr::left_join(counts_years, by = c(iso3, ind)) %>%
-    dplyr::mutate(dplyr::across(dplyr::starts_with(transform_value), as_excel_formula)) %>%
-    dplyr::select(-.data[[ind]], -.data[[iso3]])
+    dplyr::left_join(latest_reported, by = c("ind" = "ind")) %>%
+    dplyr::left_join(counts_years, by = c("iso3", "ind")) %>%
+    dplyr::mutate(dplyr::across(dplyr::starts_with(transform_value_col), as_excel_formula)) %>%
+    dplyr::select(-.data[["ind"]], -.data[["iso3"]])
 
   openxlsx::writeData(
     wb,
@@ -122,7 +117,7 @@ write_latest_reported_hpop_summary <- function(df,
     startCol = bounds["start_col"], startRow = bounds["start_row"], colNames = FALSE
   )
 
-  sentence_v <- stringr::str_to_title(value)
+  sentence_v <- stringr::str_to_title(value_col)
 
   latest_rep_headers <- c(
     glue::glue("Raw {sentence_v}"),
@@ -173,18 +168,13 @@ write_baseline_projection_hpop_summary <- function(df,
                                                    wb,
                                                    sheet_name,
                                                    ind_df,
-                                                   year,
                                                    start_year,
                                                    end_year,
-                                                   ind,
-                                                   value,
-                                                   transform_value,
-                                                   type_col,
-                                                   source_col,
-                                                   iso3,
+                                                   value_col,
+                                                   transform_value_col,
                                                    bounds,
                                                    ind_ids) {
-  this_iso3 <- unique(df[[iso3]])
+  this_iso3 <- unique(df[["iso3"]])
 
   data_rows <- (bounds["start_row"] + 3):bounds["end_row"]
 
@@ -192,32 +182,32 @@ write_baseline_projection_hpop_summary <- function(df,
 
   baseline_proj <- df %>%
     dplyr::filter(
-      .data[[year]] %in% c(!!start_year, max(!!end_year)),
-      .data[[ind]] %in% ind_ids
+      .data[["year"]] %in% c(!!start_year, max(!!end_year)),
+      .data[["ind"]] %in% ind_ids
     ) %>%
     dplyr::select(dplyr::all_of(c(
-      ind, year, value, transform_value, type_col,
-      source_col, iso3
+      "ind", "year", value_col, transform_value_col, "type",
+      "source", "iso3"
     ))) %>%
-    dplyr::group_by(.data[[ind]], .data[[iso3]]) %>%
+    dplyr::group_by(.data[["ind"]], .data[["iso3"]]) %>%
     tidyr::pivot_wider(
-      names_from = .data[[year]],
-      values_from = c(dplyr::all_of(c(value, transform_value)), .data[[type_col]], .data[[source_col]])
+      names_from = .data[["year"]],
+      values_from = c(dplyr::all_of(c(value_col, transform_value_col)), .data[["type"]], .data[["source"]])
     ) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(
-      !!sym(glue::glue("{transform_value}_{start_year}")) := get_transform_formula(.data[[ind]], bounds["start_col"], data_rows, ind_ids = ind_ids, this_iso3),
-      !!sym(glue::glue("{transform_value}_{max(end_year)}")) := get_transform_formula(.data[[ind]], bounds["start_col"] + 1, data_rows, ind_ids = ind_ids, this_iso3)
+      !!sym(glue::glue("{transform_value_col}_{start_year}")) := get_transform_formula(.data[["ind"]], bounds["start_col"], data_rows, ind_ids = ind_ids, this_iso3),
+      !!sym(glue::glue("{transform_value_col}_{max(end_year)}")) := get_transform_formula(.data[["ind"]], bounds["start_col"] + 1, data_rows, ind_ids = ind_ids, this_iso3)
     ) %>%
-    dplyr::mutate(empty1 = NA, .after = glue::glue("{value}_{max(end_year)}")) %>%
-    dplyr::mutate(empty2 = NA, .after = glue::glue("{transform_value}_{max(end_year)}")) %>%
-    dplyr::mutate(empty3 = NA, .after = glue::glue("{type_col}_{max(end_year)}"))
+    dplyr::mutate(empty1 = NA, .after = glue::glue("{value_col}_{max(end_year)}")) %>%
+    dplyr::mutate(empty2 = NA, .after = glue::glue("{transform_value_col}_{max(end_year)}")) %>%
+    dplyr::mutate(empty3 = NA, .after = glue::glue("type_{max(end_year)}"))
 
 
   baseline_proj <- ind_df[, "ind"] %>%
-    dplyr::left_join(baseline_proj, by = c("ind" = ind)) %>%
-    dplyr::mutate(dplyr::across(dplyr::starts_with(transform_value), as_excel_formula)) %>%
-    dplyr::select(-.data[[iso3]], -.data[["ind"]])
+    dplyr::left_join(baseline_proj, by = c("ind" = "ind")) %>%
+    dplyr::mutate(dplyr::across(dplyr::starts_with(transform_value_col), as_excel_formula)) %>%
+    dplyr::select(-.data[["iso3"]], -.data[["ind"]])
 
   openxlsx::writeData(
     wb,
@@ -227,9 +217,9 @@ write_baseline_projection_hpop_summary <- function(df,
   )
 
   baseline_proj_header <- vec2emptyDF(c(
-    "Raw Value", rep("", length(value) * 2 - 1), "",
-    "Transformed Value", rep("", length(value) * 2 - 1), "",
-    "Type", rep("", length(value) * 2 - 1), "",
+    "Raw Value", rep("", length(value_col) * 2 - 1), "",
+    "Transformed Value", rep("", length(value_col) * 2 - 1), "",
+    "Type", rep("", length(value_col) * 2 - 1), "",
     "Source"
   ))
 
@@ -243,10 +233,10 @@ write_baseline_projection_hpop_summary <- function(df,
   ### Baseline and proj years sub-header
   start_end_years <- as.character(c(start_year, max(end_year)))
   baseline_proj_subHeader <- vec2emptyDF(c(
-    rep(start_end_years, length(value)), "",
-    rep(start_end_years, length(value)), "",
-    rep(start_end_years, length(value)), "",
-    rep(start_end_years, length(value))
+    rep(start_end_years, length(value_col)), "",
+    rep(start_end_years, length(value_col)), "",
+    rep(start_end_years, length(value_col)), "",
+    rep(start_end_years, length(value_col))
   ))
 
   openxlsx::writeData(
@@ -286,12 +276,9 @@ write_baseline_projection_hpop_summary <- function(df,
 write_billion_contrib_ind_hpop_summary <- function(df,
                                                    wb,
                                                    sheet_name,
-                                                   year,
                                                    start_year,
                                                    end_year,
-                                                   ind,
                                                    contribution_pct,
-                                                   population,
                                                    contribution,
                                                    contribution_pct_total_pop,
                                                    ind_df,
@@ -306,24 +293,24 @@ write_billion_contrib_ind_hpop_summary <- function(df,
 
   populations <- df %>%
     dplyr::filter(
-      .data[[year]] == max(end_year),
-      .data[[ind]] %in% ind_ids
+      .data[["year"]] == max(end_year),
+      .data[["ind"]] %in% ind_ids
     ) %>%
-    dplyr::select(dplyr::all_of(population)) %>%
-    dplyr::mutate("{population}" := as.character(.data[[population]])) %>%
-    tidyr::replace_na(list(population = '""')) %>%
+    dplyr::select(dplyr::all_of("population")) %>%
+    dplyr::mutate("population" := as.character(.data[["population"]])) %>%
+    tidyr::replace_na(list("population" = '""')) %>%
     unlist()
 
   hpop_contrib <- df %>%
     dplyr::filter(
-      .data[[year]] == max(end_year),
-      .data[[ind]] %in% ind_ids
+      .data[["year"]] == max(end_year),
+      .data[["ind"]] %in% ind_ids
     ) %>%
-    dplyr::select(dplyr::all_of(c(ind, contribution_pct, population, contribution, contribution_pct_total_pop))) %>%
+    dplyr::select(dplyr::all_of(c("ind", contribution_pct, "population", contribution, contribution_pct_total_pop))) %>%
     dplyr::mutate(
       !!sym(contribution_pct) :=
         glue::glue('=IF(AND({trans_baseline_col}{data_rows}<>"",{trans_end_col}{data_rows}<>""),{trans_end_col}{data_rows}-{trans_baseline_col}{data_rows}, "")'),
-      !!sym(population) :=
+      !!sym("population") :=
         glue::glue('=IF({populations}<>"", {populations}/1000, "")'),
       !!sym(contribution) :=
         glue::glue('=IF({openxlsx::int2col(boxes_bounds$contribution["start_col"])}{data_rows}<>"", ({openxlsx::int2col(boxes_bounds$contribution["start_col"])}{data_rows}/100)*{openxlsx::int2col(boxes_bounds$contribution["start_col"]+1)}{data_rows},"")'),
@@ -332,8 +319,8 @@ write_billion_contrib_ind_hpop_summary <- function(df,
     )
 
   hpop_contrib <- ind_df[, "ind"] %>%
-    dplyr::left_join(hpop_contrib, by = c("ind" = ind)) %>%
-    dplyr::mutate(dplyr::across(c(contribution_pct, contribution, population, contribution_pct_total_pop), as_excel_formula)) %>%
+    dplyr::left_join(hpop_contrib, by = c("ind" = "ind")) %>%
+    dplyr::mutate(dplyr::across(dplyr::all_of(c(contribution_pct, contribution, "population", contribution_pct_total_pop)), as_excel_formula)) %>%
     dplyr::select(-.data[["ind"]])
 
   openxlsx::writeData(
@@ -376,8 +363,6 @@ write_billion_contribution_hpop_summary <- function(df,
                                                     sheet_name,
                                                     contribution,
                                                     contribution_pct,
-                                                    ind,
-                                                    year,
                                                     end_year,
                                                     bounds,
                                                     iso,
@@ -386,13 +371,13 @@ write_billion_contribution_hpop_summary <- function(df,
 
   hpop_billion_contribution <- df %>%
     dplyr::filter(
-      .data[[year]] == max(end_year),
-      stringr::str_detect(.data[[ind]], "^hpop_healthier_"),
-      !stringr::str_detect(.data[[ind]], "_dbl_cntd$")
+      .data[["year"]] == max(end_year),
+      stringr::str_detect(.data[["ind"]], "^hpop_healthier_"),
+      !stringr::str_detect(.data[["ind"]], "_dbl_cntd$")
     ) %>%
-    dplyr::select(!!ind, !!contribution) %>%
+    dplyr::select("ind", !!contribution) %>%
     dplyr::mutate(dplyr::across(!!contribution, ~ . / 1000)) %>%
-    dplyr::select(-!!ind)
+    dplyr::select(-"ind")
 
   openxlsx::writeData(
     wb,

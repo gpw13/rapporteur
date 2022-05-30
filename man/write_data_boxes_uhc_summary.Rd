@@ -9,17 +9,12 @@ write_data_boxes_uhc_summary(
   pillar = c("RMNCH", "infec_diseases", "ncd", "service_cap_access"),
   wb,
   sheet_name,
-  value,
-  transform_value,
+  value_col,
+  transform_value_col,
   boxes_bounds,
   start_year,
   end_year,
-  ind,
   ind_df,
-  year,
-  type_col,
-  source_col,
-  iso3,
   ind_ids
 )
 }
@@ -39,9 +34,9 @@ to a specific year, and indicator.}
 
 \item{sheet_name}{character name of the sheet to update}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{transform_value_col}{Column name of column(s) with transformed indicator
 values, used to calculate contributions.}
 
 \item{boxes_bounds}{named list of bounds for data frame boxes to be written in sheet.}
@@ -51,17 +46,7 @@ values, used to calculate contributions.}
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
 2025.}
 
-\item{ind}{Column name of column with indicator names.}
-
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
-
-\item{year}{Column name of column with years.}
-
-\item{type_col}{Column name of column with type data.}
-
-\item{source_col}{Column name of column to store source information.}
-
-\item{iso3}{Column name of column with country ISO3 codes.}
 
 \item{ind_ids}{Named vector of indicator codes for input indicators to the Billion.
 Although separate indicator codes can be used than the standard, they must

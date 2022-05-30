@@ -9,14 +9,14 @@
 #'
 #' @return data frame
 
-count_since <- function(df, year_specified, year, ind, iso3, type_col) {
-  billionaiRe:::assert_columns(df, year, ind, iso3, type_col)
+count_since <- function(df, year_specified) {
+  billionaiRe:::assert_columns(df, "year", "ind", "iso3", "type")
   billionaiRe:::assert_numeric(year_specified)
 
   df %>%
-    dplyr::filter(.data[[type_col]] %in% c("estimated", "reported")) %>%
-    dplyr::group_by(.data[[iso3]], .data[[ind]]) %>%
-    dplyr::filter(.data[[year]] >= !!year_specified) %>%
+    dplyr::filter(.data[["type"]] %in% c("estimated", "reported")) %>%
+    dplyr::group_by(.data[["iso3"]], .data[["ind"]]) %>%
+    dplyr::filter(.data[["year"]] >= !!year_specified) %>%
     dplyr::summarise(!!sym(glue::glue("count_{year_specified}")) := dplyr::n(), .groups = "drop")
 }
 
@@ -40,24 +40,24 @@ get_ind_order <- function(ind) {
 #' @inherit export_hpop_country_summary_xls
 #' @inheritParams write_uhc_timeseries_sheet
 #' @inheritParams write_hpop_summary_sheet
-get_latest_reported_df <- function(df, iso3, ind, type_col, year, value, transform_value = NULL, level = NULL, source_col, ind_df) {
+get_latest_reported_df <- function(df, value_col, transform_value_col = NULL, level = NULL, ind_df) {
   df <- df %>%
-    dplyr::filter(.data[[type_col]] %in% c("estimated", "reported"))
+    dplyr::filter(.data[["type"]] %in% c("estimated", "reported"))
 
   if (nrow(df) > 1) {
     df <- df %>%
-      dplyr::group_by(.data[[iso3]], .data[[ind]]) %>%
-      dplyr::filter(.data[[year]] == max(.data[[year]])) %>%
+      dplyr::group_by(.data[["iso3"]], .data[["ind"]]) %>%
+      dplyr::filter(.data[["year"]] == max(.data[["year"]])) %>%
       dplyr::ungroup() %>%
       dplyr::select(dplyr::all_of(c(
-        ind, value, transform_value, level, year,
-        type_col, source_col
+        "ind", value_col, transform_value_col, level, "year",
+        "type", "source"
       ))) %>%
-      dplyr::mutate(!!sym(year) := as.integer(.data[[year]]))
+      dplyr::mutate(!!sym("year") := as.integer(.data[["year"]]))
   }
 
   df <- ind_df[, "ind"] %>%
-    dplyr::left_join(df, by = c("ind" = ind))
+    dplyr::left_join(df, by = c("ind" = "ind"))
 
   return(df)
 }
@@ -70,22 +70,22 @@ get_latest_reported_df <- function(df, iso3, ind, type_col, year, value, transfo
 #' @inherit export_hpop_country_summary_xls
 #' @inheritParams export_all_countries_summaries_xls
 #' @inheritParams write_hpop_summary_sheet
-get_baseline_projection_df <- function(df, iso3, ind, type_col, year, value, transform_value, start_year, end_year, source_col, ind_df) {
+get_baseline_projection_df <- function(df, value_col, transform_value_col, start_year, end_year, ind_df) {
   df <- df %>%
-    dplyr::filter(.data[[year]] %in% c(!!start_year, max(!!end_year))) %>%
+    dplyr::filter(.data[["year"]] %in% c(!!start_year, max(!!end_year))) %>%
     dplyr::select(dplyr::all_of(c(
-      ind, year, value, transform_value, type_col,
-      source_col, iso3
+      "ind", "year", value_col, transform_value_col, "type",
+      "source", "iso3"
     ))) %>%
-    dplyr::group_by(.data[[ind]], .data[[iso3]]) %>%
-    dplyr::arrange(.data[[year]]) %>%
+    dplyr::group_by(.data[["ind"]], .data[["iso3"]]) %>%
+    dplyr::arrange(.data[["year"]]) %>%
     tidyr::pivot_wider(
-      names_from = .data[[year]],
-      values_from = c(dplyr::all_of(c(value, transform_value)), .data[[type_col]], .data[[source_col]])
+      names_from = .data[["year"]],
+      values_from = c(dplyr::all_of(c(value_col, transform_value_col)), .data[["type"]], .data[["source"]])
     ) %>%
     dplyr::ungroup()
 
   df <- ind_df[, "ind"] %>%
-    dplyr::left_join(df, by = c("ind" = ind))
+    dplyr::left_join(df, by = c("ind" = "ind"))
   return(df)
 }

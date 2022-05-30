@@ -6,7 +6,7 @@
 #' @inherit write_sheet_header_hpop_summary
 #' @inheritParams  export_all_countries_summaries_xls
 
-write_data_headers_hep_summary <- function(wb, sheet_name, value, boxes_bounds,
+write_data_headers_hep_summary <- function(wb, sheet_name, value_col, boxes_bounds,
                                            start_year, end_year) {
   openxlsx::writeData(wb,
     sheet = sheet_name,
@@ -22,7 +22,7 @@ write_data_headers_hep_summary <- function(wb, sheet_name, value, boxes_bounds,
     startRow = boxes_bounds$data_header["start_row"]
   )
 
-  sentence_v <- stringr::str_to_title(value)
+  sentence_v <- stringr::str_to_title(value_col)
 
   latest_rep_headers <- c(
     glue::glue("Raw {sentence_v}"),
@@ -50,9 +50,9 @@ write_data_headers_hep_summary <- function(wb, sheet_name, value, boxes_bounds,
 
 
   baseline_projections_headers <- vec2emptyDF(c(
-    "Raw Value", rep("", length(value) * 2 - 1), "",
-    "Level (1-5)", rep("", length(value) * 2 - 1), "",
-    "Type", rep("", length(value) * 2 - 1), "",
+    "Raw Value", rep("", length(value_col) * 2 - 1), "",
+    "Level (1-5)", rep("", length(value_col) * 2 - 1), "",
+    "Type", rep("", length(value_col) * 2 - 1), "",
     "Source"
   ))
 
@@ -100,85 +100,79 @@ write_data_boxes_hep_summary <- function(df,
                                          ),
                                          wb,
                                          sheet_name,
-                                         value,
-                                         transform_value,
+                                         value_col,
+                                         transform_value_col,
                                          boxes_bounds,
                                          start_year,
                                          end_year,
-                                         ind,
-                                         scenario,
+                                         scenario_col,
                                          ind_df,
-                                         year,
-                                         type_col,
-                                         source_col,
-                                         iso3,
                                          ind_ids) {
   pillar <- rlang::arg_match(pillar)
 
   ind_df_pillar <- ind_df %>%
-    dplyr::filter(.data[["pillar"]] %in% !!pillar, .data[[ind]] != pillar)
+    dplyr::filter(.data[["pillar"]] %in% !!pillar, .data[["ind"]] != pillar)
 
   df_pillar <- df %>%
-    dplyr::filter(.data[[ind]] %in% unique(ind_df_pillar[["ind"]]))
+    dplyr::filter(.data[["ind"]] %in% unique(ind_df_pillar[["ind"]]))
 
   if (nrow(df_pillar) == 0) {
     pillar_latest_reported <- tibble::tibble(
-      !!sym(ind) := ind_df_pillar[["ind"]],
-      !!sym(value) := NA,
+      !!sym("ind") := ind_df_pillar[["ind"]],
+      !!sym(value_col) := NA,
       !!sym("level") := NA,
-      !!sym(year) := NA,
-      !!sym(type_col) := NA,
-      !!sym(source_col) := NA
+      !!sym("year") := NA,
+      !!sym("type") := NA,
+      !!sym("source") := NA
     )
     pillar_baseline_projection <- tibble::tibble(
-      !!sym(ind) := ind_df_pillar[["ind"]],
-      !!sym(iso3) := NA,
-      !!sym(glue::glue("{value}_{start_year}")) := NA,
-      !!sym(glue::glue("{value}_{max(end_year)}")) := NA,
+      !!sym("ind") := ind_df_pillar[["ind"]],
+      !!sym("iso3") := NA,
+      !!sym(glue::glue("{value_col}_{start_year}")) := NA,
+      !!sym(glue::glue("{value_col}_{max(end_year)}")) := NA,
       empty1 = NA,
       !!sym(glue::glue("level_{start_year}")) := NA,
       !!sym(glue::glue("level_{max(end_year)}")) := NA,
       empty2 = NA,
-      !!sym(glue::glue("{type_col}_{start_year}")) := NA,
-      !!sym(glue::glue("{type_col}_{max(end_year)}")) := NA,
+      !!sym(glue::glue("type_{start_year}")) := NA,
+      !!sym(glue::glue("type_{max(end_year)}")) := NA,
       empty3 = NA,
-      !!sym(glue::glue("{source_col}_{start_year}")) := NA,
-      !!sym(glue::glue("{source_col}_{max(end_year)}")) := NA
+      !!sym(glue::glue("source_{start_year}")) := NA,
+      !!sym(glue::glue("source_{max(end_year)}")) := NA
     )
   } else {
     pillar_latest_reported <- df_pillar %>%
-      get_latest_reported_df(iso3,
-        ind,
-        type_col,
-        year,
-        value,
-        transform_value = NULL,
-        source_col,
+      get_latest_reported_df(
+        value_col,
+        transform_value_col = NULL,
         level = "level",
         ind_df_pillar
       )
 
     full_df_pillar <- tidyr::expand_grid(
-      !!sym(iso3) := unique(df_pillar[[iso3]]),
-      !!sym(ind) := unique(df_pillar[[ind]]),
-      !!sym(year) := start_year:max(end_year)
+      !!sym("iso3") := unique(df_pillar[["iso3"]]),
+      !!sym("ind") := unique(df_pillar[["ind"]]),
+      !!sym("year") := start_year:max(end_year)
     )
 
     pillar_baseline_projection <- df_pillar %>%
-      dplyr::full_join(full_df_pillar, by = c(iso3, ind, year)) %>%
-      get_baseline_projection_df(iso3, ind, type_col, year, value,
-        transform_value = "level", start_year, end_year,
-        source_col, ind_df_pillar
+      dplyr::full_join(full_df_pillar, by = c("iso3", "ind", "year")) %>%
+      get_baseline_projection_df(
+        value_col,
+        transform_value_col = "level",
+        start_year,
+        end_year,
+        ind_df_pillar
       ) %>%
-      dplyr::mutate(empty1 = NA, .after = glue::glue("{value}_{max(end_year)}")) %>%
+      dplyr::mutate(empty1 = NA, .after = glue::glue("{value_col}_{max(end_year)}")) %>%
       dplyr::mutate(empty2 = NA, .after = glue::glue("level_{max(end_year)}")) %>%
-      dplyr::mutate(empty3 = NA, .after = glue::glue("{type_col}_{max(end_year)}"))
+      dplyr::mutate(empty3 = NA, .after = glue::glue("type_{max(end_year)}"))
   }
 
   if (pillar == "prevent") {
     affected_pathos_iso3 <- rapporteur::affected_pathogens %>%
-      dplyr::filter(.data[[iso3]] %in% unique(df_pillar[[!!iso3]])) %>%
-      dplyr::select(-.data[[iso3]])
+      dplyr::filter(.data[["iso3"]] %in% unique(df_pillar[["iso3"]])) %>%
+      dplyr::select(-.data[["iso3"]])
 
 
     if (rowSums(affected_pathos_iso3) < ncol(affected_pathos_iso3)) {
@@ -188,7 +182,7 @@ write_data_boxes_hep_summary <- function(df,
       (boxes_bounds[[pillar]]["end_row"] - 1)
       fade_row <- data_rows[grep(
         paste0(pathos_iso3, collapse = "|"),
-        pillar_latest_reported[[ind]]
+        pillar_latest_reported[["ind"]]
       )]
     } else {
       fade <- FALSE
@@ -199,9 +193,9 @@ write_data_boxes_hep_summary <- function(df,
     fade_row <- NA
   }
 
-  pillar_latest_reported <- dplyr::select(pillar_latest_reported, -.data[[ind]])
+  pillar_latest_reported <- dplyr::select(pillar_latest_reported, -.data[["ind"]])
 
-  pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -c(ind, iso3))
+  pillar_baseline_projection <- dplyr::select(pillar_baseline_projection, -c("ind", "iso3"))
 
   openxlsx::writeData(wb, sheet_name,
     x = pillar_latest_reported,

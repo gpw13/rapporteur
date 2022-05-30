@@ -6,13 +6,13 @@ test_data <- load_misc_data("test_data/test_data/test_data_2022-03-06T09-30-41.p
 
 test_data_hep <- test_data %>%
   dplyr::filter(ind %in% billion_ind_codes("hep")) %>%
-  transform_hep_data(scenario = "scenario") %>%
-  calculate_hep_components(scenario = "scenario") %>%
-  calculate_hep_billion(scenario = "scenario")
+  transform_hep_data(scenario_col  = "scenario") %>%
+  calculate_hep_components(scenario_col  = "scenario") %>%
+  calculate_hep_billion(scenario_col  = "scenario")
 
 testthat::test_that("expect_country_summary_xls produced correct scenario sheet for hep",{
   temp_dir <- tempdir()
-  try_wb <- export_country_summary_xls(test_data_hep, "AFG", "hep", scenario = "scenario", output_folder = temp_dir)
+  try_wb <- export_country_summary_xls(test_data_hep, "AFG", "hep", scenario_col = "scenario", output_folder = temp_dir)
   try_wb <- openxlsx::readWorkbook(try_wb, sheet = "HEP_Scenarios")
 
   test_wb <- system.file("extdata", "test_scenarios_hep_afg.xlsx", package = "rapporteur")
@@ -25,12 +25,12 @@ test_data_hpop <- test_data %>%
   dplyr::filter(ind %in% billion_ind_codes("hpop")) %>%
   transform_hpop_data() %>%
   add_hpop_populations() %>%
-  calculate_hpop_billion(scenario = "scenario") %>%
+  calculate_hpop_billion(scenario_col = "scenario") %>%
   dplyr::mutate(source = "This is a source")
 
 testthat::test_that("expect_country_summary_xls produced correct scenario sheet for hpop",{
   temp_dir <- tempdir()
-  try_wb <- export_country_summary_xls(test_data_hpop, "AFG", "hpop", scenario = "scenario", output_folder = temp_dir)
+  try_wb <- export_country_summary_xls(test_data_hpop, "AFG", "hpop", scenario_col = "scenario", output_folder = temp_dir)
   try_wb <- openxlsx::readWorkbook(try_wb, sheet = "HPOP_Scenarios")
 
   test_wb <- system.file("extdata", "test_scenarios_hpop_afg.xlsx", package = "rapporteur")
@@ -43,12 +43,12 @@ test_data_uhc <- test_data %>%
   dplyr::mutate(use_dash = TRUE) %>%
   dplyr::filter(ind %in% billion_ind_codes("uhc")) %>%
   transform_uhc_data(recycle = TRUE) %>%
-  calculate_uhc_billion(scenario = "scenario") %>%
-  calculate_uhc_contribution(scenario = "scenario")
+  calculate_uhc_billion(scenario_col = "scenario") %>%
+  calculate_uhc_contribution(scenario_col = "scenario")
 
 testthat::test_that("expect_country_summary_xls produced correct scenario sheet for uhc",{
   temp_dir <- tempdir()
-  try_wb <- export_country_summary_xls(test_data_uhc, "AFG", "uhc", scenario = "scenario", output_folder = temp_dir)
+  try_wb <- export_country_summary_xls(test_data_uhc, "AFG", "uhc", scenario_col = "scenario", output_folder = temp_dir)
   try_wb <- openxlsx::readWorkbook(try_wb, sheet = "UHC_Scenarios")
 
   test_wb <- system.file("extdata", "test_scenarios_uhc_afg.xlsx", package = "rapporteur")
@@ -61,6 +61,6 @@ testthat::test_that("expect_country_summary_xls produced correct scenario sheet 
   temp_dir <- tempdir()
 
   test_data_all <- dplyr::bind_rows(test_data_hep, test_data_hpop, test_data_uhc)
-  testthat::expect_error(export_country_summary_xls(test_data_all, "AFG", "all", scenario = "scenario", output_folder = temp_dir), NA)
+  testthat::expect_error(export_country_summary_xls(test_data_all, "AFG", "all", scenario_col = "scenario", output_folder = temp_dir), NA)
 })
 

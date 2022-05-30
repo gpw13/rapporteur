@@ -10,12 +10,7 @@ export_plot_timeseries_indicator_iso3_group(
   indicator,
   output_folder,
   scale,
-  ind,
-  iso3_col,
-  year_col,
-  value,
-  type_col,
-  scenario,
+  value_col,
   default_scenario,
   start_year,
   experiment
@@ -39,18 +34,7 @@ country, year, and indicator.}
 By default, \code{combined} is used
 }}
 
-\item{ind}{Column name of column with indicator names.}
-
-\item{iso3_col}{Column name of column with country ISO3 codes.}
-
-\item{year_col}{Column name of column with years.}
-
-\item{value}{Column name of column with indicator values.}
-
-\item{type_col}{Column name of column with type data.}
-
-\item{scenario}{Column name of column with scenario identifiers. Useful for
-calculating contributions on data in long format rather than wide format.}
+\item{value_col}{Column name of column with indicator values.}
 
 \item{default_scenario}{name of the default scenario.}
 

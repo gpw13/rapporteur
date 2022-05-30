@@ -12,20 +12,16 @@
 #' @param this_iso3 character iditenfying the country being styled.
 style_scenarios_sheet <- function(df,
                                   wb,
-                                      billion = c("hep", "hpop", "uhc"),
-                                      sheet_name,
-                                      start_row,
+                                  billion = c("hep", "hpop", "uhc"),
+                                  sheet_name,
+                                  start_row,
                                   start_col,
-                                      ind = "ind",
-                                      year = "year",
-                                      iso3 = "iso3",
-                                      type_col = "type",
-                                      scenario = "scenario",
+                                  scenario_col = "scenario",
                                   scenarios_order,
-                                      df_wide,
-                                      ind_df,
+                                  df_wide,
+                                  ind_df,
                                   ind_ids,
-                                      this_iso3) {
+                                  this_iso3) {
   billion <- rlang::arg_match(billion)
 
   nice_inds <- ind_df %>%
@@ -106,7 +102,7 @@ style_scenarios_sheet <- function(df,
                   wb = wb,
                   sheet_name = sheet_name,
                   start_row = start_row + 2, start_col = start_col,
-                  ind = ind, year = year, type_col = type_col, scenario = scenario,
+                  scenario_col = scenario_col,
                   ind_df, scenarios_order = scenarios_order
   )
 
@@ -130,7 +126,7 @@ style_scenarios_sheet <- function(df,
     if (rowSums(affected_pathos_iso3 %>% dplyr::select(-.data[["iso3"]])) > 1) {
       pathos_iso3 <- names(affected_pathos_iso3)[affected_pathos_iso3 == FALSE]
       short_name_pathos <- unlist(
-        ind_df[stringr::str_detect(ind_df$ind, paste0(pathos_iso3, collapse = "|")), "short_name"]
+        ind_df[stringr::str_detect(ind_df[["ind"]], paste0(pathos_iso3, collapse = "|")), "short_name"]
       )
 
       fade_rows <- grep(paste0(short_name_pathos, collapse = "|"), df_wide$short_name)

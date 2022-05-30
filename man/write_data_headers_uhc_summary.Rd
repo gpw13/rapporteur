@@ -7,7 +7,7 @@
 write_data_headers_uhc_summary(
   wb,
   sheet_name,
-  value,
+  value_col,
   boxes_bounds,
   start_year,
   end_year
@@ -18,7 +18,7 @@ write_data_headers_uhc_summary(
 
 \item{sheet_name}{character name of the sheet to update}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
 \item{boxes_bounds}{named list of bounds for data frame boxes to be written in sheet.}
 

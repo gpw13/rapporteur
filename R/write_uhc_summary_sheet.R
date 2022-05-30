@@ -13,14 +13,8 @@
 write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
                                     start_year = 2018,
                                     end_year = 2019:2025,
-                                    value = "value",
-                                    transform_value = "transform_value",
-                                    year = "year",
-                                    iso3 = "iso3",
-                                    ind = "ind",
-                                    population = "population",
-                                    type_col = "type",
-                                    source_col = "source",
+                                    value_col = "value",
+                                    transform_value_col = "transform_value",
                                     ind_df,
                                     ind_ids) {
   boxes_bounds <- list(
@@ -92,9 +86,9 @@ write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
     )
   )
 
-  wb <- write_sheet_header_uhc_summary(wb, sheet_name, iso, end_year, value, boxes_bounds)
+  wb <- write_sheet_header_uhc_summary(wb, sheet_name, iso, end_year, value_col, boxes_bounds)
 
-  wb <- write_data_headers_uhc_summary(wb, sheet_name, value, boxes_bounds, start_year, end_year)
+  wb <- write_data_headers_uhc_summary(wb, sheet_name, value_col, boxes_bounds, start_year, end_year)
 
   pillars <- c("RMNCH", "infec_diseases", "ncd", "service_cap_access")
 
@@ -105,17 +99,12 @@ write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
       pillar = .x,
       wb = wb,
       sheet_name = sheet_name,
-      value = value,
-      transform_value = transform_value,
+      value_col = value_col,
+      transform_value_col = transform_value_col,
       boxes_bounds = boxes_bounds,
       start_year = start_year,
       end_year = end_year,
-      ind = ind,
       ind_df = ind_df,
-      year = year,
-      type_col = type_col,
-      source_col = source_col,
-      iso3 = iso3,
       ind_ids = ind_ids
     )
   )
@@ -125,17 +114,12 @@ write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
     pillar = "fin_hardship",
     wb = wb,
     sheet_name = sheet_name,
-    value = value,
-    transform_value = transform_value,
+    value_col = value_col,
+    transform_value_col = transform_value_col,
     boxes_bounds = boxes_bounds,
     start_year = start_year,
     end_year = end_year,
-    ind = ind,
     ind_df = ind_df,
-    year = year,
-    type_col = type_col,
-    source_col = source_col,
-    iso3 = iso3,
     ind_ids = ind_ids
   )
 
@@ -190,7 +174,7 @@ write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
 #'
 #' @inherit write_sheet_header_hpop_summary
 #' @inheritParams export_all_countries_summaries_xls
-write_sheet_header_uhc_summary <- function(wb, sheet_name, iso, end_year, value, boxes_bounds) {
+write_sheet_header_uhc_summary <- function(wb, sheet_name, iso, end_year, value_col, boxes_bounds) {
   openxlsx::writeData(wb,
     sheet = sheet_name,
     x = glue::glue("Country contribution to GPW13 Universal Health Coverage billion"),

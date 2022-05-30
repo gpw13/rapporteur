@@ -11,7 +11,7 @@ write_sheet_header_hpop_summary(
   start_col,
   start_row,
   end_year,
-  value,
+  value_col,
   boxes_bounds
 )
 }
@@ -28,7 +28,7 @@ write_sheet_header_hpop_summary(
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to 2025.}
 
-\item{value}{Column name of column with indicator values.}
+\item{value_col}{Column name of column with indicator values.}
 
 \item{boxes_bounds}{named list of bounds for data frame boxes to be written in sheet.}
 }

@@ -1,4 +1,6 @@
 #' Write Inter sheet for HPOP
+#' @param transform_value Column name of column(s) with transformed indicator
+#'     values, used to calculate contributions.
 #' @inherit write_baseline_projection_hpop_summary
 #' @inheritParams write_hpop_timeseries_sheet
 #' @inheritParams export_hpop_country_summary_xls

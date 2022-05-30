@@ -11,6 +11,7 @@
 #' @param experiment name of the experiment of plots. Default to NULL. If used, a new
 #' folder will be added to `output_folder` to store the results.
 #' @param group_iso3 if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.
+#' @param version character vector identifying the version of the plot to be passed.
 #' @inherit write_hep_summary_sheet
 #' @inheritParams export_country_summary_xls
 #'
@@ -21,15 +22,11 @@ export_plot_timeseries_indicator_pdf <- function(df,
                                                  output_folder = "outputs",
                                                  experiment = NULL,
                                                  group_iso3 = TRUE,
-                                                 ind = "ind",
-                                                 scenario = "scenario",
                                                  default_scenario = "default",
-                                                 type_col = "type",
-                                                 value = "value",
+                                                 value_col = "value",
                                                  start_year = 2018,
-                                                 year = "year",
-                                                 iso3 = "iso3",
-                                                 ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE)) {
+                                                 ind_ids = billionaiRe::billion_ind_codes("all", include_calculated = TRUE),
+                                                 version = whdh::get_formatted_timestamp()) {
   scale <- rlang::arg_match(scale)
 
   if (scale == "combined") {
@@ -39,9 +36,9 @@ export_plot_timeseries_indicator_pdf <- function(df,
   }
 
   df_ind <- df %>%
-    dplyr::filter(.data[[ind]] == !!indicator)
+    dplyr::filter(.data[["ind"]] == !!indicator)
 
-  unique_iso3 <- sort(unique(df_ind[[iso3]]))
+  unique_iso3 <- sort(unique(df_ind[["iso3"]]))
 
   if (group_iso3) {
     iso3_groups <- split(unique_iso3, ceiling(seq_along(unique_iso3) / 54))
@@ -55,20 +52,13 @@ export_plot_timeseries_indicator_pdf <- function(df,
 
   if (!is.null(experiment)) {
     output_folder <- here::here(output_folder, experiment)
-    experiment_index <- paste0(experiment, "_")
-  } else {
-    experiment_index <- NULL
   }
 
   if (!dir.exists(output_folder)) {
     dir.create(output_folder)
   }
 
-  temp_dir <- here::here(output_folder, "temp")
-
-  if (!dir.exists(temp_dir)) {
-    dir.create(temp_dir)
-  }
+  temp_dir <- tempdir()
 
   purrr::walk(
     iso3_groups, ~ export_plot_timeseries_indicator_iso3_group(
@@ -76,12 +66,7 @@ export_plot_timeseries_indicator_pdf <- function(df,
       iso3_group = .x,
       indicator = indicator,
       output_folder = temp_dir,
-      ind = ind,
-      iso3_col = iso3,
-      year_col = year,
-      value = value,
-      type_col = type_col,
-      scenario = scenario,
+      value_col = value_col,
       default_scenario = default_scenario,
       start_year = start_year,
       scale = scales,
@@ -89,19 +74,15 @@ export_plot_timeseries_indicator_pdf <- function(df,
     )
   )
 
-  pdftools::pdf_combine(
-    c(here::here(temp_dir, paste0("temp_", experiment_index, indicator, "_", scale, "_", names(iso3_groups), ".pdf"))),
-    here::here(output_folder, paste0(experiment_index, indicator, "_", scale, ".pdf"))
+  combined_pdf <- pdftools::pdf_combine(
+    c(here::here(temp_dir, paste0(stringr::str_c("temp", experiment, indicator, scale, names(iso3_groups), sep = "_"), ".pdf"))),
+    here::here(output_folder, paste0(stringr::str_c(experiment, indicator, scale, version, sep = "_"), ".pdf"))
   )
-
-  unlink(temp_dir, recursive = TRUE)
 }
 
 #' Export timeseries for a group of countries
 #'
 #' @param iso3_group named list of iso3 to be ploted
-#' @param year_col Column name of column with years.
-#' @param iso3_col Column name of column with country ISO3 codes.
 #' @inheritParams export_country_summary_xls
 #'
 #' @inherit export_plot_timeseries_indicator_pdf
@@ -110,12 +91,7 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
                                                         indicator,
                                                         output_folder,
                                                         scale,
-                                                        ind,
-                                                        iso3_col,
-                                                        year_col,
-                                                        value,
-                                                        type_col,
-                                                        scenario,
+                                                        value_col,
                                                         default_scenario,
                                                         start_year,
                                                         experiment) {
@@ -137,12 +113,7 @@ export_plot_timeseries_indicator_iso3_group <- function(df,
     iso3 = iso3_group,
     indicator = indicator,
     scale = .x,
-    ind = ind,
-    iso3_col = iso3_col,
-    year_col = year_col,
-    value = value,
-    type_col = type_col,
-    scenario = scenario,
+    value_col = value_col,
     default_scenario = default_scenario,
     start_year = start_year
   ))

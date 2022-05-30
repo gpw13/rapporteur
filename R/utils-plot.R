@@ -70,11 +70,8 @@ integer_breaks <- function(n = 5, ...) {
 }
 
 connect_lines <- function(df,
-                          iso3_col,
-                          year_col,
-                          ind_col,
                           plot_group,
-                          value,
+                          value_col,
                           plot_line_color,
                           plot_line_type,
                           base_scenario = "Base"){
@@ -86,10 +83,10 @@ connect_lines <- function(df,
     dplyr::filter(.data[[plot_group]] != base_scenario) %>%
     dplyr::group_by(
       dplyr::across(
-        dplyr::any_of(c(!!iso3_col,!!ind_col,!!plot_group)))) %>%
-    dplyr::filter(.data[[year_col]] == min(.data[[year_col]])) %>%
-    dplyr::select(dplyr::all_of(c(iso3_col, year_col, ind_col, plot_group, plot_line_color, plot_line_type))) %>%
-    dplyr::rename(last_year = !!year_col, this_ind = !!ind_col, this_plot_group = !!plot_group, this_iso3 = !! iso3_col,
+        dplyr::any_of(c("iso3","ind",!!plot_group)))) %>%
+    dplyr::filter(.data[["year"]] == min(.data[["year"]])) %>%
+    dplyr::select(dplyr::all_of(c("iso3", "year", "ind", plot_group, plot_line_color, plot_line_type))) %>%
+    dplyr::rename(last_year = !!"year", this_ind = "ind", this_plot_group = !!plot_group, this_iso3 = "iso3",
                   this_plot_line_color = !!plot_line_color,
                   this_line_type = !!plot_line_type) %>%
     dplyr::distinct() %>%
@@ -99,15 +96,20 @@ connect_lines <- function(df,
      dplyr::bind_rows(df)
 }
 
-get_previous_year_row <- function(df, last_year, this_iso3, this_ind, this_plot_group,
-                                  this_plot_line_color, this_line_type, iso3_col = "iso3", year_col = "year", ind_col = "ind",
+get_previous_year_row <- function(df,
+                                  last_year,
+                                  this_iso3,
+                                  this_ind,
+                                  this_plot_group,
+                                  this_plot_line_color,
+                                  this_line_type,
                                   plot_group = "plot_group",
                                   plot_line_color = "plot_line_color",
                                   plot_line_type = "plot_line_type"){
   df %>%
-    dplyr::filter(.data[[iso3_col]] == this_iso3,
-                  .data[[ind_col]] == this_ind) %>%
-    dplyr::filter(.data[[year_col]] %in% min(max(.data[[year_col]]), last_year - 1)) %>%
+    dplyr::filter(.data[["iso3"]] == this_iso3,
+                  .data[["ind"]] == this_ind) %>%
+    dplyr::filter(.data[["year"]] %in% min(max(.data[["year"]]), last_year - 1)) %>%
     dplyr::mutate(
       "{plot_group}" := this_plot_group,
       "{plot_line_color}" := this_plot_line_color,

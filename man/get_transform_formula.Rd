@@ -7,7 +7,7 @@
 get_transform_formula(ind, raw_col, raw_rows, ind_ids, iso3)
 }
 \arguments{
-\item{ind}{Column name of column with indicator names.}
+\item{ind}{character with the indicator code (\code{ind} in \code{billionaiRe::indicator_df()})}
 
 \item{raw_col}{integer identifying the column where the raw value (pre-transformation)
 is located.}

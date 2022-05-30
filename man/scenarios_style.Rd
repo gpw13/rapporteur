@@ -2,7 +2,7 @@
 % Please edit documentation in R/scenarios_style.R
 \name{scenarios_style}
 \alias{scenarios_style}
-\title{Change font of scenario values}
+\title{Change font of scenario_col values}
 \usage{
 scenarios_style(
   df,
@@ -10,10 +10,7 @@ scenarios_style(
   sheet_name,
   start_row,
   start_col,
-  ind,
-  year,
-  type_col,
-  scenario,
+  scenario_col,
   ind_df,
   scenarios_order
 )
@@ -29,18 +26,12 @@ scenarios_style(
 
 \item{start_col}{integer start col of styling. Passed to \code{\link[openxlsx:addStyle]{openxlsx::addStyle()}}}
 
-\item{ind}{Column name of column with indicator names.}
-
-\item{year}{Column name of column with years.}
-
-\item{type_col}{Column name of column with type data.}
-
-\item{scenario}{Column name of column with scenario identifiers. Useful for
+\item{scenario_col}{Column name of column with scenario identifiers. Useful for
 calculating contributions on data in long format rather than wide format.}
 
 \item{ind_df}{data frame containing the indicators in the correct order and format to be used.}
 
-\item{scenarios_order}{(character) vector in which \code{scenario} should be \code{dplyr::arrange}}
+\item{scenarios_order}{(character) vector in which \code{scenario_col} should be \code{dplyr::arrange}}
 }
 \value{
 \code{openxslx} Workbook object. Output file is in \code{output_folder}.

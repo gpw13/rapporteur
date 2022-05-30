@@ -8,15 +8,9 @@ export_hep_country_summary_xls(
   df,
   wb,
   iso,
-  iso3 = "iso3",
-  year = "year",
-  ind = "ind",
-  value = "value",
-  transform_value = "transform_value",
-  scenario = NULL,
-  type_col = "type",
-  source_col = "source",
-  population = "population",
+  value_col = "value",
+  transform_value_col = "transform_value",
+  scenario_col = NULL,
   contribution = "contribution",
   contribution_pct = paste0(contribution, "_percent"),
   default_scenario = "default",
@@ -36,31 +30,19 @@ country, year, and indicator.}
 
 \item{iso}{ISO3 code of country to summarize.}
 
-\item{iso3}{Column name of column with country ISO3 codes.}
+\item{value_col}{Column name of column with indicator values.}
 
-\item{year}{Column name of column with years.}
-
-\item{ind}{Column name of column with indicator names.}
-
-\item{value}{Column name of column with indicator values.}
-
-\item{transform_value}{Column name of column(s) with transformed indicator
+\item{transform_value_col}{Column name of column(s) with transformed indicator
 values, used to calculate contributions.}
 
-\item{scenario}{Column name of column with scenario identifiers. Useful for
+\item{scenario_col}{Column name of column with scenario identifiers. Useful for
 calculating contributions on data in long format rather than wide format.}
 
-\item{type_col}{Column name of column with type data.}
-
-\item{source_col}{Column name of column to store source information.}
-
-\item{population}{Column name of column with population figures.}
-
 \item{contribution}{Column name of column(s) to store contribution (population)
-values. Must be the same length as \code{transform_value}.}
+values. Must be the same length as \code{transform_value_col}.}
 
 \item{contribution_pct}{Column name of column(s) to store contribution (percent)
-values. Must be the same length as \code{transform_value}.}
+values. Must be the same length as \code{transform_value_col}.}
 
 \item{default_scenario}{name of the default scenario.}
 
