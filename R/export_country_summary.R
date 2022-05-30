@@ -24,6 +24,7 @@
 #' @param end_year End year(s) for contribution calculation, defaults to 2019 to
 #'     2025.
 #' @param output_folder Folder path to where the Excel files should be written
+#' @param version character vector identifying the version of the plot to be passed.
 #'
 #' @return list of `openxslx` Workbook object. Output file is in `output_folder`.
 #'
@@ -45,7 +46,8 @@ export_all_countries_summaries_xls <- function(df,
                                                default_scenario = "default_scenario",
                                                start_year = 2018,
                                                end_year = 2019:2025,
-                                               output_folder = "outputs") {
+                                               output_folder = "outputs",
+                                               version = whdh::get_formatted_timestamp()) {
   billion <- rlang::arg_match(billion)
 
   unique_iso3s <- unique(df[["iso3"]])
@@ -63,7 +65,8 @@ export_all_countries_summaries_xls <- function(df,
     default_scenario = default_scenario,
     start_year = start_year,
     end_year = end_year,
-    output_folder = output_folder
+    output_folder = output_folder,
+    version = version
   ))
 }
 
@@ -90,7 +93,8 @@ export_country_summary_xls <- function(df,
                                        default_scenario = "default",
                                        start_year = 2018,
                                        end_year = 2019:2025,
-                                       output_folder = "outputs") {
+                                       output_folder = "outputs",
+                                       version = whdh::get_formatted_timestamp()) {
   billion <- rlang::arg_match(billion)
 
   billionaiRe:::assert_in_list_or_null(iso, unique(df[["iso3"]]))
@@ -219,7 +223,7 @@ export_country_summary_xls <- function(df,
   }
 
   openxlsx::saveWorkbook(wb,
-                         glue::glue("{output_folder}/GPW13_{toupper(billion)}_billion_{iso}_CountrySummary_{whdh::get_formatted_timestamp()}.xlsx"),
+                         glue::glue("{output_folder}/GPW13_{toupper(billion)}_billion_{iso}_CountrySummary_{version}.xlsx"),
                          overwrite = TRUE
   )
 
