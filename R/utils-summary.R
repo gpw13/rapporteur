@@ -48,16 +48,16 @@ get_latest_reported_df <- function(df, value_col, transform_value_col = NULL, le
     df <- df %>%
       dplyr::group_by(.data[["iso3"]], .data[["ind"]]) %>%
       dplyr::filter(.data[["year"]] == max(.data[["year"]])) %>%
-      dplyr::ungroup() %>%
-      dplyr::select(dplyr::all_of(c(
-        "ind", value_col, transform_value_col, level, "year",
-        "type", "source"
-      ))) %>%
-      dplyr::mutate(!!sym("year") := as.integer(.data[["year"]]))
+      dplyr::ungroup()
   }
 
   df <- ind_df[, "ind"] %>%
-    dplyr::left_join(df, by = c("ind" = "ind"))
+    dplyr::left_join(df, by = c("ind" = "ind")) %>%
+    dplyr::select(dplyr::all_of(c(
+      "ind", value_col, transform_value_col, level, "year",
+      "type", "source"
+    ))) %>%
+    dplyr::mutate(!!sym("year") := as.integer(.data[["year"]]))
 
   return(df)
 }
@@ -82,7 +82,7 @@ get_baseline_projection_df <- function(df, value_col, transform_value_col, start
     dplyr::distinct() %>%
     tidyr::pivot_wider(
       names_from = .data[["year"]],
-      values_from = c(dplyr::all_of(c(value_col, transform_value_col)), .data[["type"]], .data[["source"]])
+      values_from = c(dplyr::all_of(c(value_col, transform_value_col)), "type", "source")
     ) %>%
     dplyr::ungroup()
 
