@@ -16,7 +16,8 @@ export_all_countries_summaries_xls(
   default_scenario = "default_scenario",
   start_year = 2018,
   end_year = 2019:2025,
-  output_folder = "outputs"
+  output_folder = "outputs",
+  version = whdh::get_formatted_timestamp()
 )
 }
 \arguments{
@@ -52,6 +53,8 @@ as \code{transform_value_col}.}
 2025.}
 
 \item{output_folder}{Folder path to where the Excel files should be written}
+
+\item{version}{character vector identifying the version of the plot to be passed.}
 }
 \value{
 list of \code{openxslx} Workbook object. Output file is in \code{output_folder}.
