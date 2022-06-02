@@ -295,6 +295,10 @@ export_hep_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
+  if(unique(df_iso_one_scenario$scenario) == 1){
+    openxlsx::removeWorksheet(wb,"UHC_Scenarios")
+  }
+
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(
       .data[["hep"]],
@@ -419,6 +423,11 @@ export_hpop_country_summary_xls <- function(df,
     dplyr::ungroup()
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
+
+  if(unique(df_iso_one_scenario$scenario) == 1){
+    openxlsx::removeWorksheet(wb,"UHC_Scenarios")
+  }
+
 
   ind_in_df <- unique(df_iso_one_scenario[["ind"]])
 
@@ -581,6 +590,10 @@ export_uhc_country_summary_xls <- function(df,
     dplyr::mutate(dplyr::across(dplyr::all_of(c(value_col, transform_value_col)), ~ round(.x, digits = 2)))
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
+
+  if(unique(df_iso_one_scenario$scenario) == 1){
+    openxlsx::removeWorksheet(wb,"UHC_Scenarios")
+  }
 
   ind_df <- billionaiRe::indicator_df %>%
     dplyr::filter(
