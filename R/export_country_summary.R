@@ -295,8 +295,8 @@ export_hep_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
-  if(unique(df_iso_one_scenario$scenario) == 1){
-    openxlsx::removeWorksheet(wb,"UHC_Scenarios")
+  if(length(unique(df_iso_one_scenario$scenario)) == 1){
+    openxlsx::removeWorksheet(wb,"HEP_Scenarios")
   }
 
   ind_df <- billionaiRe::indicator_df %>%
@@ -424,8 +424,8 @@ export_hpop_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
-  if(unique(df_iso_one_scenario$scenario) == 1){
-    openxlsx::removeWorksheet(wb,"UHC_Scenarios")
+  if(length(unique(df_iso_one_scenario$scenario)) == 1){
+    openxlsx::removeWorksheet(wb,"HPOP_Scenarios")
   }
 
 
@@ -591,7 +591,7 @@ export_uhc_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
-  if(unique(df_iso_one_scenario$scenario) == 1){
+  if(length(unique(df_iso_one_scenario$scenario)) == 1){
     openxlsx::removeWorksheet(wb,"UHC_Scenarios")
   }
 
