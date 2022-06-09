@@ -295,7 +295,11 @@ export_hep_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
-  if(length(unique(df_iso_one_scenario$scenario)) == 1){
+  scenario_in_df_iso <- unique(df_iso[[scenario_col]])
+
+  scenarios_not_base <- scenario_in_df_iso[!scenario_in_df_iso %in% c("reference_infilling", "routine", "covid_shock")]
+
+  if(length(scenarios_not_base) <= 1){
     openxlsx::removeWorksheet(wb,"HEP_Scenarios")
   }
 
@@ -424,10 +428,13 @@ export_hpop_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
-  if(length(unique(df_iso_one_scenario$scenario)) == 1){
+  scenario_in_df_iso <- unique(df_iso[[scenario_col]])
+
+  scenarios_not_base <- scenario_in_df_iso[!scenario_in_df_iso %in% c("reference_infilling", "routine", "covid_shock")]
+
+  if(length(scenarios_not_base) <= 1){
     openxlsx::removeWorksheet(wb,"HPOP_Scenarios")
   }
-
 
   ind_in_df <- unique(df_iso_one_scenario[["ind"]])
 
@@ -591,7 +598,11 @@ export_uhc_country_summary_xls <- function(df,
 
   df_iso_one_scenario <- get_df_one_scenario(df_iso, scenario_col, default_scenario)
 
-  if(length(unique(df_iso_one_scenario$scenario)) == 1){
+  scenario_in_df_iso <- unique(df_iso[[scenario_col]])
+
+  scenarios_not_base <- scenario_in_df_iso[!scenario_in_df_iso %in% c("reference_infilling", "routine", "covid_shock")]
+
+  if(length(scenarios_not_base) <= 1){
     openxlsx::removeWorksheet(wb,"UHC_Scenarios")
   }
 

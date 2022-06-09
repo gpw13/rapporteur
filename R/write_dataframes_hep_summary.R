@@ -344,7 +344,7 @@ write_summary_box_hep_summary <- function(wb,
 
   summary_formulas <- c(
     glue::glue("=AVERAGE({paste0(purrr::map_chr(pillars, ~paste0(col_raw_latest,boxes_bounds[[.x]]['end_row'])), collapse = ',')})"),
-    glue::glue("={col_raw_end_year}{boxes_bounds[['summary']]['start_row']} - {col_latest_last}{boxes_bounds[['summary']]['start_row']}"),
+    glue::glue("={col_raw_end_year}{boxes_bounds[['summary']]['start_row']} - {col_raw_start_year}{boxes_bounds[['summary']]['start_row']}"),
     glue::glue("={col_latest_last}{boxes_bounds[['sheet_header']]['end_row']}*1000"),
     glue::glue("={col_latest_last}{boxes_bounds[['summary']]['end_row']-3}*{col_latest_last}{boxes_bounds[['summary']]['end_row']-2}/100"),
     glue::glue("={col_latest_last}{boxes_bounds[['summary']]['end_row']-1}/{col_latest_last}{boxes_bounds[['summary']]['end_row']-2}*100")

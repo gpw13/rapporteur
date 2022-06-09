@@ -143,7 +143,7 @@ write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
         "5 The Average Service Coverage value presented here is slightly different to the SDG 3.8.1 value due to the use of nested arithmetic means and small adjustments to the TB treatment, tobacco control, and Health workforce indicators. Please see the Methods Report for more information.",
         "\\** Projections have been produced jointly with the World Bank based on survey based estimates available to both organizations by July 2019. Modelling relies on the International Monetary Fund World Economic Outlook projections for GDP per capita (2019 released until 2024); the WHO Global expenditure data on household out-of-pocket expenditures (2018 update) and the IMF or the World Bank data on household final private consumption (2019 released). These projections are preliminary, they will be used in the dashboard to compute the UHC billion but won't be shown. They will be updated to take into account more recent survey-based estimates that will go through country consultation in early 2021 but might not yet capture the impact of COVID-19."
       ),
-    methode_transformation =
+    method_transformation =
       c(
         "The prevalence of raised blood pressure is converted into prevalence of non-raised blood pressure and is rescaled using a minimum value of 50% (i.e. rescaled value = (X - 50) / (100 - 50) * 100).",
         "Mean fasting plasma glucose, which is a continuous measure (units of mmol/L), is converted to a scale of 0 to 100 using the minimum theoretical biological risk (5.1 mmol/L) and observed maximum across countries (7.1 mmol/L) (i.e. rescaled value  =  (7.1  -  original value)  / (7.1 - 5.1) * 100).",
@@ -161,10 +161,10 @@ write_uhc_summary_sheet <- function(df, wb, sheet_name, iso,
 
   write_notes(end_notes$notes, "Notes:", wb, sheet_name, bounds = notes_bounds)
 
-  methode_transformation_bounds <- boxes_bounds[["notes"]]
-  methode_transformation_bounds[["start_row"]] <- notes_bounds[["end_row"]] + 1
+  method_transformation_bounds <- boxes_bounds[["notes"]]
+  method_transformation_bounds[["start_row"]] <- notes_bounds[["end_row"]] + 1
 
-  write_notes(end_notes$methode_transformation, "Methode of transformation:", wb, sheet_name, bounds = methode_transformation_bounds)
+  write_notes(end_notes$method_transformation, "Method of transformation:", wb, sheet_name, bounds = method_transformation_bounds)
 
 
   return(wb)
