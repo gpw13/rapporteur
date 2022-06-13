@@ -106,6 +106,9 @@ export_country_summary_xls <- function(df,
   wb <- write_permanent_sheets(billion, start_col = 2, start_row = 3)
   openxlsx::activeSheet(wb) <- "Intro"
 
+  purrr::walk(openxlsx::sheets(wb)[stringr::str_detect(openxlsx::sheets(wb), "^(HPOP|HEP|UHC)_(?!Time Series)")], ~ openxlsx::removeWorksheet(wb, .x))
+
+
   if (billion == "all") {
     export_hep_country_summary_xls(
       df = df,
@@ -324,23 +327,6 @@ export_hep_country_summary_xls <- function(df,
     ) %>%
     dplyr::arrange(get_ind_order(.data[["ind"]]))
 
-  # summary sheet
-  summary_sheet <- glue::glue("{sheet_prefix}_summary")
-
-  wb <- write_hep_summary_sheet(
-    df = df_iso_one_scenario,
-    wb = wb,
-    sheet_name = summary_sheet,
-    iso = iso,
-    start_year = start_year,
-    end_year = end_year,
-    value_col = value_col,
-    transform_value_col = transform_value_col,
-    scenario_col = scenario_col,
-    ind_df,
-    ind_ids
-  )
-
   write_hep_timeseries_sheet(
     df = df_iso_one_scenario,
     wb = wb,
@@ -352,37 +338,6 @@ export_hep_country_summary_xls <- function(df,
     ind_ids,
     end_year)
 
-  if(!is.null(scenario_col)){
-    if(length(unique(df_iso[[scenario_col]])) > 1){
-      write_scenario_sheet(
-        df = df_iso,
-        wb = wb,
-        billion = "hep",
-        sheet_name = glue::glue("{sheet_prefix}_Scenarios"),
-        start_row = 4,
-        start_col = 2,
-        value_col = value_col,
-        scenario_col = scenario_col,
-        ind_df = ind_df,
-        ind_ids = ind_ids,
-        start_year = start_year,
-        end_year = scenario_end_year,
-        default_scenario = default_scenario
-      )
-    }
-  }
-
-  openxlsx::addStyle(wb,
-                     sheet = "HEP_Chart", rows = 22, cols = (3:(2 + nrow(ind_df))),
-                     style = excel_styles(
-                       textRotation = 90,
-                       fontSize = 8,
-                       fgFill = "white",
-                       wrapText = TRUE,
-                       halign = "center",
-                       valign = "center"
-                     )
-  )
 }
 
 #' Export country summary to Excel for HPOP billion
@@ -491,25 +446,6 @@ export_hpop_country_summary_xls <- function(df,
     )
 
 
-  # summary sheet
-  summary_sheet <- glue::glue("{sheet_prefix}_summary")
-
-  wb <- write_hpop_summary_sheet(
-    df = df_iso_one_scenario,
-    wb = wb,
-    sheet_name = summary_sheet,
-    start_year = start_year,
-    end_year = end_year,
-    value_col = value_col,
-    iso = iso,
-    transform_value_col = transform_value_col,
-    contribution = contribution,
-    contribution_pct = contribution_pct,
-    contribution_pct_total_pop = contribution_pct_total_pop,
-    ind_df = ind_df,
-    ind_ids = ind_ids
-  )
-
   # Time series
   timeseries_sheet <- glue::glue("{sheet_prefix}_Time Series")
 
@@ -520,38 +456,6 @@ export_hpop_country_summary_xls <- function(df,
     value_col = value_col,
     ind_df = ind_df,
     end_year = end_year
-  )
-
-  if(length(unique(df_iso[[scenario_col]])) > 1){
-    write_scenario_sheet(
-      df = df_iso,
-      wb = wb,
-      billion = "hpop",
-      sheet_name = glue::glue("{sheet_prefix}_Scenarios"),
-      start_row = 4,
-      start_col = 2,
-      value_col = value_col,
-      scenario_col = scenario_col,
-      ind_df = ind_df,
-      ind_ids = ind_ids,
-      start_year = start_year,
-      end_year = scenario_end_year,
-      default_scenario = default_scenario
-    )
-  }
-
-
-  # Flip titles graph
-  openxlsx::addStyle(wb,
-                     sheet = "HPOP_Chart", rows = 22, cols = (3:(2 + nrow(ind_df))),
-                     style = excel_styles(
-                       textRotation = 90,
-                       fontSize = 8,
-                       fgFill = "white",
-                       wrapText = TRUE,
-                       halign = "center",
-                       valign = "center"
-                     )
   )
   return(wb)
 }
@@ -631,19 +535,6 @@ export_uhc_country_summary_xls <- function(df,
   # data sheet
   summary_sheet <- glue::glue("{sheet_prefix}_summary")
 
-  write_uhc_summary_sheet(
-    df = df_iso_one_scenario,
-    wb = wb,
-    sheet_name = summary_sheet,
-    iso = iso,
-    start_year = start_year,
-    end_year = end_year,
-    value_col = value_col,
-    transform_value_col = transform_value_col,
-    ind_df,
-    ind_ids
-  )
-
   write_uhc_timeseries_sheet(
     df = df_iso_one_scenario,
     wb = wb,
@@ -654,36 +545,6 @@ export_uhc_country_summary_xls <- function(df,
     ind_df,
     ind_ids,
     end_year
-  )
-
-  if(length(unique(df_iso[[scenario_col]])) > 1){
-    write_scenario_sheet(
-      df = df_iso,
-      wb = wb,
-      billion = "uhc",
-      sheet_name = glue::glue("{sheet_prefix}_Scenarios"),
-      start_row = 4,
-      start_col = 2,
-      value_col = value_col,
-      scenario_col = scenario_col,
-      ind_df = ind_df,
-      ind_ids = ind_ids,
-      start_year = start_year,
-      end_year = scenario_end_year,
-      default_scenario = default_scenario
-    )
-  }
-
-  openxlsx::addStyle(wb,
-                     sheet = "UHC_Chart", rows = 22, cols = (3:(2 + nrow(ind_df))),
-                     style = excel_styles(
-                       textRotation = 90,
-                       fontSize = 8,
-                       fgFill = "white",
-                       wrapText = TRUE,
-                       halign = "center",
-                       valign = "center"
-                     )
   )
 
   return(wb)
