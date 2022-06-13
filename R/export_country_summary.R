@@ -23,6 +23,7 @@
 #' @param start_year Base year for contribution calculation, defaults to 2018.
 #' @param end_year End year(s) for contribution calculation, defaults to 2019 to
 #'     2025.
+#' @param scenario_end_year End year of the scenarios. Defaults to `end_year`.
 #' @param output_folder Folder path to where the Excel files should be written
 #' @param version character vector identifying the version of the plot to be passed.
 #'
@@ -46,6 +47,7 @@ export_all_countries_summaries_xls <- function(df,
                                                default_scenario = "default_scenario",
                                                start_year = 2018,
                                                end_year = 2019:2025,
+                                               scenario_end_year = end_year,
                                                output_folder = "outputs",
                                                version = whdh::get_formatted_timestamp()) {
   billion <- rlang::arg_match(billion)
@@ -65,6 +67,7 @@ export_all_countries_summaries_xls <- function(df,
     default_scenario = default_scenario,
     start_year = start_year,
     end_year = end_year,
+    scenario_end_year = scenario_end_year,
     output_folder = output_folder,
     version = version
   ))
@@ -93,6 +96,7 @@ export_country_summary_xls <- function(df,
                                        default_scenario = "default",
                                        start_year = 2018,
                                        end_year = 2019:2025,
+                                       scenario_end_year = end_year,
                                        output_folder = "outputs",
                                        version = whdh::get_formatted_timestamp()) {
   billion <- rlang::arg_match(billion)
@@ -115,10 +119,12 @@ export_country_summary_xls <- function(df,
       default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
+      scenario_end_year = scenario_end_year,
       sheet_prefix = "HEP",
       output_folder = output_folder,
       ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE)
     )
+
     export_hpop_country_summary_xls(
       df = df,
       wb = wb,
@@ -131,11 +137,13 @@ export_country_summary_xls <- function(df,
       contribution_pct_total_pop = contribution_pct_total_pop,
       default_scenario = default_scenario,
       start_year = start_year,
+      scenario_end_year = scenario_end_year,
       end_year = end_year,
       sheet_prefix = "HPOP",
       output_folder = output_folder,
       ind_ids = billionaiRe::billion_ind_codes("hpop", include_calculated = TRUE)
     )
+
     export_uhc_country_summary_xls(df,
                                    wb = wb,
                                    iso = iso,
@@ -146,6 +154,7 @@ export_country_summary_xls <- function(df,
                                    default_scenario = default_scenario,
                                    start_year = start_year,
                                    end_year = end_year,
+                                   scenario_end_year = scenario_end_year,
                                    sheet_prefix = "UHC",
                                    output_folder = output_folder,
                                    ind_ids = billionaiRe::billion_ind_codes("uhc", include_calculated = TRUE)
@@ -167,6 +176,7 @@ export_country_summary_xls <- function(df,
       default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
+      scenario_end_year = scenario_end_year,
       sheet_prefix = "HEP",
       output_folder = output_folder,
       ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE, include_subindicators = FALSE)
@@ -188,6 +198,7 @@ export_country_summary_xls <- function(df,
       default_scenario = default_scenario,
       start_year = start_year,
       end_year = end_year,
+      scenario_end_year = scenario_end_year,
       sheet_prefix = "HPOP",
       output_folder = output_folder,
       ind_ids = billionaiRe::billion_ind_codes("hpop", include_calculated = TRUE)
@@ -206,6 +217,7 @@ export_country_summary_xls <- function(df,
                                    default_scenario = default_scenario,
                                    start_year = start_year,
                                    end_year = end_year,
+                                   scenario_end_year = scenario_end_year,
                                    sheet_prefix = "UHC",
                                    output_folder = output_folder,
                                    ind_ids = billionaiRe::billion_ind_codes("uhc", include_calculated = TRUE)
@@ -253,6 +265,7 @@ export_hep_country_summary_xls <- function(df,
                                            default_scenario = "default",
                                            start_year = 2018,
                                            end_year = 2019:2025,
+                                           scenario_end_year = end_year,
                                            sheet_prefix = "HEP",
                                            output_folder = "outputs",
                                            ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE, include_subindicators = FALSE)) {
@@ -353,7 +366,7 @@ export_hep_country_summary_xls <- function(df,
         ind_df = ind_df,
         ind_ids = ind_ids,
         start_year = start_year,
-        end_year = end_year,
+        end_year = scenario_end_year,
         default_scenario = default_scenario
       )
     }
@@ -391,6 +404,7 @@ export_hpop_country_summary_xls <- function(df,
                                             default_scenario = "default",
                                             start_year = 2018,
                                             end_year = 2019:2025,
+                                            scenario_end_year = end_year,
                                             sheet_prefix = "HPOP",
                                             output_folder = "outputs",
                                             ind_ids = billionaiRe::billion_ind_codes("hpop", include_calculated = TRUE)) {
@@ -521,7 +535,7 @@ export_hpop_country_summary_xls <- function(df,
       ind_df = ind_df,
       ind_ids = ind_ids,
       start_year = start_year,
-      end_year = end_year,
+      end_year = scenario_end_year,
       default_scenario = default_scenario
     )
   }
@@ -557,6 +571,7 @@ export_uhc_country_summary_xls <- function(df,
                                            default_scenario = "default",
                                            start_year = 2018,
                                            end_year = 2019:2025,
+                                           scenario_end_year = end_year,
                                            sheet_prefix = "UHC",
                                            output_folder = "outputs",
                                            ind_ids = billionaiRe::billion_ind_codes("uhc",
@@ -654,7 +669,7 @@ export_uhc_country_summary_xls <- function(df,
       ind_df = ind_df,
       ind_ids = ind_ids,
       start_year = start_year,
-      end_year = end_year,
+      end_year = scenario_end_year,
       default_scenario = default_scenario
     )
   }

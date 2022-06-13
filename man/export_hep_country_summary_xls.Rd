@@ -16,6 +16,7 @@ export_hep_country_summary_xls(
   default_scenario = "default",
   start_year = 2018,
   end_year = 2019:2025,
+  scenario_end_year = end_year,
   sheet_prefix = "HEP",
   output_folder = "outputs",
   ind_ids = billionaiRe::billion_ind_codes("hep", include_calculated = TRUE,
@@ -50,6 +51,8 @@ values. Must be the same length as \code{transform_value_col}.}
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
 2025.}
+
+\item{scenario_end_year}{End year of the scenarios. Defaults to \code{end_year}.}
 
 \item{sheet_prefix}{Character prefix to add in front of export sheets}
 

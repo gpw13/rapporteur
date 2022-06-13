@@ -17,6 +17,7 @@ export_country_summary_xls(
   default_scenario = "default",
   start_year = 2018,
   end_year = 2019:2025,
+  scenario_end_year = end_year,
   output_folder = "outputs",
   version = whdh::get_formatted_timestamp()
 )
@@ -54,6 +55,8 @@ as \code{transform_value_col}.}
 
 \item{end_year}{End year(s) for contribution calculation, defaults to 2019 to
 2025.}
+
+\item{scenario_end_year}{End year of the scenarios. Defaults to \code{end_year}.}
 
 \item{output_folder}{Folder path to where the Excel files should be written}
 
