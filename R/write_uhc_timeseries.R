@@ -30,30 +30,23 @@ write_uhc_timeseries_sheet <- function(df, wb, sheet_name,
     startRow = 2
   )
 
-  no_show <- df %>%
-    dplyr::filter(.data[["ind"]] == ind_ids["art"]) %>%
-    dplyr::summarise(no_show = dplyr::case_when(
-      sum(.data[["use_dash"]]) %in% c(0,NA) ~ TRUE,
-      TRUE ~ FALSE
-    )) %>%
-    dplyr::pull("no_show")
-
   # TODO: Simplify function to purrr-like walk rather than looping
 
   time_series <- df %>%
     dplyr::ungroup() %>%
-    dplyr::select(dplyr::all_of(c("ind", "year", "type", value_col))) %>%
+    dplyr::select(dplyr::all_of(c("ind", "year", "type", "use_dash", value_col))) %>%
     dplyr::filter(.data[["year"]] <= max(end_year)) %>%
     dplyr::group_by(dplyr::across(dplyr::all_of(c("ind", "year", "type")))) %>%
     tidyr::pivot_longer(c(!!value_col), names_to = "value_mod", values_to = "value") %>%
     dplyr::mutate(
       !!sym("value") := dplyr::case_when(
-        .data[["ind"]] == ind_ids["art"] & no_show ~ NA_real_,
-        .data[["ind"]] == ind_ids["fh"] & .data[["type"]] == "projected" ~ NA_real_,
+        .data[["ind"]] == ind_ids["art"] & !.data[["use_dash"]] ~ NA_real_,
+        .data[["ind"]] == ind_ids["fh"] & !.data[["use_dash"]] ~ NA_real_,
         TRUE ~ .data[["value"]]
       ),
       !!sym("value_mod") := factor(!!sym("value_mod"), levels = !!value_col)
     ) %>%
+    dplyr::select(-"use_dash") %>%
     dplyr::arrange(.data[["year"]]) %>%
     dplyr::group_by(!!sym("value_mod")) %>%
     dplyr::group_split()
