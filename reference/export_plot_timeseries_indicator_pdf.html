@@ -77,38 +77,61 @@
     <dl><dt>df</dt>
 <dd><p>Data frame in long format filtered for a specific country, where 1 row corresponds
 to a specific year, and indicator.</p></dd>
+
+
 <dt>indicator</dt>
 <dd><p>name of indicator to plot</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>type of scale to be exported. Can be either:</p><ul><li><p><code>common</code>: same scale for all iso3</p></li>
 <li><p><code>free</code>: individual scale for each iso3</p></li>
 <li><p><code>combined</code>: combination of common and free.
 By default, <code>combined</code> is used</p></li>
 </ul></dd>
+
+
 <dt>output_folder</dt>
 <dd><p>Folder path to where the Excel files should be written</p></dd>
+
+
 <dt>experiment</dt>
 <dd><p>name of the experiment of plots. Default to NULL. If used, a new
 folder will be added to <code>output_folder</code> to store the results.</p></dd>
+
+
 <dt>group_iso3</dt>
 <dd><p>if TRUE (default), iso3s will be grouped by 54 to have more readable graphs.</p></dd>
+
+
 <dt>default_scenario</dt>
 <dd><p>name of the default scenario.</p></dd>
+
+
 <dt>value_col</dt>
 <dd><p>Column name of column with indicator values.</p></dd>
+
+
 <dt>start_year</dt>
 <dd><p>Base year for contribution calculation, defaults to 2018.</p></dd>
+
+
 <dt>ind_ids</dt>
 <dd><p>Named vector of indicator codes for input indicators to the Billion.
 Although separate indicator codes can be used than the standard, they must
 be supplied as a named vector where the names correspond to the output of
 <code>billion_ind_codes()</code>.</p></dd>
+
+
 <dt>version</dt>
 <dd><p>character vector identifying the version of the plot to be passed.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>openxslx</code> Workbook object. Output file is in <code>output_folder</code>.</p>
+    
+
+<p><code>openxslx</code> Workbook object. Output file is in <code>output_folder</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -120,7 +143,7 @@ be supplied as a named vector where the names correspond to the output of
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
