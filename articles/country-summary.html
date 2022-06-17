@@ -42,6 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/country-summary.html">Country summary Excel files</a>
+    <a class="dropdown-item" href="../articles/indicator-time-series-plots.html">Indicator time series plots</a>
   </div>
 </li>
 <li class="nav-item">
@@ -80,8 +81,71 @@
 
     
     
-<p>Country summary sheets are country-specific Excel files reporting on the Triple Billions.</p>
-<p>Two functions exists: * <code><a href="../reference/export_country_summary_xls.html">export_country_summary_xls()</a></code> : export a specific country * <code><a href="../reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls()</a></code> : export all countries present in the dataset</p>
+<div class="section level2">
+<h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
+</h2>
+<p>The <em>country summary Excel files</em> provides an overview of country data and calculations for the WHO Triple Billions:</p>
+<ul>
+<li>1 billion more people benefiting from universal health coverage (UHC Billion)</li>
+<li>1 billion more people better protected from health emergencies (HEP Billion)</li>
+<li>1 billion more people enjoying better health and well-being (HPOP Billion)</li>
+</ul>
+<p>It provides a stand-alone country summary of the dashboard data and the calculation of the billion contribution estimates for each country. The calculations are based on reported/estimated data values together with projections and scenarios.</p>
+<p>The billion dashboard can be found <a href="https://portal.who.int/triplebillions/" class="external-link">here</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="content">Content<a class="anchor" aria-label="anchor" href="#content"></a>
+</h2>
+<p>For each billion:</p>
+<ul>
+<li>The <em>summary</em> sheet shows indicator and sub indicator data and how this is used to determine the overall country contribution to the billion.</li>
+<li>The <em>time series</em> sheet shows the underlying time series data for 2000 to the end year (including data projections).</li>
+<li>The <em>scenario</em> sheet shows different alternative scenarios if they are present in the data set.</li>
+<li>The <em>chart</em> graphs the latest value and direction of the change for each indicator for 2018 to the end year (on a normalised 0-100 scale).</li>
+</ul>
+<p>The indicator sheet details names and units of indicators and sub-indicators grouped by billion.</p>
+<div class="section level3">
+<h3 id="summary-sheets">Summary sheets<a class="anchor" aria-label="anchor" href="#summary-sheets"></a>
+</h3>
+<p>Each billion summary sheet is tailored to the relevant billion. Each contains:</p>
+<ul>
+<li><p>Raw value: the SDG/WHO published value for each indicator or sub-indicator</p></li>
+<li><p>Transformed value: the normalized value (scaled to 0-100) that is used in the Billion calculations (details are provided in the GPW13 methods report)</p></li>
+<li><p>Year: even if the time series might contain more data, only latest reported, baseline and last projected years are reported in the summary.<br></p></li>
+<li>
+<p>Type: type of data:</p>
+<ul>
+<li>reported: value observed through surveys, records, etc.</li>
+<li>estimated: calculations produced by WHO technical programmes</li>
+<li>imputed: in-filled values based on time series or other methods</li>
+<li>projected: in-filled values based on projection</li>
+</ul>
+</li>
+<li><p>Source: identifies the source of the data entry</p></li>
+<li><p>Calculated values showing how the components of the overall billion contribution</p></li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="limitations">Limitations<a class="anchor" aria-label="anchor" href="#limitations"></a>
+</h2>
+<p>Please refer to the <a href="https://www.who.int/publications/i/item/9789240012776" class="external-link">GPW13 Methods report</a> and the <a href="https://portal.who.int/triplebillions/Home/FAQ" class="external-link">Triple Billion Dashboard FAQ</a>.</p>
+<p>Some of the calculations are made within the workbook in order to demonstrate the underlying calculation. In some instances, this may result in slight differences relative to the dashboard due to rounding issues.</p>
+<p>The contributions to the billion are based on projections and these will change as new data is reported.</p>
+<p>The uncertainty attached to the indicator and billion contribution estimates are large.</p>
+<p>All empty cells in tables denote missing data entries.</p>
+<p>All population figures in those sheets are from the World Population Prospects figures from the UN Department of Economic and Social Affairs</p>
+</div>
+<div class="section level2">
+<h2 id="generating-country-summary-sheets-from-r">Generating country summary sheets from R<a class="anchor" aria-label="anchor" href="#generating-country-summary-sheets-from-r"></a>
+</h2>
+<p>Two functions exists:</p>
+<ul>
+<li>
+<code><a href="../reference/export_country_summary_xls.html">export_country_summary_xls()</a></code> : export a specific country</li>
+<li>
+<code><a href="../reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls()</a></code> : export all countries present in the dataset</li>
+</ul>
 <p>The <code>billion</code> parameter allows to export a specific billion or all at once.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.who.int/data/triple-billion-dashboard" class="external-link">rapporteur</a></span><span class="op">)</span>
@@ -98,7 +162,14 @@
 
 <span class="co"># Exporting all billions for all countries in the dataset:</span>
 <span class="fu"><a href="../reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all"</span><span class="op">)</span></code></pre></div>
-  </main>
+<div class="section level3">
+<h3 id="country-summary-template">Country summary template<a class="anchor" aria-label="anchor" href="#country-summary-template"></a>
+</h3>
+<p><code>rapporteur</code> relies on a country summary template to generate the final output. The template can be found in <code>inst/extdata/country_summary_template.xlsx</code>. The template also demonstrate how the the Excel sheets are expected to work.</p>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
