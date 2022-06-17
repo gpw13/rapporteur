@@ -30,11 +30,63 @@ knitr::opts_chunk$set(
 )
 ```
 
-Country summary sheets are country-specific Excel files reporting on the Triple Billions.
+# Purpose
+
+The *country summary Excel files* provides an overview of country data and calculations for the WHO Triple Billions:
+
+*   1 billion more people benefiting from universal health coverage (UHC Billion)
+*   1 billion more people better protected from health emergencies (HEP Billion)
+*   1 billion more people enjoying better health and well-being (HPOP Billion)
+
+It provides a stand-alone country summary of the dashboard data and the calculation of the billion contribution estimates for each country. The calculations are based on reported/estimated data values together with projections and scenarios.
+
+The billion dashboard can be found [here](https://portal.who.int/triplebillions/).
+
+# Content
+For each billion:
+
+- The *summary* sheet shows indicator and sub indicator data and how this is used to determine the overall country contribution to the billion.
+- The *time series* sheet shows the underlying time series data for 2000 to the end year (including data projections).
+- The *scenario* sheet shows different alternative scenarios if they are present in the data set.
+- The *chart* graphs the latest value and direction of the change for each indicator for 2018 to the end year (on a normalised 0-100 scale).
+
+The indicator sheet details names and units of indicators and sub-indicators grouped by billion.
+
+## Summary sheets
+Each billion summary sheet is tailored to the relevant billion. Each contains:
+
+*   Raw value: the SDG/WHO published value for each indicator or sub-indicator
+*   Transformed value: the normalized value (scaled to 0-100) that is used in the Billion calculations (details are provided in the GPW13 methods report)
+*   Year: even if the time series might contain more data, only latest reported, baseline and last projected years are reported in the summary.										
+*   Type: type of data:
+
+    -   reported: value observed through surveys, records, etc.
+	  -   estimated: calculations produced by WHO technical programmes
+	  -   imputed: in-filled values based on time series or other methods
+	  -   projected: in-filled values based on projection
+*   Source: identifies the source of the data entry
+*   Calculated values showing how the components of the overall billion contribution
+											
+# Limitations
+
+Please refer to the [GPW13 Methods report](https://www.who.int/publications/i/item/9789240012776) and the [Triple Billion Dashboard FAQ](https://portal.who.int/triplebillions/Home/FAQ).
+
+Some of the calculations are made within the workbook in order to demonstrate the underlying calculation. In some instances, this may result in slight differences relative to the dashboard due to rounding issues.
+
+The contributions to the billion are based on projections and these will change as new data is reported.
+
+The uncertainty attached to the indicator and billion contribution estimates are large.
+
+All empty cells in tables denote missing data entries.
+
+All population figures in those sheets are from the World Population Prospects figures from the UN Department of Economic and Social Affairs 											
+
+# Generating country summary sheets from R
 
 Two functions exists:
-* `export_country_summary_xls()` : export a specific country
-* `export_all_countries_summaries_xls()` : export all countries present in the dataset
+
+*   `export_country_summary_xls()` : export a specific country
+*   `export_all_countries_summaries_xls()` : export all countries present in the dataset
 
 The `billion` parameter allows to export a specific billion or all at once.
 
@@ -55,3 +107,7 @@ export_country_summary_xls(all_billions_example, "CAN", "all", output_folder = "
 export_all_countries_summaries_xls(all_billions_example, "all", output_folder = "outputs/all")
 
 ```
+
+## Country summary template
+
+`rapporteur` relies on a country summary template to generate the final output. The template can be found in `inst/extdata/country_summary_template.xlsx`. The template also demonstrate how the the Excel sheets are expected to work.

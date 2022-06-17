@@ -1,0 +1,42 @@
+---
+title: "Indicator time series plots"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Indicator time series plots}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(rapporteur)
+library(billionaiRe)
+```
+
+The indicator time series plots allow to plot Triple Billion time series. They take into consideration the structure of `scenario` (see the `Scenarios` vignette in billionaiRe) and output appropriate plots to PDF.
+
+The functions are split into first generating ggplot objects, and set exporting and binding to PDF, which can allow internal users to re-use the functions to export to other formats.
+
+```{r example, eval=FALSE}
+test_data <- load_misc_data("test_data/test_data/test_data.parquet") %>%
+  dplyr::mutate(value = dplyr::case_when(
+    scenario == "covid_dip_lag" & year <= 2020 ~ NA_real_,
+    scenario == "covid_dip_lag" ~  dplyr::if_else(.data[["value"]] - 10.0 >0, .data[["value"]] - 10.0, 0),
+    TRUE ~ .data[["value"]]
+  )) %>%
+  dplyr::filter(!is.na(value))
+
+temp_dir <- tempdir()
+
+export_plot_timeseries_indicator_pdf(test_data,
+                                     indicator = "anc4",
+                                     output_folder = temp_dir)
+
+
+```
