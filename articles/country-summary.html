@@ -148,20 +148,20 @@
 </ul>
 <p>The <code>billion</code> parameter allows to export a specific billion or all at once.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.who.int/data/triple-billion-dashboard" class="external-link">rapporteur</a></span><span class="op">)</span>
-
-<span class="co"># Export HEP summary for Afghanistan:</span>
-<span class="fu"><a href="../reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"AFG"</span>, <span class="st">"hep"</span><span class="op">)</span>
-
-<span class="co"># Export all billions for Canada:</span>
-<span class="fu"><a href="../reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span><span class="op">)</span>
-
-<span class="co"># By default, files are saved to "outputs" folder, but this can be modified with `output_folder'.</span>
-<span class="co"># If the folder doesn't exists, it will be created (recursively).</span>
-<span class="fu"><a href="../reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all/CAN"</span><span class="op">)</span>
-
-<span class="co"># Exporting all billions for all countries in the dataset:</span>
-<span class="fu"><a href="../reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.who.int/data/triple-billion-dashboard" class="external-link">rapporteur</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Export HEP summary for Afghanistan:</span></span>
+<span><span class="fu"><a href="../reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"AFG"</span>, <span class="st">"hep"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Export all billions for Canada:</span></span>
+<span><span class="fu"><a href="../reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># By default, files are saved to "outputs" folder, but this can be modified with `output_folder'.</span></span>
+<span><span class="co"># If the folder doesn't exists, it will be created (recursively).</span></span>
+<span><span class="fu"><a href="../reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all/CAN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Exporting all billions for all countries in the dataset:</span></span>
+<span><span class="fu"><a href="../reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="country-summary-template">Country summary template<a class="anchor" aria-label="anchor" href="#country-summary-template"></a>
 </h3>
@@ -181,7 +181,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

@@ -86,9 +86,9 @@
 </h2>
 <p>A demonstration dataset is provided in the dataset. It does not reflect actual data for the countries included. It serves only to demonstrate the functions of the package.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.who.int/data/triple-billion-dashboard" class="external-link">rapporteur</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all_billions_example</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.who.int/data/triple-billion-dashboard" class="external-link">rapporteur</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">all_billions_example</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">##   iso3 year               ind use_dash</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 1  CAN 2000 surviving_infants     TRUE</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 2  CAN 2000   measles_routine     TRUE</span></span>
@@ -122,21 +122,21 @@
 <h2 id="country-summary-sheets">Country Summary Sheets<a class="anchor" aria-label="anchor" href="#country-summary-sheets"></a>
 </h2>
 <p>Country summary sheets are country-specific Excel files reporting on the Triple Billions.</p>
-<p>Two functions exists: * <code><a href="reference/export_country_summary_xls.html">export_country_summary_xls()</a></code> : export a specific country * <code><a href="reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls()</a></code> : export all countries present in the dataset</p>
+<p>Two functions exist to generate these: * <code><a href="reference/export_country_summary_xls.html">export_country_summary_xls()</a></code> : export a specific country * <code><a href="reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls()</a></code> : export all countries present in the dataset</p>
 <p>The <code>billion</code> parameter allows to export a specific billion or all at once.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Export HEP summary for Afghanistan:</span>
-<span class="fu"><a href="reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"AFG"</span>, <span class="st">"hep"</span><span class="op">)</span>
-
-<span class="co"># Export all billions for Canada:</span>
-<span class="fu"><a href="reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span><span class="op">)</span>
-
-<span class="co"># By default, files are saved to "outputs" folder, but this can be modified with `output_folder'.</span>
-<span class="co"># If the folder doesn't exists, it will be created (recursively).</span>
-<span class="fu"><a href="reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all/CAN"</span><span class="op">)</span>
-
-<span class="co"># Exporting all billions for all countries in the dataset:</span>
-<span class="fu"><a href="reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Export HEP summary for Afghanistan:</span></span>
+<span><span class="fu"><a href="reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"AFG"</span>, <span class="st">"hep"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Export all billions for Canada:</span></span>
+<span><span class="fu"><a href="reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># By default, files are saved to "outputs" folder, but this can be modified with `output_folder'.</span></span>
+<span><span class="co"># If the folder doesn't exists, it will be created (recursively).</span></span>
+<span><span class="fu"><a href="reference/export_country_summary_xls.html">export_country_summary_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"CAN"</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all/CAN"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Exporting all billions for all countries in the dataset:</span></span>
+<span><span class="fu"><a href="reference/export_all_countries_summaries_xls.html">export_all_countries_summaries_xls</a></span><span class="op">(</span><span class="va">all_billions_example</span>, <span class="st">"all"</span>, output_folder <span class="op">=</span> <span class="st">"outputs/all"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -188,7 +188,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>
