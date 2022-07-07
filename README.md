@@ -59,8 +59,10 @@ head(all_billions_example)
 Country summary sheets are country-specific Excel files reporting on the
 Triple Billions.
 
-Two functions exists: \* `export_country_summary_xls()` : export a
-specific country \* `export_all_countries_summaries_xls()` : export all
+Two functions exist to generate these:
+* `export_country_summary_xls()` : export a
+specific country 
+* `export_all_countries_summaries_xls()` : export all
 countries present in the dataset
 
 The `billion` parameter allows to export a specific billion or all at
